@@ -13,7 +13,7 @@ const pkgPrefix = 'steamer-plugin-';
 
 function Commander() {
 
-};
+}
 
 Commander.prototype.initPlugin = function() {
 	// command example: steamer init
@@ -27,12 +27,12 @@ Commander.prototype.initPlugin = function() {
 
 		try {
 			plugin = require(pkg);
-
 			if (_.has(plugin, 'init') && _.isFunction(plugin.init)) {
 				plugin.init();
 			}
 		}
 		catch(e) {
+			console.log(e);
 			if (e.code === 'MODULE_NOT_FOUND') {
 				Err.PluginNotFond(pkg);
 			}
