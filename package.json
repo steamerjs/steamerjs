@@ -1,0 +1,41 @@
+{
+  "name": "steamer-cli",
+  "version": "0.0.1",
+  "description": "steamer",
+  "main": "index.js",
+  "scripts": {
+    
+  },
+  "bin": {
+    "steamer": "./bin/steamer.js",
+    "str": "./bin/steamer.js",
+  },
+  "files": [
+    "bin",
+    "libs",
+    "template"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteamerTeam/steamer-cli.git"
+  },
+  "keywords": [
+    "steamer"
+  ],
+  "author": "SteamerTeam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SteamerTeam/steamer-cli/issues"
+  },
+  "homepage": "https://github.com/SteamerTeam/steamer-cli#readme",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "yargs": "^4.7.1",
+    "colors": "^1.1.2",
+    "requireg": "^0.1.5",
+    "fs-extra": "^0.30.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.4.0"
+  }
+}
