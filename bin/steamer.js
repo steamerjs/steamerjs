@@ -4,16 +4,12 @@
 const fs = require('fs'),
 	  path = require('path'),
 	  argv = require('yargs').argv,
-	  _ = require('lodash'),
-	  Err = require('steamer-core').Err,
-	  Conf = require('steamer-core').Conf;
+	  _ = require('lodash');
 
 
 const pkgPrefix = 'steamer-plugin-';
 
-function Commander() {
-
-}
+function Commander() {}
 
 Commander.prototype.initPlugin = function() {
 	// command example: steamer init
@@ -28,13 +24,12 @@ Commander.prototype.initPlugin = function() {
 		try {
 			plugin = require(pkg);
 			if (_.has(plugin, 'init') && _.isFunction(plugin.init)) {
-				plugin.init();
+				plugin.init(argv);
 			}
 		}
 		catch(e) {
-			console.log(e);
 			if (e.code === 'MODULE_NOT_FOUND') {
-				Err.PluginNotFond(pkg);
+				throw new Error("steamer plugin is not found.");
 			}
 		}
 	} 
