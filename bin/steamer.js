@@ -23,14 +23,16 @@ Commander.prototype.initPlugin = function() {
 
 		try {
 			plugin = require(pkg);
-			if (_.has(plugin, 'init') && _.isFunction(plugin.init)) {
-				plugin.init(argv);
+			if (_.isFunction(plugin) && _.isFunction(plugin.prototype.init)) {
+				let instance = new plugin(argv);
+				instance.init();
+			}
+			else {
+				throw new Error(pkg + " is not a function or " + pkg + ".prototpe.init is not a function.");
 			}
 		}
 		catch(e) {
-			if (e.code === 'MODULE_NOT_FOUND') {
-				throw new Error("plugin " + plugin + " is not found.");
-			}
+			console.log(e.stack);
 		}
 	} 
 };
