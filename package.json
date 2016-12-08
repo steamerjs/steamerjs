@@ -1,6 +1,6 @@
 {
   "name": "steamer-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "steamer",
   "main": "index.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "yargs": "^6.5.0"
   },
   "devDependencies": {
-    "jasmine": "^2.4.0"
+    "jasmine": "^2.4.0",
+    "steamer-plugin-example": "git://github.com/SteamerTeam/steamer-plugin-example"
   }
 }

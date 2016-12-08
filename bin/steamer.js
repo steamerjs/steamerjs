@@ -29,7 +29,7 @@ Commander.prototype.initPlugin = function() {
 		}
 		catch(e) {
 			if (e.code === 'MODULE_NOT_FOUND') {
-				throw new Error("steamer plugin is not found.");
+				throw new Error("plugin " + plugin + " is not found.");
 			}
 		}
 	} 
