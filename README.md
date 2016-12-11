@@ -19,25 +19,38 @@ str xxx
 ```
 
 #### Official Plugins
-* starter kit management plugin [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
-* AlloyTeam AK offline platform[steamer-plugin-ak](https://github.com/SteamerTeam/steamer-plugin-ak)
+* [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
+	- starter kit management plugin 
+* [steamer-plugin-ak](https://github.com/SteamerTeam/steamer-plugin-ak)
+	- AlloyTeam AK offline platform
 
 #### Official Starter Kit
-* react starter kit [steamer-react](https://github.com/SteamerTeam/steamer-react)
-* vue starter kit [steamer-vue](https://github.com/SteamerTeam/steamer-vue)
-* koa starter kit [steamer-koa](https://github.com/SteamerTeam/steamer-koa)
-* gulp starter kit [steamer-gulp](https://github.com/SteamerTeam/steamer-gulp)
+* [steamer-react](https://github.com/SteamerTeam/steamer-react) 
+	- react starter kit
+* [steamer-vue](https://github.com/SteamerTeam/steamer-vue)
+	- vue starter kit
+* [steamer-koa](https://github.com/SteamerTeam/steamer-koa)
+	- koa starter kit
+* [steamer-gulp](https://github.com/SteamerTeam/steamer-gulp)
+	- gulp starter kit
 
 #### Core Utils
-* plugin utils [steamer-pluginutils](https://github.com/SteamerTeam/steamer-pluginutils)
+* [steamer-pluginutils](https://github.com/SteamerTeam/steamer-pluginutils)
+	- plugin utils
 
 #### Starter Kit Utils
-* steamer webpack starter kit utils [steamer-webpack-utils](https://github.com/SteamerTeam/steamer-webpack-utils)
+* [steamer-webpack-utils](https://github.com/SteamerTeam/steamer-webpack-utils)
+	- steamer webpack starter kit utils
 
 #### Tiny Tool Libraries
-* ajax utils [steamer-net](https://github.com/SteamerTeam/steamer-net)
-* reponsive solution [steamer-responsive](https://github.com/SteamerTeam/steamer-responsive)
-* cross domain communication [steamer-cross](https://github.com/SteamerTeam/steamer-cross)
-* timer management utils [steamer-timer](https://github.com/SteamerTeam/steamer-timer)
-* browser util functions [steamer-browserutils](https://github.com/SteamerTeam/steamer-browserutils)
+* [steamer-net](https://github.com/SteamerTeam/steamer-net)
+	- ajax utils
+* [steamer-responsive](https://github.com/SteamerTeam/steamer-responsive)
+	- reponsive solution
+* [steamer-cross](https://github.com/SteamerTeam/steamer-cross)
+	- cross domain communication
+* [steamer-timer](https://github.com/SteamerTeam/steamer-timer)
+	- timer management utils
+* [steamer-browserutils](https://github.com/SteamerTeam/steamer-browserutils)
+	- browser util functions
 
