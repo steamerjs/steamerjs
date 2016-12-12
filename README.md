@@ -21,6 +21,8 @@ str xxx
 #### Official Plugins
 * [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
 	- starter kit management plugin 
+* [steamer-plugin-pro](https://github.com/SteamerTeam/steamer-plugin-pro)
+	- project management plugin 
 * [steamer-plugin-ak](https://github.com/SteamerTeam/steamer-plugin-ak)
 	- AlloyTeam AK offline platform
 
