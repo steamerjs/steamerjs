@@ -1,4 +1,4 @@
-### steamer-cli
+### steamerjs
 
 Plugin is command, use when you plugin in.
 
@@ -7,7 +7,7 @@ Plugin is command, use when you plugin in.
 #### Installation
 
 ```
-npm i -g steamer-cli
+npm i -g steamerjs
 ```
 
 #### Usage
