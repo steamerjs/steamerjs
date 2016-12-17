@@ -1,7 +1,7 @@
 {
-  "name": "steamer-cli",
+  "name": "steamerjs",
   "version": "0.0.3",
-  "description": "steamer",
+  "description": "steamerjs",
   "main": "index.js",
   "scripts": {
     
@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SteamerTeam/steamer-cli.git"
+    "url": "git+https://github.com/SteamerTeam/steamerjs.git"
   },
   "keywords": [
     "steamer"
@@ -25,9 +25,9 @@
   "author": "SteamerTeam",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SteamerTeam/steamer-cli/issues"
+    "url": "https://github.com/SteamerTeam/steamerjs/issues"
   },
-  "homepage": "https://github.com/SteamerTeam/steamer-cli#readme",
+  "homepage": "https://github.com/SteamerTeam/steamerjs#readme",
   "dependencies": {
     "colors": "^1.1.2",
     "fs-extra": "^1.0.0",
