@@ -20,6 +20,7 @@ Commander.prototype.initPlugin = function() {
 	if (mainCommands.length) {
 		// use the 1st value
 		pkg = pkgPrefix + mainCommands[0];
+		pkg = this.reserveCmds(mainCommands[0]);
 
 		try {
 			plugin = require(pkg);
@@ -35,6 +36,17 @@ Commander.prototype.initPlugin = function() {
 			console.log(e.stack);
 		}
 	} 
+};
+
+Commander.prototype.reserveCmds = function(cmd) {
+
+	var mapping = ['config', 'list', 'alias'];
+
+	if (mapping.indexOf(cmd) > -1) {
+		cmd = "../libs/" + pkgPrefix + cmd;
+	}
+
+	return cmd;
 };
 
 Commander.prototype.init = function() {
