@@ -4,7 +4,8 @@
 const fs = require('fs'),
 	  path = require('path'),
 	  argv = require('yargs').argv,
-	  _ = require('lodash');
+	  _ = require('lodash'),
+	  utils = require('steamer-pluginutils');
 
 
 const pkgPrefix = 'steamer-plugin-';
