@@ -4,4 +4,4 @@ module.exports = {
         "http-proxy": "",
         "https-proxy": ""
     }
-}
+};

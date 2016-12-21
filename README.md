@@ -18,6 +18,53 @@ steamer xxx
 str xxx
 ```
 
+#### Builtin Plugins
+* steamer-plugin-config
+	- manage steamerjs config
+```
+// initialization local folder config
+steamer config --init
+
+or 
+
+steamer config -i
+
+// set config key and value
+steamer config --set http-proxy=http://proxy.steamer.com
+
+or 
+
+steamer config -s http-proxy=http://proxy.steamer.com
+
+// if set global, you can add -g or --global option
+
+
+// delete config key
+steamer config --del http-proxy
+
+or
+
+steamer config -d http-proxy
+
+// if delete global config key, you can add -g or --global option
+
+
+// list config value
+steamer config --list
+
+or 
+
+steamer config -l
+
+// if list global config, you can add -g or --global option
+
+```
+
+* steamer-plugin-list
+	- list all available commands you can use
+```
+```
+
 #### Official Plugins
 * [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
 	- starter kit management plugin 

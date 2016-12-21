@@ -41,7 +41,7 @@ Commander.prototype.initPlugin = function() {
 
 Commander.prototype.reserveCmds = function(cmd) {
 
-	var mapping = ['config', 'list', 'alias'];
+	var mapping = ['config', 'list'];
 
 	if (mapping.indexOf(cmd) > -1) {
 		cmd = "../libs/" + pkgPrefix + cmd;

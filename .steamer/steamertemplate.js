@@ -1,6 +1,6 @@
 module.exports = {
 	"plugin": "steamer",
-	config:{
+	"config":{
 		"http-proxy": "",
 		"https-proxy": ""
 	}

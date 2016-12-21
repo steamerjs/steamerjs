@@ -10,9 +10,8 @@ utils.pluginName = "steamer";
 const globalConfigFolder = path.join(__dirname, "../"),
 	  localConfigFolder = path.resolve();
 
-function ConfigPlugin(argv, conf) {
+function ConfigPlugin(argv) {
 	this.argv = argv;
-	this.conf = conf;
 }
 
 ConfigPlugin.prototype.init  = function() {
