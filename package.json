@@ -1,6 +1,6 @@
 {
   "name": "steamerjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {},
@@ -31,7 +31,7 @@
     "fs-extra": "^1.0.0",
     "inquirer": "^1.2.3",
     "lodash": "^4.17.2",
-    "steamer-pluginutils": "0.0.1",
+    "steamer-pluginutils": "^0.0.3",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
