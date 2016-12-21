@@ -63,6 +63,7 @@ steamer config -l
 * steamer-plugin-list
 	- list all available commands you can use
 ```
+steamer list
 ```
 
 #### Official Plugins
