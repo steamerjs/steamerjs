@@ -1,17 +1,15 @@
 "use strict";
 
-const fs = require('fs-extra'),
-	  path = require('path'),
+const path = require('path'),
 	  pluginUtils = require('steamer-pluginutils');
 
 var utils = new pluginUtils();
 utils.pluginName = "steamer";
 
-const globalConfigFolder = path.join(__dirname, "../"),
-	  localConfigFolder = path.resolve();
-
 function ConfigPlugin(argv) {
 	this.argv = argv;
+	this.globalConfigFolder = path.join(__dirname, "../");
+	this.localConfigFolder = path.resolve();
 }
 
 ConfigPlugin.prototype.init  = function() {
@@ -39,7 +37,7 @@ ConfigPlugin.prototype.createConfig  = function() {
 	var utils = new pluginUtils();
 	utils.pluginName = "steamertemplate";
 	
-	let config = utils.readConfig(globalConfigFolder, isJs);
+	let config = utils.readConfig(this.globalConfigFolder, isJs);
 
 	utils.createConfig("", config, isJs, isForce, targetName);
 };
@@ -65,7 +63,7 @@ ConfigPlugin.prototype.set  = function() {
 	let isJs = true,
 		isForce = true,
 		isGlobal = this.argv.global || this.argv.g,
-		configFolder = isGlobal ? globalConfigFolder : localConfigFolder;
+		configFolder = isGlobal ? this.globalConfigFolder : this.localConfigFolder;
 
 	utils.createConfig(configFolder, config, isJs, isForce);
 
@@ -81,15 +79,15 @@ ConfigPlugin.prototype.del  = function() {
 	let isJs = true,
 		isForce = true,
 		isGlobal = this.argv.global || this.argv.g,
-		configFolder = isGlobal ? globalConfigFolder : localConfigFolder;
-
+		configFolder = isGlobal ? this.globalConfigFolder : this.localConfigFolder;
+	
 	utils.createConfig(configFolder, config, isJs, isForce);
 };
 
 ConfigPlugin.prototype.readConfig  = function() {
 	let isJs = true,
 		isGlobal = this.argv.global || this.argv.g,
-		configFolder = isGlobal ? globalConfigFolder : localConfigFolder;
+		configFolder = isGlobal ? this.globalConfigFolder : this.localConfigFolder;
 
 	return utils.readConfig(configFolder, isJs);
 };

@@ -1,20 +1,20 @@
 #!/usr/bin/env node
-"use strict";
+'use strict';
 
-const fs = require('fs'),
-	  path = require('path'),
-	  argv = require('yargs').argv,
-	  _ = require('lodash'),
-	  utils = require('steamer-pluginutils');
+const argv = require('yargs').argv,
+	  _ = require('lodash');
 
 
 const pkgPrefix = 'steamer-plugin-';
 
-function Commander() {}
+function Commander(args) {
+	this.argv = args || argv;
+}
 
 Commander.prototype.initPlugin = function() {
 	// command example: steamer init
-	let mainCommands = argv._,
+	let argv = this.argv,
+		mainCommands = argv._,
 		pkg = null,
 		plugin = null;
 	
@@ -34,7 +34,7 @@ Commander.prototype.initPlugin = function() {
 			}
 		}
 		catch(e) {
-			console.log(e.stack);
+			console.log(e.stack   );
 		}
 	} 
 };
@@ -54,7 +54,7 @@ Commander.prototype.init = function() {
 	this.initPlugin();
 };
 
-var commander = new Commander();
+var commander = new Commander(argv);
 commander.init();
 
 

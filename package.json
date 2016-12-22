@@ -1,9 +1,15 @@
 {
   "name": "steamerjs",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "steamerjs",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint bin libs",
+    "test": "npm run lint&&jasmine"
+  },
+  "eslintConfig": {
+    "extends": "./config/eslint-config.js"
+  },
   "bin": {
     "steamer": "./bin/steamer.js",
     "str": "./bin/steamer.js"
@@ -31,10 +37,11 @@
     "fs-extra": "^1.0.0",
     "inquirer": "^1.2.3",
     "lodash": "^4.17.2",
-    "steamer-pluginutils": "^0.0.3",
+    "steamer-pluginutils": "^1.0.1",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
+    "eslint": "^3.12.2",
     "jasmine": "^2.4.0",
     "steamer-plugin-example": "git://github.com/SteamerTeam/steamer-plugin-example"
   }
