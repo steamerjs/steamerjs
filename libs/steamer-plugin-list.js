@@ -1,7 +1,8 @@
 "use strict";
 
 const fs = require('fs-extra'),
-	  pluginUtils = require('steamer-pluginutils');
+	  pluginUtils = require('steamer-pluginutils'),
+	  config = require('./config');
 
 var utils = new pluginUtils();
 
@@ -28,6 +29,8 @@ ListPlugin.prototype.filterCmds = function() {
 	files = files.filter((item) => {
 		return item.indexOf(pluginPrefix) === 0;
 	});
+
+	files = files.concat(config.cmds);
 
 	return files;
 };

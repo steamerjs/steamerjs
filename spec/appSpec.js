@@ -46,6 +46,10 @@ describe("steamer list", function() {
 			return item.indexOf(pluginPrefix) === 0;
 		});
 
+		let reserverCmds = require('../libs/config').cmds;
+
+		resultfiles = resultfiles.concat(reserverCmds);
+
 		expect(files).toEqual(resultfiles);
   	});
 });

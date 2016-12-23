@@ -2,7 +2,8 @@
 'use strict';
 
 const argv = require('yargs').argv,
-	  _ = require('lodash');
+	  _ = require('lodash'),
+	  config = require('../libs/config');
 
 
 const pkgPrefix = 'steamer-plugin-';
@@ -41,7 +42,7 @@ Commander.prototype.initPlugin = function() {
 
 Commander.prototype.reserveCmds = function(cmd) {
 
-	var mapping = ['config', 'list'];
+	var mapping = config.cmds;
 
 	mapping = mapping.map((item) => {
 		return pkgPrefix + item;
