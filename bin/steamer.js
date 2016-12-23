@@ -34,7 +34,7 @@ Commander.prototype.initPlugin = function() {
 			}
 		}
 		catch(e) {
-			console.log(e.stack   );
+			console.log(e.stack);
 		}
 	} 
 };
