@@ -75,6 +75,8 @@ steamer list
 	- AlloyTeam AK offline platform
 
 #### Official Starter Kit
+* [steamer-example](https://github.com/SteamerTeam/steamer-example)
+	- example starter kit
 * [steamer-react](https://github.com/SteamerTeam/steamer-react) 
 	- react starter kit
 * [steamer-vue](https://github.com/SteamerTeam/steamer-vue)
