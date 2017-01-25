@@ -1,16 +1,16 @@
-### steamerjs
+# steamerjs
 
 Plugin is command, use when you plugin in.
 
 插件即命令，即插即可用。
 
-#### 安装
+## 安装
 
 ```
 npm i -g steamerjs
 ```
 
-#### Usage
+## 使用
 ```
 steamer xxx
 
@@ -66,7 +66,7 @@ steamer config -l
 steamer list
 ```
 
-#### 官方插件
+## 官方插件
 * [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
 	- 脚手架管理插件
 * [steamer-plugin-pro](https://github.com/SteamerTeam/steamer-plugin-pro)
@@ -74,7 +74,7 @@ steamer list
 * [steamer-plugin-ak](https://github.com/SteamerTeam/steamer-plugin-ak)
 	- AlloyTeam AK 离线包平台打包插件
 
-#### 官方脚手架
+## 官方脚手架
 * [steamer-example](https://github.com/SteamerTeam/steamer-example)
 	- 脚手架例子
 * [steamer-simple](https://github.com/SteamerTeam/steamer-simple)
@@ -88,13 +88,13 @@ steamer list
 * [steamer-gulp](https://github.com/SteamerTeam/steamer-gulp)
 	- gulp 脚手架
 
-#### 核心 util 方法
+## 核心 util 方法
 * [steamer-pluginutils](https://github.com/SteamerTeam/steamer-pluginutils)
 
-#### 脚手脚 util 方法
+## 脚手脚 util 方法
 * [steamer-webpack-utils](https://github.com/SteamerTeam/steamer-webpack-utils)
 
-#### 迷你小工具库
+## 迷你小工具库
 * [steamer-net](https://github.com/SteamerTeam/steamer-net)
 	- ajax 请求
 * [steamer-responsive](https://github.com/SteamerTeam/steamer-responsive)
