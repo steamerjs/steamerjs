@@ -4,7 +4,7 @@ Plugin is command, use when you plugin in.
 
 插件即命令，即插即可用。
 
-#### Installation
+#### 安装
 
 ```
 npm i -g steamerjs
@@ -18,91 +18,91 @@ steamer xxx
 str xxx
 ```
 
-#### Builtin Plugins
+#### 内置插件
 * steamer-plugin-config
-	- manage steamerjs config
+	- 管理 steamerjs 配置
 ```
-// initialization local folder config
+// 初始化本地文件夹配置
 steamer config --init
 
-or 
+或
 
 steamer config -i
 
-// set config key and value
+// 设置配置的键值
 steamer config --set http-proxy=http://proxy.steamer.com
 
-or 
+或
 
 steamer config -s http-proxy=http://proxy.steamer.com
 
-// if set global, you can add -g or --global option
+// 如果想设置全局配置，请加上 -g 或 --global 参数。
 
 
-// delete config key
+// 删除键值
 steamer config --del http-proxy
 
-or
+或
 
 steamer config -d http-proxy
 
-// if delete global config key, you can add -g or --global option
+// 如果想删除全局配置，请加上  -g 或 --global 参数。
 
 
-// list config value
+// 罗列所有配置值
 steamer config --list
 
-or 
+或
 
 steamer config -l
 
-// if list global config, you can add -g or --global option
+// 如果想罗列所有全局配置值，请加上  -g 或 --global 参数。
 
 ```
 
 * steamer-plugin-list
-	- list all available commands you can use
+	- 列出所有你可以使用的命令
 ```
 steamer list
 ```
 
-#### Official Plugins
+#### 官方插件
 * [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
-	- starter kit management plugin 
+	- 脚手架管理插件
 * [steamer-plugin-pro](https://github.com/SteamerTeam/steamer-plugin-pro)
-	- project management plugin 
+	- 多项目管理插件
 * [steamer-plugin-ak](https://github.com/SteamerTeam/steamer-plugin-ak)
-	- AlloyTeam AK offline platform
+	- AlloyTeam AK 离线包平台打包插件
 
-#### Official Starter Kit
+#### 官方脚手架
 * [steamer-example](https://github.com/SteamerTeam/steamer-example)
-	- example starter kit
+	- 脚手架例子
+* [steamer-simple](https://github.com/SteamerTeam/steamer-simple)
+	- 一个基础而无框架的脚手架
 * [steamer-react](https://github.com/SteamerTeam/steamer-react) 
-	- react starter kit
+	- react 脚手架
 * [steamer-vue](https://github.com/SteamerTeam/steamer-vue)
-	- vue starter kit
+	- vue 脚手架
 * [steamer-koa](https://github.com/SteamerTeam/steamer-koa)
-	- koa starter kit
+	- koa 脚手架
 * [steamer-gulp](https://github.com/SteamerTeam/steamer-gulp)
-	- gulp starter kit
+	- gulp 脚手架
 
-#### Core Utils
+#### 核心 util 方法
 * [steamer-pluginutils](https://github.com/SteamerTeam/steamer-pluginutils)
-	- plugin utils
 
-#### Starter Kit Utils
+#### 脚手脚 util 方法
 * [steamer-webpack-utils](https://github.com/SteamerTeam/steamer-webpack-utils)
-	- steamer webpack starter kit utils
 
-#### Tiny Tool Libraries
+#### 迷你小工具库
 * [steamer-net](https://github.com/SteamerTeam/steamer-net)
-	- ajax utils
+	- ajax 请求
 * [steamer-responsive](https://github.com/SteamerTeam/steamer-responsive)
-	- reponsive solution
+	- 自适应方案 
 * [steamer-cross](https://github.com/SteamerTeam/steamer-cross)
-	- cross domain communication
+	- 跨域通讯
 * [steamer-timer](https://github.com/SteamerTeam/steamer-timer)
-	- timer management utils
+	- 时间管函数
 * [steamer-browserutils](https://github.com/SteamerTeam/steamer-browserutils)
-	- browser util functions
+	- 浏览器 util 方法
 
