@@ -10,6 +10,31 @@ Plugin is command, use when you plugin in.
 npm i -g steamerjs
 ```
 
+## 设定NODE_PATH的全局变量
+`steamerjs` 体系内，有不少需要调用 `NODE_PATH` 位置的，因此需要设置好此变量。
+
+`MacOS`
+
+```javascript
+export PATH=$PATH: # 将 /usr/bin 追加到 PATH 变量中
+export NODE_PATH="/usr/lib/node_modules;/usr/local/lib/node_modules" #指定 NODE_PATH 变量
+
+```
+
+`Windows`
+```javascript
+1. 鼠标右击计算机
+2. 属性
+3. 高级系统设置
+4. 环境变量
+5. 系统变量，设置NODE_PATH
+```
+
+注意，如果你的系统需要多个 `Node` 版本，共存，建议 `MacOS` 使用 [nvm](https://github.com/creationix/nvm)，`Windows` 使用 [nvm-windows](https://github.com/coreybutler/nvm-windows)。
+
+选定主要版本后，再安装 `steamerjs` 及其它生态的相关插件或者脚手架。
+
+
 ## 使用
 ```
 steamer xxx
@@ -21,7 +46,8 @@ str xxx
 #### 内置插件
 * steamer-plugin-config
 	- 管理 steamerjs 配置
-```
+
+```javascript
 // 初始化本地文件夹配置
 steamer config --init
 
@@ -62,7 +88,8 @@ steamer config -l
 
 * steamer-plugin-list
 	- 列出所有你可以使用的命令
-```
+
+```javascript
 steamer list
 ```
 
