@@ -14,6 +14,7 @@ npm i -g steamerjs
 `steamerjs` 体系内，有不少需要调用 `NODE_PATH` 位置的，因此需要设置好此变量。
 
 `MacOS`
+默认值为：`/usr/local/lib/node_modules`
 
 ```javascript
 export PATH=$PATH: # 将 /usr/bin 追加到 PATH 变量中
@@ -22,6 +23,9 @@ export NODE_PATH="/usr/lib/node_modules;/usr/local/lib/node_modules" #指定 NOD
 ```
 
 `Windows`
+32位默认值为：`C:\Program Files (x86)\nodejs\node_modules`
+64位默认值为：`C:\Program Files\nodejs\node_modules`
+
 ```javascript
 1. 鼠标右击计算机
 2. 属性
@@ -132,4 +136,7 @@ steamer list
 	- 时间管函数
 * [steamer-browserutils](https://github.com/SteamerTeam/steamer-browserutils)
 	- 浏览器 util 方法
+
+## Changelog
+* v1.1.1 引用外部插件，自身设置，罗列命令
 
