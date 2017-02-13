@@ -99,6 +99,14 @@ steamer config -l
 steamer list
 ```
 
+## 测试
+```
+// 安装eslint工具
+npm i -g eslint
+
+npm run test
+```
+
 ## 官方插件
 * [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
 	- 脚手架管理插件
