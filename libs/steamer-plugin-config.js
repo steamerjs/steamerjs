@@ -35,7 +35,8 @@ ConfigPlugin.prototype.createConfig  = function() {
 		targetName = "steamer";
 
 	var utils = new pluginUtils();
-	utils.pluginName = "steamertemplate";
+	// set steamertemplate in order to read steamertemplate.js file
+	utils.pluginName = "steamertemplate"; 
 	
 	let config = utils.readConfig(this.globalConfigFolder, isJs);
 
@@ -93,7 +94,7 @@ ConfigPlugin.prototype.readConfig  = function() {
 };
 
 ConfigPlugin.prototype.list  = function() {
-	return console.log(this.readConfig());
+	return utils.info(this.readConfig());
 };
 
 module.exports = ConfigPlugin;

@@ -3,8 +3,11 @@
 
 const argv = require('yargs').argv,
 	  _ = require('lodash'),
-	  config = require('../libs/config');
+	  config = require('../libs/config'),
+	  pluginUtils = require('steamer-pluginutils');
 
+var utils = new pluginUtils();
+utils.pluginName = "steamerjs";
 
 const pkgPrefix = 'steamer-plugin-';
 
@@ -35,7 +38,7 @@ Commander.prototype.initPlugin = function() {
 			}
 		}
 		catch(e) {
-			console.log(e.stack);
+			utils.error(e.stack);
 		}
 	} 
 };

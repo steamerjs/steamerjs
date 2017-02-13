@@ -5,6 +5,7 @@ const fs = require('fs-extra'),
 	  config = require('./config');
 
 var utils = new pluginUtils();
+utils.pluginName = "steamer-plugin-config";
 
 const pluginPrefix = "steamer-plugin-";
 
@@ -16,10 +17,10 @@ ListPlugin.prototype.init = function() {
 
 	let files = this.filterCmds();
 
-	utils.info("You have following commands: ");
+	utils.info("You have following steamer commands: ");
 
 	files.map((item) => {
-		console.log(item.replace(pluginPrefix, ""));
+		utils.warn(item.replace(pluginPrefix, ""));
 	});
 };
 
