@@ -141,4 +141,4 @@ steamer list
 
 ## Changelog
 * v1.1.1 引用外部插件，自身设置，罗列命令
-
+* v1.1.3 优化log输出格式
