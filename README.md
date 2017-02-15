@@ -108,6 +108,8 @@ npm run test
 ```
 
 ## 官方插件
+* [steamer-plugin-example](https://github.com/SteamerTeam/steamer-plugin-example)
+	- 插件规范
 * [steamer-plugin-kit](https://github.com/SteamerTeam/steamer-plugin-kit)
 	- 脚手架管理插件
 * [steamer-plugin-pro](https://github.com/SteamerTeam/steamer-plugin-pro)
@@ -117,7 +119,7 @@ npm run test
 
 ## 官方脚手架
 * [steamer-example](https://github.com/SteamerTeam/steamer-example)
-	- 脚手架例子
+	- 脚手架规范
 * [steamer-simple](https://github.com/SteamerTeam/steamer-simple)
 	- 一个基础而无框架的脚手架
 * [steamer-react](https://github.com/SteamerTeam/steamer-react) 
