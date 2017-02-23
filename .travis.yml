@@ -2,8 +2,8 @@ sudo: false
 language: node_js
 node_js:
   - node
-  - 6
-  - 4
+  - 7
+  - 5
 script: npm run travis
 
 after_success:

@@ -194,6 +194,7 @@ describe("steamer doctor check environment", function() {
 	});
 
 	it("del global NODE_PATH", function() {
+		console.log("\n");
 		delete process.env.NODE_PATH;
 		expect(function() {
 			let steamer = new Steamer();
