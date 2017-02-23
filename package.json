@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint bin libs",
     "test": "npm run lint && jasmine",
-    "coverage": "istanbul cover jasmine"
+    "coverage": "istanbul cover jasmine",
+    "travis": "npm run cover -- --report lcovonly"
   },
   "bin": {
     "steamer": "./bin/steamer.js",
@@ -39,6 +40,8 @@
     "yargs": "^6.5.0"
   },
   "devDependencies": {
+    "codecov.io": "^0.1.6",
+    "coveralls": "^2.11.16",
     "eslint": "^3.12.2",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.3",

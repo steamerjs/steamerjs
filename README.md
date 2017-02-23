@@ -1,5 +1,8 @@
 # steamerjs
 
+[![NPM Version](https://img.shields.io/npm/v/steamerjs.svg?style=flat)](https://www.npmjs.com/package/react-touch-component)
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
+
 Plugin is command, use when you plugin in.
 
 插件即命令，即插即可用。
