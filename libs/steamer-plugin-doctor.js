@@ -10,7 +10,7 @@ function DoctortPlugin(argv) {
 }
 
 DoctortPlugin.prototype.init = function() {
-	if(process.env.NODE_PATH === undefined) {
+	if (process.env.NODE_PATH === undefined) {
 		throw new Error("You must set NODE_PATH correctly!!! Now it's undefined\n You can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH");
 	}
 };

@@ -47,7 +47,7 @@ describe("steamer list", function() {
 			return item.indexOf(pluginPrefix) === 0;
 		});
 
-		let reserverCmds = require('../libs/config').cmds;
+		let reserverCmds = require('../libs/config').reserveCmd;
 
 		resultfiles = resultfiles.concat(reserverCmds);
 

@@ -31,7 +31,7 @@ ListPlugin.prototype.filterCmds = function() {
 		return item.indexOf(pluginPrefix) === 0;
 	});
 
-	files = files.concat(config.cmds);
+	files = files.concat(config.reserveCmd);
 
 	return files;
 };

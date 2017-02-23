@@ -3,6 +3,7 @@
 
 const argv = require('yargs').argv,
 	  _ = require('lodash'),
+	  chalk = require('chalk'),
 	  config = require('../libs/config');
 
 const pkgPrefix = 'steamer-plugin-';
@@ -11,6 +12,9 @@ function Commander(args) {
 	this.argv = args || argv;
 }
 
+/**
+ * init running plugin
+ */
 Commander.prototype.initPlugin = function() {
 	// command example: steamer init
 	let argv = this.argv,
@@ -22,27 +26,37 @@ Commander.prototype.initPlugin = function() {
 	} 
 };
 
+/**
+ * reserver commands
+ * @param  {String} cmd [command name]
+ * @return {String}     [returned command name]
+ */
 Commander.prototype.reserveCmds = function(cmd) {
 
-	var mapping = config.cmds;
+	let reserve = config.reserveCmd;
 
-	mapping = mapping.map((item) => {
+	reserve = reserve.map((item) => {
 		return pkgPrefix + item;
 	});
 
-	if (mapping.indexOf(cmd) > -1) {
+	if (reserve.indexOf(cmd) > -1) {
 		cmd = "../libs/" + cmd;
 	}
 
 	return cmd;
 };
 
+/**
+ * run plugin
+ * @param  {String} pluginName [plugin name]
+ * @param  {Ojbect} argv       [command argv from yargs]
+ */
 Commander.prototype.runPlugin = function(pluginName, argv) {
-	var pkg = pkgPrefix + pluginName,
-		plugin = null;
-	pkg = this.reserveCmds(pkg);
+	var plugin = null,
+		pkg = pkgPrefix + pluginName;
 
 	try {
+		pkg = this.reserveCmds(pkg);
 		plugin = require(pkg);
 		if (_.isFunction(plugin) && _.isFunction(plugin.prototype.init)) {
 			let instance = new plugin(argv);
@@ -53,24 +67,32 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 		}
 	}
 	catch(e) {
-		// this.util may be not init
-		if(this.utils) {
-			this.utils.error(e.stack);
-		} else {
-			throw new Error(e.toString());
-		}
-		
+		console.log(chalk.red(e.toString()));
 	}
 };
 
+/**
+ * init steamer plugin util function
+ */
 Commander.prototype.initUtilPlugin = function() {
 	const pluginUtils = require('steamer-pluginutils');
-	this.utils = new pluginUtils();
-	this.utils.pluginName = "steamerjs";
+	this.utils = new pluginUtils('steamerjs');
 };
 
+/**
+ * plugins called before current running plugin
+ */
 Commander.prototype.pluginBeforeInit = function() {
-	config.initPlugin.map((item) => {
+	config.beforeInit.map((item) => {
+		this.runPlugin(item);
+	});
+};
+
+/**
+ * plugins called after current running plugin
+ */
+Commander.prototype.pluginAfterInit = function() {
+	config.afterInit.map((item) => {
 		this.runPlugin(item);
 	});
 };
@@ -79,13 +101,11 @@ Commander.prototype.init = function() {
 	this.pluginBeforeInit();
 	this.initUtilPlugin();
 	this.initPlugin();
+	this.pluginAfterInit();
 };
-
-
 
 var commander = new Commander(argv);
 commander.init();
-
 
 module.exports = Commander;
 
