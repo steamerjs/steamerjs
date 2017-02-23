@@ -1,3 +1,4 @@
 module.exports = {
-	cmds: ['config', 'list'], // reserve commands
+	cmds: ['config', 'list', 'doctor'], // reserve commands
+	initPlugin: ['doctor'],
 };
