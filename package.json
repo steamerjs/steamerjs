@@ -40,6 +40,7 @@
   "devDependencies": {
     "eslint": "^3.12.2",
     "jasmine": "^2.4.0",
+    "sinon": "^1.17.7",
     "steamer-plugin-example": "git://github.com/SteamerTeam/steamer-plugin-example"
   }
 }

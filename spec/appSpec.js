@@ -4,6 +4,7 @@
 
 const path = require('path'),
 	  pluginUtils = require('steamer-pluginutils'),
+	  sinon = require('sinon'),
 	  fs = require('fs-extra');
 
 var utils = new pluginUtils();
@@ -179,5 +180,32 @@ describe("steamer config setback2", function() {
 
 		expect(true).toBe(true);
   	});
+});
+
+describe("steamer doctor check environment", function() {
+	beforeEach(function () {
+	    this.sandbox = sinon.sandbox.create();
+	    this.beforePath = process.env.NODE_PATH;
+	});
+
+	afterEach(function () {
+	    this.sandbox.restore();
+	    process.env.NODE_PATH = this.beforePath;
+	});
+
+	it("del global NODE_PATH", function() {
+		delete process.env.NODE_PATH;
+		expect(function() {
+			let steamer = new Steamer();
+			steamer.init();
+		}).toThrow();
+	});
+
+	it("set global NODE_PATH", function() {
+		expect(function() {
+			let steamer = new Steamer();
+			steamer.init();
+		}).not.toThrow();
+	});
 });
 
