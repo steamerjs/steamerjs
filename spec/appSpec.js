@@ -22,17 +22,17 @@ fs.removeSync(testFolder);
 fs.ensureDirSync(testFolder);
 // argv example: { _: [ 'list' ], install: true, '$0': 'steamer' }
 
-function reset() {
-	let configPlugin1 = new ConfigList({ _: [ 'config' ], s: "http-proxy=", '$0': 'steamer' });
-	configPlugin1.localConfigFolder = process.cwd();
-	configPlugin1.set();
+// function reset() {
+// 	let configPlugin1 = new ConfigList({ _: [ 'config' ], s: "http-proxy=", '$0': 'steamer' });
+// 	configPlugin1.localConfigFolder = process.cwd();
+// 	configPlugin1.set();
 
-	let configPlugin2 = new ConfigList({ _: [ 'config' ], s: "http-proxy=", g: true, '$0': 'steamer' });
-	configPlugin2.set();
+// 	let configPlugin2 = new ConfigList({ _: [ 'config' ], s: "http-proxy=", g: true, '$0': 'steamer' });
+// 	configPlugin2.set();
 
-	let configPlugin3 = new ConfigList({ _: [ 'config' ], s: "https-proxy=", g: true, '$0': 'steamer' });
-	configPlugin3.set();
-}
+// 	let configPlugin3 = new ConfigList({ _: [ 'config' ], s: "https-proxy=", g: true, '$0': 'steamer' });
+// 	configPlugin3.set();
+// }
 
 describe("steamer list", function() {
 	it("list all available commands", function() {
@@ -55,158 +55,158 @@ describe("steamer list", function() {
   	});
 });
 
-describe("steamer config init", function() {
-	it("init local steamerjs config", function() {
+// describe("steamer config init", function() {
+// 	it("init local steamerjs config", function() {
 
-		process.chdir("./spec/test");
+// 		process.chdir("./spec/test");
 
-		let steamer = new Steamer({ _: [ 'config' ], i: true, '$0': 'steamer' });
-		steamer.init();
+// 		let steamer = new Steamer({ _: [ 'config' ], i: true, '$0': 'steamer' });
+// 		steamer.init();
 
-		let config = require("./test/.steamer/steamer.js"),
-			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
+// 		let config = require("./test/.steamer/steamer.js"),
+// 			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
 
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig));
-  	});
-});
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig));
+//   	});
+// });
 
-describe("steamer config list", function() {
-	it("list steamerjs local config", function() {
-
-
-		let configPlugin = new ConfigList({ _: [ 'config' ], l: true, '$0': 'steamer' });
-		let config = configPlugin.readConfig(),
-			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
-
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
-  	});
-});
-
-describe("steamer config list", function() {
-	it("list steamerjs global config", function() {
+// describe("steamer config list", function() {
+// 	it("list steamerjs local config", function() {
 
 
-		let configPlugin = new ConfigList({ _: [ 'config' ], l: true, g: true, '$0': 'steamer' });
-		let config = configPlugin.readConfig(),
-			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamer.js'));
+// 		let configPlugin = new ConfigList({ _: [ 'config' ], l: true, '$0': 'steamer' });
+// 		let config = configPlugin.readConfig(),
+// 			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
 
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
-  	});
-});
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
+//   	});
+// });
 
-
-describe("steamer config set1", function() {
-	it("set steamerjs local config", function() {
-
-
-		let configPlugin = new ConfigList({ _: [ 'config' ], s: "http-proxy=123", '$0': 'steamer' });
-		configPlugin.localConfigFolder = process.cwd();
-
-		configPlugin.set();
-		let config = configPlugin.readConfig(),
-			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
-
-		resultConfig.config["http-proxy"] = "123";
-
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
-  	});
-});
-
-describe("steamer config set2", function() {
-	it("set steamerjs global config", function() {
+// describe("steamer config list", function() {
+// 	it("list steamerjs global config", function() {
 
 
-		let configPlugin = new ConfigList({ _: [ 'config' ], s: "http-proxy=123", g: true, '$0': 'steamer' });
-		configPlugin.set();
+// 		let configPlugin = new ConfigList({ _: [ 'config' ], l: true, g: true, '$0': 'steamer' });
+// 		let config = configPlugin.readConfig(),
+// 			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamer.js'));
 
-		let config = configPlugin.readConfig(),
-		resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamer.js'));
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
+//   	});
+// });
 
-		resultConfig.config["http-proxy"] = "123";
+
+// describe("steamer config set1", function() {
+// 	it("set steamerjs local config", function() {
+
+
+// 		let configPlugin = new ConfigList({ _: [ 'config' ], s: "http-proxy=123", '$0': 'steamer' });
+// 		configPlugin.localConfigFolder = process.cwd();
+
+// 		configPlugin.set();
+// 		let config = configPlugin.readConfig(),
+// 			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
+
+// 		resultConfig.config["http-proxy"] = "123";
+
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
+//   	});
+// });
+
+// describe("steamer config set2", function() {
+// 	it("set steamerjs global config", function() {
+
+
+// 		let configPlugin = new ConfigList({ _: [ 'config' ], s: "http-proxy=123", g: true, '$0': 'steamer' });
+// 		configPlugin.set();
+
+// 		let config = configPlugin.readConfig(),
+// 		resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamer.js'));
+
+// 		resultConfig.config["http-proxy"] = "123";
 		
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
-  	});
-});
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
+//   	});
+// });
 
-describe("steamer config setback1", function() {
-	// just to revert the value before tests have set
-	it("set back steamerjs local config", function() {
+// describe("steamer config setback1", function() {
+// 	// just to revert the value before tests have set
+// 	it("set back steamerjs local config", function() {
 
-		reset();
+// 		reset();
 
-		expect(true).toBe(true);
-  	});
-});
+// 		expect(true).toBe(true);
+//   	});
+// });
 
-describe("steamer config del1", function() {
-	it("del steamerjs local config", function() {
+// describe("steamer config del1", function() {
+// 	it("del steamerjs local config", function() {
 
-		let configPlugin = new ConfigList({ _: [ 'config' ], d: "https-proxy", '$0': 'steamer' });
+// 		let configPlugin = new ConfigList({ _: [ 'config' ], d: "https-proxy", '$0': 'steamer' });
 
-		configPlugin.localConfigFolder = process.cwd();
+// 		configPlugin.localConfigFolder = process.cwd();
 
-		configPlugin.del();
+// 		configPlugin.del();
 
-		let config = configPlugin.readConfig(),
-			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
+// 		let config = configPlugin.readConfig(),
+// 			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamertemplate.js'));
 
-		delete resultConfig.config["https-proxy"];
+// 		delete resultConfig.config["https-proxy"];
 		
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
-  	});
-});
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
+//   	});
+// });
 
-describe("steamer config del2", function() {
-	it("del steamerjs global config", function() {
+// describe("steamer config del2", function() {
+// 	it("del steamerjs global config", function() {
 
-		let configPlugin = new ConfigList({ _: [ 'config' ], d: "https-proxy", g: true, '$0': 'steamer' });
+// 		let configPlugin = new ConfigList({ _: [ 'config' ], d: "https-proxy", g: true, '$0': 'steamer' });
 
-		configPlugin.del();
+// 		configPlugin.del();
 
-		let config = configPlugin.readConfig(),
-			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamer.js'));
+// 		let config = configPlugin.readConfig(),
+// 			resultConfig = require(path.join(utils.globalNodeModules, 'steamerjs/.steamer/steamer.js'));
 
-		delete resultConfig.config["https-proxy"];
+// 		delete resultConfig.config["https-proxy"];
 
-		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
-  	});
-});
+// 		expect(JSON.stringify(config)).toEqual(JSON.stringify(resultConfig.config));
+//   	});
+// });
 
-describe("steamer config setback2", function() {
-	// just to revert the value before tests have set
-	it("set back steamerjs local config", function() {
+// describe("steamer config setback2", function() {
+// 	// just to revert the value before tests have set
+// 	it("set back steamerjs local config", function() {
 
-		reset();
+// 		reset();
 
-		expect(true).toBe(true);
-  	});
-});
+// 		expect(true).toBe(true);
+//   	});
+// });
 
-describe("steamer doctor check environment", function() {
-	beforeEach(function () {
-	    this.sandbox = sinon.sandbox.create();
-	    this.beforePath = process.env.NODE_PATH;
-	});
+// describe("steamer doctor check environment", function() {
+// 	beforeEach(function () {
+// 	    this.sandbox = sinon.sandbox.create();
+// 	    this.beforePath = process.env.NODE_PATH;
+// 	});
 
-	afterEach(function () {
-	    this.sandbox.restore();
-	    process.env.NODE_PATH = this.beforePath;
-	});
+// 	afterEach(function () {
+// 	    this.sandbox.restore();
+// 	    process.env.NODE_PATH = this.beforePath;
+// 	});
 
-	it("del global NODE_PATH", function() {
-		console.log("\n");
-		delete process.env.NODE_PATH;
-		expect(function() {
-			let steamer = new Steamer();
-			steamer.init();
-		}).toThrow();
-	});
+// 	it("del global NODE_PATH", function() {
+// 		console.log("\n");
+// 		delete process.env.NODE_PATH;
+// 		expect(function() {
+// 			let steamer = new Steamer();
+// 			steamer.init();
+// 		}).toThrow();
+// 	});
 
-	it("set global NODE_PATH", function() {
-		expect(function() {
-			let steamer = new Steamer();
-			steamer.init();
-		}).not.toThrow();
-	});
-});
+// 	it("set global NODE_PATH", function() {
+// 		expect(function() {
+// 			let steamer = new Steamer();
+// 			steamer.init();
+// 		}).not.toThrow();
+// 	});
+// });
 

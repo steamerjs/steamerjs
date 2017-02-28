@@ -5,10 +5,11 @@ const path = require('path'),
 
 var utils = new pluginUtils();
 utils.pluginName = "steamer";
+// utils.cacheMode = true;
 
 function ConfigPlugin(argv) {
 	this.argv = argv;
-	this.globalConfigFolder = path.join(__dirname, "../");
+	this.globalConfigFolder = process.env.HOME;
 	this.localConfigFolder = path.resolve();
 }
 
@@ -36,7 +37,7 @@ ConfigPlugin.prototype.createConfig  = function() {
 
 	var utils = new pluginUtils();
 	// set steamertemplate in order to read steamertemplate.js file
-	utils.pluginName = "steamertemplate"; 
+	utils.pluginName = "steamer"; 
 	
 	let config = utils.readConfig(this.globalConfigFolder, isJs);
 
