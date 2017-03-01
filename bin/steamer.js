@@ -95,12 +95,7 @@ Commander.prototype.runPlugin = function(pluginName, argv = {}) {
 
 		}
 		else if (_.isFunction(plugin.prototype.init)) {
-			_.isFunction(plugin.prototype.prevInit) && instance.prevInit();
-			
 			instance.init();
-
-			_.isFunction(plugin.prototype.postInit) && instance.postInit();
-
 		}
 		else {
 			throw new Error(pkg + ".prototpe.init is not a function. ");
