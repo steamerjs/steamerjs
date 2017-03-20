@@ -1,12 +1,12 @@
 {
   "name": "steamerjs",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {
     "lint": "eslint bin libs",
-    "test": "npm run lint && jasmine",
-    "coverage": "istanbul cover jasmine",
+    "test": "npm run lint && mocha",
+    "coverage": "istanbul cover _mocha",
     "travis": "npm run cover -- --report lcovonly"
   },
   "bin": {
@@ -38,16 +38,17 @@
     "lodash": "^4.17.2",
     "log-symbols": "^1.0.2",
     "semver": "^5.3.0",
-    "steamer-pluginutils": "^1.0.8",
+    "steamer-pluginutils": "^1.2.0",
     "yargs": "^6.5.0"
   },
   "devDependencies": {
     "codecov.io": "^0.1.6",
     "coveralls": "^2.11.16",
     "eslint": "^3.12.2",
+    "expect.js": "^0.3.1",
     "istanbul": "^0.4.5",
-    "jasmine": "^2.5.3",
-    "sinon": "^1.17.7",
+    "mocha": "^3.2.0",
+    "sinon": "^2.0.0",
     "steamer-plugin-example": "git://github.com/SteamerTeam/steamer-plugin-example"
   }
 }

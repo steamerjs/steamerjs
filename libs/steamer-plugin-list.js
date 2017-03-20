@@ -5,13 +5,10 @@ const fs = require('fs-extra'),
 	  pluginUtils = require('steamer-pluginutils'),
 	  config = require('./config');
 
-var utils = new pluginUtils();
-utils.pluginName = "steamer-plugin-config";
-
 const pluginPrefix = "steamer-plugin-";
 
 function ListPlugin() {
-	
+	this.utils = new pluginUtils("steamer");
 }
 
 ListPlugin.description = "list steamerjs commands";
@@ -28,14 +25,10 @@ ListPlugin.prototype.list = function() {
 	this.printTitle();
 
 	files.map((item) => {
-		utils.success(item.replace(pluginPrefix, ""));
+		this.utils.success(item.replace(pluginPrefix, ""));
 	});
 
 	this.printUsage();
-};
-
-ListPlugin.prototype.onExit = function() {
-	
 };
 
 /**
@@ -43,7 +36,12 @@ ListPlugin.prototype.onExit = function() {
  * @return {Array} [command file]
  */
 ListPlugin.prototype.filterCmds = function() {
-	let files = fs.readdirSync(utils.globalNodeModules);
+
+	if (!this.utils.globalNodeModules) {
+		return [];
+	}
+
+	let files = fs.readdirSync(this.utils.globalNodeModules);
 
 	files = files.filter((item) => {
 		return item.indexOf(pluginPrefix) === 0;
@@ -70,17 +68,17 @@ ListPlugin.prototype.printTitle = function() {
  */
 ListPlugin.prototype.printUsage = function() {
 	let msg = "";
-	msg += utils.printTitle("Command Usage", "white");
-	msg += utils.success("steamer <command>");
-	msg += utils.success("steamer <command> --[<args>]");
-	msg += utils.success("steamer <command> -[<args alias>]");
-	msg += utils.printEnd("white");
+	msg += this.utils.printTitle("Command Usage", "white");
+	msg += this.utils.success("steamer <command>");
+	msg += this.utils.success("steamer <command> --[<args>]");
+	msg += this.utils.success("steamer <command> -[<args alias>]");
+	msg += this.utils.printEnd("white");
 	return msg;
 };
 
 
 ListPlugin.prototype.help = function() {
-	utils.printUsage("list", "list all available commands");
+	this.utils.printUsage("list all available commands", "list");
 };
 
 module.exports = ListPlugin;

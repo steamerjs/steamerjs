@@ -8,10 +8,12 @@
 const logSymbols = require('log-symbols'),
 	  chalk = require('chalk'),
 	  semver = require('semver'),
+	  pluginUtils = require('steamer-pluginutils'),
 	  baseVer = "5.0.0";
 
 function DoctortPlugin(argv) {
 	this.argv = argv;
+	this.utils = new pluginUtils("steamer");
 }
 
 DoctortPlugin.prototype.isNodePathSet = function() {
@@ -58,6 +60,10 @@ DoctortPlugin.prototype.init = function() {
 	else {
 		console.log(logSymbols.error, " ", chalk.red('Node Version should be >= ' + baseVer));
 	}
+};
+
+DoctortPlugin.prototype.help = function() {
+	this.utils.printUsage('help you check steamer running environment!', 'doctor');
 };
 
 module.exports = DoctortPlugin;
