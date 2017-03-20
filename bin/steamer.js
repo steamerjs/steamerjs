@@ -52,8 +52,9 @@ Commander.prototype.reserveCmds = function(cmd) {
  * @param  {String} pluginName [plugin name]
  * @param  {Ojbect} argv       [command argv from yargs]
  */
-Commander.prototype.runPlugin = function(pluginName, argv = {}) {
-	var plugin = null,
+Commander.prototype.runPlugin = function(pluginName, argv) {
+	var argv = argv || {},
+		plugin = null,
 		pkg = pkgPrefix + pluginName,
 		isHelpCalled = argv.help || argv.h || false,
 		isBeforeInit = (argv._init === "before"),
