@@ -8,7 +8,9 @@ const path = require('path'),
 	  expect = require('expect.js'),
 	  sinon = require('sinon'),
 	  Steamer = require('../bin/steamer'),
-	  SteamerConfig =require('../libs/steamer-plugin-config'),
+	  SteamerDoctor = require('../libs/steamer-plugin-doctor'),
+	  SteamerConfig = require('../libs/steamer-plugin-config'),
+	  SteamerList = require('../libs/steamer-plugin-list'),
 	  pluginUtils = require('steamer-pluginutils');
 
 var utils = new pluginUtils("steamer");
@@ -60,6 +62,59 @@ describe("steamer-plugin-doctor", function() {
 
   	});
 
+  	it("fail NODE version", function() {
+
+		var log = sinon.stub(console, 'log');
+
+		var steamerDoctor = new SteamerDoctor();
+
+		var versionCheck = sinon.stub(steamerDoctor, 'isNodeVerRight').callsFake(function() {
+			return false;
+		});
+
+		steamerDoctor.init();
+
+		expect(console.log.calledTwice).to.be(true);
+		expect(console.log.calledWith(logSymbols.success, " ", chalk.white('NODE_PATH is ' + process.env.NODE_PATH))).to.be(true);
+		expect(console.log.calledWith(logSymbols.error, " ", chalk.red('Node Version should be >= 5.0.0'))).to.be(true);
+		
+
+		versionCheck.restore();
+		log.restore();
+
+  	});
+
+  	it("beforeInit fail NODE_PATH", function() {
+
+  		var steamerDoctor = new SteamerDoctor();
+
+		var NODE_PATH = process.env['NODE_PATH'];
+		delete process.env['NODE_PATH'];
+
+		expect(function() {
+			steamerDoctor.beforeInit();
+		}).to.throwError();
+		
+		process.env['NODE_PATH'] = NODE_PATH;
+
+  	});
+
+  	it("beforeInit fail NODE version", function() {
+  		
+  		var steamerDoctor = new SteamerDoctor();
+
+		var versionCheck = sinon.stub(steamerDoctor, 'isNodeVerRight').callsFake(function() {
+			return false;
+		});
+
+		expect(function() {
+			steamerDoctor.beforeInit();
+		}).to.throwError();
+		
+		versionCheck.restore();
+
+  	});
+
   	it("help", function() {
 
 		var log = sinon.stub(console, 'log');
@@ -104,10 +159,26 @@ describe("steamer-plugin-list", function() {
 		expect(console.log.calledWith(chalk.green('config'))).to.be(true);
 		expect(console.log.calledWith(chalk.green('list'))).to.be(true);
 		expect(console.log.calledWith(chalk.green('doctor'))).to.be(true);
-
-		expect(true).to.be(true);
+		// expect(console.log.callCount).to.be(11);
 
 		readdirSync.restore();
+		log.restore();
+
+  	});
+
+  	it("list commands if globalNodeModules is not set", function() {
+
+		var log = sinon.stub(console, 'log');
+
+		let steamerList = new SteamerList({});
+		steamerList.utils.globalNodeModules = undefined;
+
+		steamerList.init();
+
+		expect(steamerList.filterCmds()).to.eql([]);
+		// expect(console.log.callCount).to.be(6);
+		expect(console.log.calledWith(chalk.bold.white("Hello! You can use following commands: "))).to.be(true);
+
 		log.restore();
 
   	});

@@ -151,7 +151,3 @@ npm run test
 	- 时间管函数
 * [steamer-browserutils](https://github.com/SteamerTeam/steamer-browserutils)
 	- 浏览器 util 方法
-
-## Changelog
-* v1.1.1 引用外部插件，自身设置，罗列命令
-* v1.1.3 优化log输出格式
