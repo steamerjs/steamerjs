@@ -61,7 +61,11 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 		isAfterInit = (argv._init === "after");
 
 	try {
+		//  correct require path for npm link
+		this.utils.addRequirePath(process.env.NODE_PATH);
+
 		pkg = this.reserveCmds(pkg);
+
 		plugin = require(pkg);
 
 		if (!_.isFunction(plugin)) {
