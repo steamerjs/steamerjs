@@ -3,7 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/steamerjs.svg?style=flat)](https://www.npmjs.com/package/steamerjs)
 [![Travis](https://img.shields.io/travis/SteamerTeam/steamerjs.svg)](https://travis-ci.org/SteamerTeam/steamerjs)
 [![Deps](https://david-dm.org/SteamerTeam/steamerjs.svg)](https://david-dm.org/SteamerTeam/steamerjs)
-[![Coverage](https://coveralls.io/repos/github/SteamerTeam/steamerjs.svg)](https://coveralls.io/github/SteamerTeam/steamerjs)
+[![Coverage](https://img.shields.io/coveralls/SteamerTeam/steamerjs.svg)](https://coveralls.io/github/SteamerTeam/steamerjs)
 
 Plugin is command, use when you plugin in.
 
