@@ -1,3 +1,6 @@
+## 1.2.3
+	- update dependencies
+
 ## 1.2.2
 	- 优化globalNodeModules获取方式
 
