@@ -1,6 +1,6 @@
 {
   "name": "steamerjs",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,7 @@
     "lodash": "^4.17.2",
     "log-symbols": "^1.0.2",
     "semver": "^5.3.0",
-    "steamer-pluginutils": "^1.2.3",
+    "steamer-pluginutils": "^1.2.4",
     "yargs": "^7.0.2"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-## 1.2.3
+## 1.2.4
 	- update dependencies
 
 ## 1.2.2
