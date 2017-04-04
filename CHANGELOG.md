@@ -1,3 +1,6 @@
+## 1.2.2
+	- 优化globalNodeModules获取方式
+
 ## 1.2.0
 	- 优化结构
 	- 更换测试工具成mocha
