@@ -7,6 +7,9 @@ node_js:
   - 5
 script: npm run travis
 
+before_install:
+  - export NODE_PATH=$(npm root -g)
+
 after_success:
   - cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose
   - cat ./coverage/coverage.json | node_modules/codecov.io/bin/codecov.io.js
