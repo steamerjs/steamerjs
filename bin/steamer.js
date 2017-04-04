@@ -5,12 +5,14 @@ const yargs = require('yargs'),
 	  argv = yargs.argv,
 	  _ = require('lodash'),
 	  chalk = require('chalk'),
-	  config = require('../libs/config');
+	  config = require('../libs/config'),
+	  pluginUtils = require('steamer-pluginutils');
 
 const pkgPrefix = 'steamer-plugin-';
 
 function Commander(args) {
 	this.argv = args || argv;
+	this.utils = new pluginUtils('steamerjs');
 }
 
 /**
@@ -117,14 +119,6 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 };
 
 /**
- * init steamer plugin util function
- */
-Commander.prototype.initUtilPlugin = function() {
-	const pluginUtils = require('steamer-pluginutils');
-	this.utils = new pluginUtils('steamerjs');
-};
-
-/**
  * remove duplicate commands
  * @param  {Array} cmds [commands]
  * @return {Array}      [uinque commands]
@@ -169,14 +163,15 @@ Commander.prototype.pluginAfterInit = function() {
 };
 
 Commander.prototype.init = function() {
-	this.initUtilPlugin();
 	this.pluginBeforeInit();
 	this.initPlugin();
 	this.pluginAfterInit();
 };
 
-var commander = new Commander(argv);
-commander.init();
+if (!process.env.steamer_test) {
+	var commander = new Commander(argv);
+	commander.init();
+}
 
 module.exports = Commander;
 

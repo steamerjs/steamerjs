@@ -11,9 +11,15 @@ const path = require('path'),
 	  SteamerDoctor = require('../libs/steamer-plugin-doctor'),
 	  SteamerConfig = require('../libs/steamer-plugin-config'),
 	  SteamerList = require('../libs/steamer-plugin-list'),
-	  pluginUtils = require('steamer-pluginutils');
+	  pluginUtils = require('steamer-pluginutils'),
+	  cp = require('child_process'),
+	  Buffer = require('buffer').Buffer;
 
 var utils = new pluginUtils("steamer");
+
+before(function() {
+	process.env.steamer_test = true;
+});
 
 describe("steamer-plugin-doctor", function() {
 
@@ -21,45 +27,48 @@ describe("steamer-plugin-doctor", function() {
 
 		var log = sinon.stub(console, 'log');
 
-		var NODE_PATH = process.env['NODE_PATH'];
-		process.env.NODE_PATH = "123";
+		// var NODE_PATH = process.env['NODE_PATH'];
+		// process.env.NODE_PATH = "123";
 
 		let steamer = new Steamer({
 			_: ['doctor']
 		});
 
 		steamer.init();
+
+		var NODE_PATH = steamer.utils.globalNodeModules;
+		steamer.utils.globalNodeModules = "123";
 
     	expect(console.log.calledTwice).to.be(true);
 
     	expect(console.log.calledWith(logSymbols.success, " ", chalk.white('NODE_PATH is ' + process.env.NODE_PATH))).to.be(true);
     	expect(console.log.calledWith(logSymbols.success, " ", chalk.white('Node Version is ' + process.version))).to.be(true);
 
-    	process.env.NODE_PATH = NODE_PATH;
+    	// process.env.NODE_PATH = NODE_PATH;
+    	steamer.utils.globalNodeModules = NODE_PATH;
     	log.restore();
+
   	});
 
 	it("fail NODE_PATH", function() {
 
 		var log = sinon.stub(console, 'log');
 
-		var NODE_PATH = process.env['NODE_PATH'];
-		delete process.env['NODE_PATH'];
+		var steamerDoctor = new SteamerDoctor();
 
-		let steamer = new Steamer({
-			_: ['doctor']
+		var versionCheck = sinon.stub(steamerDoctor, 'isNodePathSet').callsFake(function() {
+			return false;
 		});
 
-		steamer.init();
+		steamerDoctor.init();
 
 		expect(console.log.calledTwice).to.be(true);
-
 		expect(console.log.calledWith(logSymbols.error, " ", chalk.red('NODE_PATH is undefined\nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH'))).to.be(true);
     	expect(console.log.calledWith(logSymbols.success, " ", chalk.white('Node Version is ' + process.version))).to.be(true);
+		
 
-		process.env['NODE_PATH'] = NODE_PATH;
+		versionCheck.restore();
 		log.restore();
-
   	});
 
   	it("fail NODE version", function() {
@@ -86,16 +95,22 @@ describe("steamer-plugin-doctor", function() {
 
   	it("beforeInit fail NODE_PATH", function() {
 
-  		var steamerDoctor = new SteamerDoctor();
+  		var log = sinon.stub(console, 'log');
 
-		var NODE_PATH = process.env['NODE_PATH'];
-		delete process.env['NODE_PATH'];
+		var steamerDoctor = new SteamerDoctor();
+
+		var versionCheck = sinon.stub(steamerDoctor, 'isNodePathSet').callsFake(function() {
+			return false;
+		});
+
+		steamerDoctor.init();
+		
+		log.restore();
 
 		expect(function() {
 			steamerDoctor.beforeInit();
 		}).to.throwError();
 		
-		process.env['NODE_PATH'] = NODE_PATH;
 
   	});
 

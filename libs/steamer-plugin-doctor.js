@@ -17,7 +17,8 @@ function DoctortPlugin(argv) {
 }
 
 DoctortPlugin.prototype.isNodePathSet = function() {
-	return process.env.NODE_PATH !== undefined && process.env.NODE_PATH !== null;
+	let globalNodeModules = this.utils.globalNodeModules;
+	return globalNodeModules !== undefined && globalNodeModules !== null;
 };
 
 DoctortPlugin.prototype.throwNodePathError = function() {
@@ -48,7 +49,7 @@ DoctortPlugin.prototype.beforeInit = function() {
 DoctortPlugin.prototype.init = function() {
 
 	if (this.isNodePathSet()) {
-		console.log(logSymbols.success, " ", chalk.white('NODE_PATH is ' + process.env.NODE_PATH));
+		console.log(logSymbols.success, " ", chalk.white('NODE_PATH is ' + this.utils.globalNodeModules));
 	}
 	else {
 		console.log(logSymbols.error, " ", chalk.red('NODE_PATH is undefined\nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH'));
