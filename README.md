@@ -15,7 +15,7 @@ Plugin is command, use when you plugin in.
 npm i -g steamerjs
 ```
 
-## 设定NODE_PATH的全局变量
+## 设定NODE_PATH的全局变量(若无报错，可不设置)
 `steamerjs` 体系内，有不少需要调用 `NODE_PATH` 位置的，因此需要设置好此变量。
 
 `MacOS`
