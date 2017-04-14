@@ -128,6 +128,8 @@ npm run test
 	- 多项目管理插件
 * [steamer-plugin-ak](https://github.com/SteamerTeam/steamer-plugin-ak)
 	- AlloyTeam AK 离线包平台打包插件
+* [steamer-plugin-jb](https://github.com/SteamerTeam/steamer-plugin-jb)
+	- AlloyTeam JB 测试部署系统配置插件
 
 ## 官方脚手架
 * [steamer-example](https://github.com/SteamerTeam/steamer-example)
