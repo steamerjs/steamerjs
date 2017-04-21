@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>内置插件 · GitBook</title>
+        <title>AlloyStore 组件平台插件 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Steamer-Plugin-Doctor.html" />
+    <link rel="next" href="Steamer-Plugins.html" />
     
     
-    <link rel="prev" href="Steamer-Plugin-Alloystore.html" />
+    <link rel="prev" href="Steamer-Plugin-JB.html" />
     
 
     </head>
@@ -447,7 +447,7 @@
         
         
     
-        <li class="chapter " data-level="6.1" data-path="Steamer-Plugin-Alloystore.html">
+        <li class="chapter active" data-level="6.1" data-path="Steamer-Plugin-Alloystore.html">
             
                 <a href="Steamer-Plugin-Alloystore.html">
             
@@ -467,7 +467,7 @@
         
         
     
-        <li class="chapter active" data-level="7.1" data-path="Steamer-Plugins.html">
+        <li class="chapter " data-level="7.1" data-path="Steamer-Plugins.html">
             
                 <a href="Steamer-Plugins.html">
             
@@ -555,7 +555,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >内置插件</a>
+        <a href=".." >AlloyStore 组件平台插件</a>
     </h1>
 </div>
 
@@ -570,8 +570,48 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="steamer-&#x5185;&#x7F6E;&#x63D2;&#x4EF6;">Steamer &#x5185;&#x7F6E;&#x63D2;&#x4EF6;</h1>
-<p>&#x6B64;&#x7C7B;&#x63D2;&#x4EF6;&#x76F4;&#x63A5;&#x5185;&#x7F6E;&#x5230; <code>steamerjs</code> &#x4E2D;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x53E6;&#x5916;&#x5168;&#x5C40;&#x5B89;&#x88C5;&#xFF0C;&#x53EF;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x3002;</p>
+                                <h1 id="steamer-plugin-alloystore">steamer-plugin-alloystore</h1>
+<p>&#x5C06;&#x7EC4;&#x4EF6;&#x4E0A;&#x4F20;&#x6216;&#x66F4;&#x65B0;&#x81F3;alloystore(&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x5C55;&#x793A;&#x5E73;&#x53F0;)</p>
+<h2 id="&#x5B89;&#x88C5;">&#x5B89;&#x88C5;</h2>
+<pre><code class="lang-javascript"><span class="hljs-comment">// tnpm&#x662F;&#x5185;&#x90E8;npm&#x7BA1;&#x7406;&#x547D;&#x4EE4;&#x884C;&#x5DE5;&#x5177;</span>
+tnpm i -g steamerjs
+
+tnpm i -g steamer-plugin-alloystore
+</code></pre>
+<h2 id="&#x63A8;&#x8350;&#x811A;&#x624B;&#x67B6;">&#x63A8;&#x8350;&#x811A;&#x624B;&#x67B6;</h2>
+<p>&#x7EC4;&#x4EF6;&#x5F00;&#x53D1;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x811A;&#x624B;&#x67B6;:</p>
+<ul>
+<li><a href="https://github.com/SteamerTeam/steamer-react-component" target="_blank">steamer-react-component</a></li>
+</ul>
+<p>&#x7EC4;&#x4EF6;&#x7684; <code>example</code> &#x9700;&#x8981;&#x7B26;&#x5408;&#x4EE5;&#x4E0B;&#x89C4;&#x8303;&#xFF0C;&#x624D;&#x80FD;&#x6B63;&#x786E;&#x88AB;&#x8BFB;&#x53D6;&#xFF0C;&#x5E76;&#x4E0A;&#x4F20;&#x5230; <code>alloystore</code></p>
+<ul>
+<li><code>example</code> &#x6E90;&#x7801;&#x5199;&#x5728; <code>example/src</code> &#x4E0B;</li>
+<li><code>js</code> &#x4EE3;&#x7801;&#x4EC5;&#x4E14;&#x4EC5;&#x5199;&#x5728;&#x4E00;&#x4E2A; <code>js</code> &#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x4F4D;&#x7F6E;&#x5728; <code>example/src/container/index.js</code></li>
+<li><code>css</code> &#x6216;&#x5176;&#x5B83;&#x6837;&#x5F0F;&#x4EE3;&#x7801;&#xFF0C;&#x4EC5;&#x4E14;&#x4EC5;&#x5199;&#x5728;&#x4E00;&#x4E2A; <code>css|less|stylus|scss|sass</code> &#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6B64;&#x6587;&#x4EF6;&#x4F4D;&#x7F6E;&#x5728; <code>example/src/container/</code> &#x4E0B;&#xFF0C;&#x540D;&#x5B57;&#x65E0;&#x8981;&#x6C42;&#xFF0C;&#x4F46;&#x5728; <code>index.js</code> &#x4E2D;&#x8981;&#x5F15;&#x7528;&#xFF0C;&#x5E76;&#x4EE5;&#x5B8C;&#x6574;&#x540D;&#x79F0;&#x5F15;&#x7528;&#xFF0C;&#x5982; <code>require(&apos;./index.css&apos;)</code></li>
+</ul>
+<h2 id="&#x4F7F;&#x7528;">&#x4F7F;&#x7528;</h2>
+<p>&#x8FDB;&#x5165;&#x7EC4;&#x4EF6;&#x76EE;&#x5F55;</p>
+<pre><code class="lang-javascript">cd component
+</code></pre>
+<p>&#x521D;&#x6B21;&#x4F7F;&#x7528;&#xFF0C;&#x8FDB;&#x884C;&#x767B;&#x5F55;&#xFF0C;&#x8F93;&#x5165;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;&#xFF0C;&#x6B63;&#x786E;&#x540E;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x8FDB;&#x884C;&#x4E0A;&#x4F20;</p>
+<pre><code class="lang-javascript">steamer alloystore
+</code></pre>
+<p>&#x5982;&#x679C;&#x5DF2;&#x7ECF;&#x4E0A;&#x4F20;&#x8FC7;&#xFF0C;&#x547D;&#x4EE4;&#x4F1A;&#x5728; <code>package.json</code> &#x5199;&#x5165;&#x4EE5;&#x4E0B;&#x5B57;&#x6BB5;&#xFF0C;&#x8BB0;&#x5F55;&#x7EC4;&#x4EF6;&#x7684; <code>id</code>:</p>
+<pre><code>&quot;alloystore&quot;: {
+    &quot;id&quot;: 35
+}
+</code></pre><p>&#x90A3;&#x4E48;&#x518D;&#x6B21;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x65F6;&#xFF0C;&#x4F1A;&#x5E2E;&#x4F60;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x7EC4;&#x4EF6;&#x5728;&#x7EBF;&#x4E0A;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x4EE5;&#x53CA; <code>example</code>&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x53EA;&#x662F;&#x60F3;&#x4E0A;&#x4F20; <code>example</code>&#xFF0C;&#x800C;&#x4E0D;&#x66F4;&#x65B0;&#x7EC4;&#x4EF6;&#x7684;&#x7248;&#x672C;&#xFF0C;&#x53EF;&#x4F7F;&#x7528;&#x4EE5;&#x4E0B;&#x547D;&#x4EE4;&#xFF1A;</p>
+<pre><code>steamer alloystore -u example
+// or
+steamer alloystore --update example
+</code></pre><h3 id="&#x5F00;&#x53D1;">&#x5F00;&#x53D1;</h3>
+<pre><code class="lang-javascript"><span class="hljs-comment">// &#x5C06;&#x4F60;&#x7684;&#x63D2;&#x4EF6;&#x4F20;&#x81F3;&#x5168;&#x5C40;&#x8DEF;&#x5F84;&#xFF0C;&#x90A3;&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528; `steamer example`</span>
+npm link
+
+<span class="hljs-comment">// &#x5F53;&#x4F60;&#x5B8C;&#x6210;&#x5F00;&#x53D1;&#xFF0C;&#x53EF;&#x4EE5; `unlink` &#x4F60;&#x7684;&#x63D2;&#x4EF6;</span>
+npm unlink
+</code></pre>
 
                                 
                                 </section>
@@ -599,12 +639,12 @@
 
             
                 
-                <a href="Steamer-Plugin-Alloystore.html" class="navigation navigation-prev " aria-label="Previous page: AlloyStore 组件平台插件">
+                <a href="Steamer-Plugin-JB.html" class="navigation navigation-prev " aria-label="Previous page: JB 捷豹配置插件">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Steamer-Plugin-Doctor.html" class="navigation navigation-next " aria-label="Next page: doctor 系统诊断插件">
+                <a href="Steamer-Plugins.html" class="navigation navigation-next " aria-label="Next page: 内置插件">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -615,7 +655,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"内置插件","level":"7.1","depth":1,"next":{"title":"doctor 系统诊断插件","level":"7.1.1","depth":2,"path":"docs/Steamer-Plugin-Doctor.md","ref":"./docs/Steamer-Plugin-Doctor.md","articles":[]},"previous":{"title":"AlloyStore 组件平台插件","level":"6.1","depth":1,"path":"docs/Steamer-Plugin-Alloystore.md","ref":"./docs/Steamer-Plugin-Alloystore.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/Steamer-Plugins.md","mtime":"2017-04-20T18:59:45.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T03:10:28.502Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"AlloyStore 组件平台插件","level":"6.1","depth":1,"next":{"title":"内置插件","level":"7.1","depth":1,"path":"docs/Steamer-Plugins.md","ref":"./docs/Steamer-Plugins.md","articles":[{"title":"doctor 系统诊断插件","level":"7.1.1","depth":2,"path":"docs/Steamer-Plugin-Doctor.md","ref":"./docs/Steamer-Plugin-Doctor.md","articles":[]},{"title":"config 命令配置插件","level":"7.1.2","depth":2,"path":"docs/Steamer-Plugin-Config.md","ref":"./docs/Steamer-Plugin-Config.md","articles":[]},{"title":"list 命令行罗列插件","level":"7.1.3","depth":2,"path":"docs/Steamer-Plugin-List.md","ref":"./docs/Steamer-Plugin-List.md","articles":[]}]},"previous":{"title":"JB 捷豹配置插件","level":"5.1","depth":1,"path":"docs/Steamer-Plugin-JB.md","ref":"./docs/Steamer-Plugin-JB.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"docs/Steamer-Plugin-Alloystore.md","mtime":"2017-04-21T03:06:23.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-04-21T03:10:28.502Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
