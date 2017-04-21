@@ -72,7 +72,12 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 			plugin = require(pkg);
 		}
 		catch(e) {
-			throw new Error(pkg + " is not installed. ");
+			if (e.code == 'MODULE_NOT_FOUND') {
+				throw new Error(pkg + " is not installed. ");
+			}
+			else {
+				throw e;
+			}
 		}
 
 		if (!_.isFunction(plugin)) {

@@ -1,3 +1,7 @@
+## 1.2.6
+	- 优化报错提示
+
+
 ## 1.2.4
 	- update dependencies
 
