@@ -1,3 +1,7 @@
+## 1.2.7
+	- 修复 addRequirePath 添加 undefined 路径的 bug
+
+
 ## 1.2.6
 	- 优化报错提示
 

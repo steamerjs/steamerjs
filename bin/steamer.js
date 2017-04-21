@@ -64,7 +64,7 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 
 	try {
 		//  correct require path for npm link
-		this.utils.addRequirePath(process.env.NODE_PATH);
+		this.utils.addRequirePath(process.env.NODE_PATH || '');
 
 		pkg = this.reserveCmds(pkg);
 
