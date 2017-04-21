@@ -68,7 +68,12 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 
 		pkg = this.reserveCmds(pkg);
 
-		plugin = require(pkg);
+		try {
+			plugin = require(pkg);
+		}
+		catch(e) {
+			throw new Error(pkg + " is not installed. ");
+		}
 
 		if (!_.isFunction(plugin)) {
 			throw new Error(pkg + " is not a function. ");
@@ -114,7 +119,7 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 
 	}
 	catch(e) {
-		console.log(chalk.red(e.toString()));
+		console.log(chalk.red(e.stack));
 	}
 };
 
