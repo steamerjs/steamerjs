@@ -1,3 +1,6 @@
+## 1.2.8
+	- 升级 steamer-pluginutils 依赖并优化了性能
+
 ## 1.2.7
 	- 修复 addRequirePath 添加 undefined 路径的 bug
 
