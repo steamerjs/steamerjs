@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 'use strict';
-var startTime = Date.now();
 const path = require('path'),
 	  yargs = require('yargs'),
 	  argv = yargs.argv,
@@ -95,7 +94,6 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 				this.utils.printTitle("Command Usage", "white");
 				instance.help();
 				this.utils.printEnd("white");
-				console.log((Date.now() - startTime) / 1000);
 			}
 		}
 		else if (isBeforeInit) {
