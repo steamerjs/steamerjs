@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-
-const yargs = require('yargs'),
+var startTime = Date.now();
+const path = require('path'),
+	  yargs = require('yargs'),
 	  argv = yargs.argv,
 	  _ = require('lodash'),
 	  chalk = require('chalk'),
@@ -45,6 +46,9 @@ Commander.prototype.reserveCmds = function(cmd) {
 	if (reserve.indexOf(cmd) > -1) {
 		cmd = "../libs/" + cmd;
 	}
+	else {
+		cmd = path.join(this.utils.globalNodeModules, cmd);
+	}
 
 	return cmd;
 };
@@ -63,8 +67,6 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 		isAfterInit = (argv._init === "after");
 
 	try {
-		//  correct require path for npm link
-		this.utils.addRequirePath(process.env.NODE_PATH || '');
 
 		pkg = this.reserveCmds(pkg);
 
@@ -93,6 +95,7 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 				this.utils.printTitle("Command Usage", "white");
 				instance.help();
 				this.utils.printEnd("white");
+				console.log((Date.now() - startTime) / 1000);
 			}
 		}
 		else if (isBeforeInit) {
