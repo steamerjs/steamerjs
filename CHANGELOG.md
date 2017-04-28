@@ -1,7 +1,5 @@
 ## 1.3.0
 	- 添加 version/v 参数，可以显示各个插件的版本号
-	- 添加内置steamer-plugin-update插件，允许steamerjs及其插件的快速更新
-
 
 ## 1.2.9
 	- 升级 steamer-pluginutils 依赖并优化了性能
