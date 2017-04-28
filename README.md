@@ -11,7 +11,7 @@ Plugin is command, use when you plugin in.
 
 
 ## 安装
-
+javascript
 ```
 // 安装核心库
 npm i -g steamerjs
@@ -21,9 +21,21 @@ npm i -g steamer-plugin-xxx
 ```
 
 ## 使用
-```
+```javascript
 steamer xxx
 
 // alias command
 str xxx
+```
+
+## 更新
+```javascript
+// 更新本身
+npm update -g steamerjs
+
+// 更新插件
+npm update -g steamer-plugin-xxx
+
+// 更新脚手架
+npm update -g steamer-xxx
 ```
