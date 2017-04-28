@@ -405,13 +405,13 @@ describe("steamerjs", function() {
 
 	after(function() {
 
-		process.chdir('../../');
-
 		process.env.steamer_test = true;
 
 		spawnSync('npm', ['unlink'], {
 			stdio: 'inherit',
 		});
+
+		process.chdir('../../');
 	});
 
 	it('version steamerjs', function() {
@@ -495,7 +495,7 @@ describe("steamerjs", function() {
   		
   		Steamerjs.init();
 			
-  		expect(!!~utilError.firstCall.args[0].indexOf('Error: /usr/local/lib/node_modules/steamer-plugin-123 is not installed.')).to.be(true);
+  		expect(!!~utilError.firstCall.args[0].indexOf('steamer-plugin-123 is not installed.')).to.be(true);
 		
 		utilError.restore();
   	});
