@@ -1,6 +1,6 @@
 {
   "name": "steamerjs",
-  "version": "1.2.9",
+  "version": "1.3.0",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {
@@ -20,19 +20,18 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SteamerTeam/steamerjs.git"
+    "url": "git+https://github.com/steamerjs/steamerjs.git"
   },
   "keywords": [
     "steamer"
   ],
-  "author": "SteamerTeam",
+  "author": "steamerjs",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SteamerTeam/steamerjs/issues"
+    "url": "https://github.com/steamerjs/steamerjs/issues"
   },
-  "homepage": "https://github.com/SteamerTeam/steamerjs#readme",
+  "homepage": "https://github.com/steamerjs/steamerjs#readme",
   "dependencies": {
-    "chalk": "^1.1.3",
     "fs-extra": "^2.1.2",
     "lodash": "^4.17.2",
     "log-symbols": "^1.0.2",

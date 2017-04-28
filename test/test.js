@@ -12,14 +12,10 @@ const path = require('path'),
 	  SteamerConfig = require('../libs/steamer-plugin-config'),
 	  SteamerList = require('../libs/steamer-plugin-list'),
 	  pluginUtils = require('steamer-pluginutils'),
-	  cp = require('child_process'),
-	  Buffer = require('buffer').Buffer;
+	  spawnSync = require('child_process').spawnSync;
 
 var utils = new pluginUtils("steamer");
 
-before(function() {
-	process.env.steamer_test = true;
-});
 
 describe("steamer-plugin-doctor", function() {
 
@@ -231,6 +227,10 @@ describe("steamer-plugin-config", function() {
 		process.chdir("./test/local");
 	});
 
+	after(function() {
+		process.chdir("../../");
+	});
+
 
 	it("init config files", function() {
 
@@ -384,6 +384,120 @@ describe("steamer-plugin-config", function() {
 		expect(log.calledWith(optionMsg)).to.be(true);
 
 		log.restore();
+  	});
+
+});
+
+describe("steamerjs", function() {
+
+	before(function() {
+		
+		process.chdir(path.join(process.cwd(), 'test/steamer-plugin-example'));
+
+		process.env.steamer_test = true;
+
+		spawnSync('npm', ['link'], {
+			stdio: 'inherit',
+		});
+
+		process.chdir(path.join(process.cwd()));
+	});
+
+	after(function() {
+
+		process.chdir('../../');
+
+		process.env.steamer_test = true;
+
+		spawnSync('npm', ['unlink'], {
+			stdio: 'inherit',
+		});
+	});
+
+	it('version steamerjs', function() {
+
+
+  		var Steamerjs = new Steamer({
+  			_: [],
+			v: true
+		});
+
+  		var utilInfo = sinon.stub(Steamerjs.utils, 'info');
+
+		Steamerjs.init();
+
+		var pkgJson = require("../package.json");
+
+		expect(utilInfo.calledWith(pkgJson.name + "@" + pkgJson.version)).to.be(true);
+
+		utilInfo.restore();
+  	});
+
+  	it('version list', function() {
+
+
+  		var Steamerjs = new Steamer({
+  			_: ['list'],
+			v: true
+		});
+
+  		var utilInfo = sinon.stub(Steamerjs.utils, 'info');
+  		
+		Steamerjs.init();
+
+		var pkgJson = require("../package.json");
+
+		expect(utilInfo.calledWith("built-in plugin: steamer-plugin-list\n" + pkgJson.name + "@" + pkgJson.version)).to.be(true);
+
+		utilInfo.restore();
+  	});
+
+  	it('version exampmle1', function() {
+
+
+  		var Steamerjs = new Steamer({
+  			_: ['example1'],
+			v: true
+		});
+
+  		var utilInfo = sinon.stub(Steamerjs.utils, 'info');
+  		
+		Steamerjs.init();
+
+		expect(utilInfo.calledWith("steamer-plugin-example1@1.0.1")).to.be(true);
+
+		utilInfo.restore();
+  	});
+
+  	it('help', function() {
+
+
+  		var Steamerjs = new Steamer({
+  			_: [],
+			h: true,
+		});
+
+  		var utilInfo = sinon.stub(Steamerjs.utils, 'info');
+  		
+		Steamerjs.init();
+
+		utilInfo.restore();
+  	});
+
+  	it('pkg not exist', function() {
+
+
+  		var Steamerjs = new Steamer({
+  			_: ['123'],
+		});
+
+  		var utilError = sinon.stub(Steamerjs.utils, 'error');
+  		
+  		Steamerjs.init();
+			
+  		expect(!!~utilError.firstCall.args[0].indexOf('Error: /usr/local/lib/node_modules/steamer-plugin-123 is not installed.')).to.be(true);
+		
+		utilError.restore();
   	});
 
 });

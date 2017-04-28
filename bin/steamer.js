@@ -4,7 +4,6 @@ const path = require('path'),
 	  yargs = require('yargs'),
 	  argv = yargs.argv,
 	  _ = require('lodash'),
-	  chalk = require('chalk'),
 	  config = require('../libs/config'),
 	  pluginUtils = require('steamer-pluginutils');
 
@@ -27,6 +26,17 @@ Commander.prototype.initPlugin = function() {
 		// use the 1st value
 		this.runPlugin(mainCommands[0], argv);
 	} 
+	else {
+		let isVersion = argv.version || argv.v || false,
+			isHelpCalled = argv.help || argv.h || false;
+
+		if (isHelpCalled) {
+			this.help();
+		}
+		else if (isVersion) {
+			this.showVersion('../');
+		}
+	}
 };
 
 /**
@@ -62,6 +72,7 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 		plugin = null,
 		pkg = pkgPrefix + pluginName,
 		isHelpCalled = argv.help || argv.h || false,
+		isVersion = argv.version || argv.v || false,
 		isBeforeInit = (argv._init === "before"),
 		isAfterInit = (argv._init === "after");
 
@@ -96,6 +107,9 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 				this.utils.printEnd("white");
 			}
 		}
+		else if (isVersion) {
+			this.showVersion(pkg);
+		}
 		else if (isBeforeInit) {
 			if (!_.isFunction(plugin.prototype.beforeInit)) {
 				throw new Error(pkg + ".prototpe.beforeInit is not a function. ");
@@ -125,8 +139,52 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 
 	}
 	catch(e) {
-		console.log(chalk.red(e.stack));
+		this.utils.error(e.stack);
 	}
+};
+
+/**
+ * show version
+ * @param  {String} pkg [plugin]
+ */
+Commander.prototype.showVersion = function(pkg) {
+	if (path.isAbsolute(pkg)) {
+		let pkgPath = path.join(pkg, "package.json"),
+			pkgJson = require(pkgPath);
+
+		this.utils.info(pkgJson.name + "@" + pkgJson.version);
+	}
+	else {
+		let pkgPath = path.join(path.dirname(__dirname), "package.json"),
+			pkgJson = require(pkgPath),
+			plugin = path.basename(pkg);
+
+		if (plugin.length > 2) {
+			this.utils.info("built-in plugin: " + plugin + "\n" + pkgJson.name + "@" + pkgJson.version);
+		}
+		else {
+			this.utils.info(pkgJson.name + "@" + pkgJson.version);
+		}
+	}
+};
+
+/**
+ * show help
+ */
+Commander.prototype.help = function() {
+	this.utils.printUsage('steamer core command', '[<plugin>] [--<option>]');
+	this.utils.printOption([
+		{
+			option: "version",
+			alias: "v",
+			description: "show built-in or third-party plugin version"
+		},
+		{
+			option: "help",
+			alias: "h",
+			description: "show built-in or third-party plugin help"
+		}
+	]);
 };
 
 /**
@@ -179,6 +237,7 @@ Commander.prototype.init = function() {
 	this.pluginAfterInit();
 };
 
+// 用于测试
 if (!process.env.steamer_test) {
 	var commander = new Commander(argv);
 	commander.init();
