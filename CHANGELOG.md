@@ -1,3 +1,6 @@
+## 1.3.2
+	- update steamer-pluginutils
+
 ## 1.3.1
 	- NODE_PATH 不允许 undefined, null 和 空字符串
 
