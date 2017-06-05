@@ -18,11 +18,11 @@ function DoctortPlugin(argv) {
 
 DoctortPlugin.prototype.isNodePathSet = function() {
 	let globalNodeModules = this.utils.globalNodeModules;
-	return globalNodeModules !== undefined && globalNodeModules !== null;
+	return globalNodeModules !== undefined && globalNodeModules !== null && globalNodeModules !== "";
 };
 
 DoctortPlugin.prototype.throwNodePathError = function() {
-	throw new Error("You must set NODE_PATH correctly!!! Now it's undefined\nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH");
+	throw new Error("You must set NODE_PATH correctly!!! Now it's undefined or empty\nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH");
 };
 
 DoctortPlugin.prototype.isNodeVerRight = function() {

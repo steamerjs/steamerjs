@@ -1,3 +1,6 @@
+## 1.3.1
+	- NODE_PATH 不允许 undefined, null 和 空字符串
+
 ## 1.3.0
 	- 添加 version/v 参数，可以显示各个插件的版本号
 
