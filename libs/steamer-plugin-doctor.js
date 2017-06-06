@@ -22,7 +22,7 @@ DoctortPlugin.prototype.isNodePathSet = function() {
 };
 
 DoctortPlugin.prototype.throwNodePathError = function() {
-	throw new Error("You must set NODE_PATH correctly!!! Now it's undefined or empty\nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH");
+	throw new Error("You must set NODE_PATH correctly!!! Now it's undefined or empty\nYou can visit https://github.com/steamerjs/steamerjs to see how to set NODE_PATH");
 };
 
 DoctortPlugin.prototype.isNodeVerRight = function() {

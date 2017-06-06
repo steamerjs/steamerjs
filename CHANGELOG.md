@@ -1,4 +1,4 @@
-## 1.3.3
+## 1.3.4
 	- update steamer-pluginutils
 
 ## 1.3.1

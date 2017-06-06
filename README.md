@@ -20,6 +20,9 @@ npm i -g steamerjs
 npm i -g steamer-plugin-xxx
 ```
 
+## 设置 `NODE_PATH`
+[常见问题 - NODE_PATH设置](https://steamerjs.github.io/steamerjs/docs/Steamer-QA.html)
+
 ## 使用
 ```javascript
 steamer xxx
