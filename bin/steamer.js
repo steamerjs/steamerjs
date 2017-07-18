@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const path = require('path'),
+	  fs = require('fs'),
 	  yargs = require('yargs'),
 	  argv = yargs.argv,
 	  _ = require('lodash'),
@@ -56,7 +57,14 @@ Commander.prototype.reserveCmds = function(cmd) {
 		cmd = "../libs/" + cmd;
 	}
 	else {
-		cmd = path.join(this.utils.globalNodeModules, cmd);
+		let route = path.join(__dirname, '../../', cmd);
+
+		if (fs.existsSync(route)) {
+			cmd = route;
+		}
+		else {
+			cmd = path.join(this.utils.globalNodeModules, cmd);
+		}
 	}
 
 	return cmd;

@@ -1,3 +1,6 @@
+## 1.3.5
+	- 优化插件引用机制
+
 ## 1.3.4
 	- update steamer-pluginutils
 
