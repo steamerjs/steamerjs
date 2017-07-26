@@ -1,14 +1,17 @@
 "use strict";
 
-const fs = require('fs-extra'),
-	  chalk = require('chalk'),
-	  pluginUtils = require('steamer-pluginutils'),
+const pluginUtils = require('steamer-pluginutils'),
 	  config = require('./config');
 
 const pluginPrefix = "steamer-plugin-";
 
+var chalk = null,
+	fs = null;
+
 function ListPlugin() {
-	this.utils = new pluginUtils("steamer");
+	this.utils = new pluginUtils("steamerjs");
+	chalk = this.utils.chalk;
+	fs = this.utils.fs;
 }
 
 ListPlugin.description = "list steamerjs commands";

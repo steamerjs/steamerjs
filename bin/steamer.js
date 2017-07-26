@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 'use strict';
 const path = require('path'),
 	  fs = require('fs'),
@@ -6,6 +7,7 @@ const path = require('path'),
 	  argv = yargs.argv,
 	  _ = require('lodash'),
 	  config = require('../libs/config'),
+	  
 	  pluginUtils = require('steamer-pluginutils');
 
 const pkgPrefix = 'steamer-plugin-';
@@ -239,6 +241,7 @@ Commander.prototype.pluginAfterInit = function() {
 	});
 };
 
+
 Commander.prototype.init = function() {
 	this.pluginBeforeInit();
 	this.initPlugin();
@@ -250,6 +253,8 @@ if (!process.env.steamer_test) {
 	var commander = new Commander(argv);
 	commander.init();
 }
+
+
 
 module.exports = Commander;
 

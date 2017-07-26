@@ -391,16 +391,20 @@ describe("steamer-plugin-config", function() {
 describe("steamerjs", function() {
 
 	before(function() {
-		
-		process.chdir(path.join(process.cwd(), 'test/steamer-plugin-example'));
+		try {
+			process.chdir(path.join(process.cwd(), 'test/steamer-plugin-example'));
 
-		process.env.steamer_test = true;
+			process.env.steamer_test = true;
 
-		spawnSync('npm', ['link'], {
-			stdio: 'inherit',
-		});
+			spawnSync('npm', ['link'], {
+				stdio: 'inherit',
+			});
 
-		process.chdir(path.join(process.cwd()));
+			process.chdir(path.join(process.cwd()));
+		}
+		catch(e) {
+			console.log(e);
+		}
 	});
 
 	after(function() {
@@ -498,6 +502,17 @@ describe("steamerjs", function() {
   		expect(!!~utilError.firstCall.args[0].indexOf('steamer-plugin-123 is not installed.')).to.be(true);
 		
 		utilError.restore();
+  	});
+
+});
+
+describe("steamer-plugin-update", function() {
+
+	it('update steamer pkgs', function() {
+
+  		var Steamerjs = new Steamer({
+  			_: ['update'],
+		});
   	});
 
 });

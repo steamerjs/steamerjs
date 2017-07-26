@@ -1,13 +1,14 @@
 "use strict";
 
-const fs = require('fs-extra'),
-	  path = require('path'),
+const path = require('path'),
 	  pluginUtils = require('steamer-pluginutils');
 
+var fs = null;
 
 function ConfigPlugin(argv) {
 	this.argv = argv;
-	this.utils = new pluginUtils("steamer");
+	this.utils = new pluginUtils("steamerjs");
+	fs = this.utils.fs;
 }
 
 ConfigPlugin.prototype.init  = function() {

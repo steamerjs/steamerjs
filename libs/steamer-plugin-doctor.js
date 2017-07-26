@@ -6,14 +6,16 @@
  */
 
 const logSymbols = require('log-symbols'),
-	  chalk = require('chalk'),
 	  semver = require('semver'),
 	  pluginUtils = require('steamer-pluginutils'),
 	  baseVer = "5.0.0";
 
+var chalk = null;
+
 function DoctortPlugin(argv) {
 	this.argv = argv;
-	this.utils = new pluginUtils("steamer");
+	this.utils = new pluginUtils("steamerjs");
+	chalk = this.utils.chalk;
 }
 
 DoctortPlugin.prototype.isNodePathSet = function() {
