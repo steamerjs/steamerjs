@@ -35,11 +35,11 @@ str xxx
 ## 更新
 ```javascript
 // 更新本身
-npm update -g steamerjs
+npm install -g steamerjs@latest
 
 // 更新插件
-npm update -g steamer-plugin-xxx
+npm install -g steamer-plugin-xxx@latest
 
 // 更新脚手架
-npm update -g steamer-xxx
+npm install -g steamer-xxx@latest
 ```
