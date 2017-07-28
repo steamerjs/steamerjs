@@ -45,7 +45,8 @@ UpdatePlugin.prototype.checkUpdate = function() {
 			var updatePkgs = [];
 
 			pacakges.forEach((item) => {
-				if (semVer.lt(item.installed, item.latest)) {
+				if (item.installed && item.latest 
+					&& semVer.lt(item.installed, item.latest)) {
 					let updatePkg = {
 						name: item.moduleName,
 						oldVer: item.installed,
@@ -58,6 +59,8 @@ UpdatePlugin.prototype.checkUpdate = function() {
 
 			this.autoSelection(updatePkgs);
 		}
+	}).catch((e) => {
+		this.utils.error(e.stack);
 	}); 
 };
 

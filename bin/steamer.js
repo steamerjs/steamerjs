@@ -95,6 +95,9 @@ Commander.prototype.runPlugin = function(pluginName, argv) {
 		}
 		catch(e) {
 			if (e.code == 'MODULE_NOT_FOUND') {
+				this.utils.error(pkg + " is not installed. One of following two reasons may cause this issue: ");
+				this.utils.warn("1. You do not install this plugin.");
+				this.utils.warn("2. You install the plugin but forget to set NODE_PATH.");
 				throw new Error(pkg + " is not installed. ");
 			}
 			else {
