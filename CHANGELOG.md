@@ -1,3 +1,6 @@
+## 1.4.1
+   - 支持使用 steamerjs
+
 ## 1.4.0
    - require plugin的时候更友好的提示
 

@@ -1,6 +1,6 @@
 {
   "name": "steamerjs",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,7 @@
   },
   "bin": {
     "steamer": "./bin/steamer.js",
+    "steamerjs": "./bin/steamer.js",
     "str": "./bin/steamer.js"
   },
   "files": [
