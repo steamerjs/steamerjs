@@ -1,11 +1,14 @@
+## 1.5.0
+    - 升级 steamer-pluginutils
+
 ## 1.4.1
-   - 支持使用 steamerjs
+    - 支持使用 steamerjs
 
 ## 1.4.0
-   - require plugin的时候更友好的提示
+    - require plugin的时候更友好的提示
 
 ## 1.4.0
-   - 添加更新功能
+    - 添加更新功能
 
 ## 1.3.5
 	- 优化插件引用机制
