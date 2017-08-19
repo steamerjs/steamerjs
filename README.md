@@ -22,11 +22,13 @@ npm i -g steamerjs
 npm i -g steamer-plugin-xxx
 ```
 
+
 ## 设置 `NODE_PATH`
 
 由于 `steamerjs` 的命令或脚手架都需要全局安装，尽管steamerjs会尝试兼容，但在某些使用场景下会仍然找到不全局安装的位置，因此推荐设置环境变量 `NODE_PATH`。
 
 [常见问题 - NODE_PATH设置](https://steamerjs.github.io/steamerjs/docs/Steamer-QA.html)
+
 
 ## 使用
 ```javascript
