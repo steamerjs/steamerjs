@@ -10,21 +10,26 @@ gulp.task('es5', () => {
 	return gulp.src(srcPath)
     		   .pipe(babel({
 		            presets: [
-		            	'es2015',
-		            	'es2016',
-		            	'es2017'
+		            	// 'es2015',
+		            	// 'es2016',
+		            	// 'es2017'
 		            ],
 		            plugins: [
+		            	'transform-es2015-modules-commonjs',
 		            	'transform-runtime'
 		            ]
 		        }))
+			    .on('error', function(e) {
+			    	console.info(e);
+					this.emit('end');
+				})
      		   .pipe(gulp.dest(distPath));
 });
 
 gulp.task('clean', () => {
 	return del([
 	    distPath
-	], { force: true, });
+	], { force: true });
 });
 
 gulp.task('default', ['clean', 'es5'], (cb) => {

@@ -1,7 +1,7 @@
 module.exports = {
     "env": {},
     "extends": [
-        "@alloyteam/eslint-config-standard",
+        "eslint-config-alloy",
     ],
     "plugins": [],
     "rules": {},
