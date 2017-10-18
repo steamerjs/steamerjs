@@ -4,7 +4,11 @@ module.exports = {
         "@alloyteam/eslint-config-standard",
     ],
     "plugins": [],
-    "rules": {},
+    "rules": {
+        "one-var": "off",
+        "strict": "off",
+        complexity: ["error", 20]
+    },
     "globals": {
         "describe": true,
         "it": true,
