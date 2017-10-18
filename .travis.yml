@@ -4,7 +4,6 @@ node_js:
   - node
   - 7
   - 6
-  - 5
 script: npm run travis
 
 before_install:

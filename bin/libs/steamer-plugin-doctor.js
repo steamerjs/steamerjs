@@ -49,10 +49,10 @@ class DoctortPlugin extends SteamerPlugin {
             let npmRoot = fixPath(stdout);
 
             if (npmRoot === this.getGlobalModules()) {
-                this.log(logSymbols.success + '  NODE_PATH is ' + this.getGlobalModules());
+                this.log(`${logSymbols.success}  NODE_PATH is ${this.getGlobalModules()}`);
             }
             else {
-                this.log(logSymbols.error + '  NODE_PATH does not equal to value from \'npm root -g\'\nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH');
+                this.log(`${logSymbols.error}  NODE_PATH should equal to ${this.chalk.yellow(npmRoot)}. \nPlease run  \'npm root -g\' to get this value. \nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH`);
             }
         });
     }

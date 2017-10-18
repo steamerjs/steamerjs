@@ -91,10 +91,10 @@ class Commander extends SteamerPlugin {
             }
             catch (e) {
                 if (e.code === 'MODULE_NOT_FOUND') {
+                    this.warn('Please run \"steamer doctor\" to detect the following problem.');
                     let msg = pkg + ' is not installed. One of following two reasons may cause this issue: \n';
                     msg += '1. You do not install this plugin.\n';
                     msg += '2. You install the plugin but forget to set NODE_PATH.\n';
-                    this.warn('Please run \"steamer doctor\" to detect the following problem.');
                     throw new Error(msg);
                 }
                 else {
