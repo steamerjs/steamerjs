@@ -28,8 +28,9 @@ class ConfigPlugin extends SteamerPlugin {
     }
 
     /**
-	 * list config key & values, local config extend global config
-	 */
+     * list config key & values, local config extend global config
+     * 
+     */
     list() {
         let config = this.readSteamerConfig();
 

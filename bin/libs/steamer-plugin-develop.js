@@ -82,8 +82,41 @@ class DevelopPlugin extends SteamerPlugin {
 
     }
 
-    kit() {
+    kit(kit) {
+        let pluginName = `${kitPrefix}${kit}`,
+            projectPath = path.join(process.cwd(), pluginName);
 
+        if (this.fs.existsSync(projectPath)) {
+            return this.folderExist(projectPath);
+        }
+
+        this.info('Waiting to download...');
+        
+        downloadGit('https://github.com:steamerjs/steamer-example#master', projectPath, { clone: true }, (err) => {
+            if (err) {
+                this.error(err);
+            }
+            else {
+                this.processKit(projectPath, kit);
+                this.info(`Installation success! \nYou can develop the starterkit inside ${projectPath}`);
+            }
+        });
+    }
+
+    processKit(projectPath, kit) {
+        let pkgJson = path.join(projectPath, 'package.json'),
+            kitConfig = path.join(projectPath, './.steamer/steamer-example.js'),
+            regex1 = new RegExp(`steamer-example`, 'ig');
+
+        if (this.fs.existsSync(pkgJson)) {
+            let pkgJsonContent = this.fs.readFileSync(pkgJson, 'utf-8');
+
+            pkgJsonContent = pkgJsonContent.replace(regex1, `${kitPrefix}${kit}`);
+            this.fs.writeFileSync(pkgJson, pkgJsonContent);
+        }
+
+        this.fs.copySync(kitConfig, path.join(projectPath, `./.steamer/${kitPrefix}${kit}`));
+        this.fs.removeSync(kitConfig);
     }
 
     folderExist(projectPath) {
