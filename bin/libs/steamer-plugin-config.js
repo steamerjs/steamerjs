@@ -5,7 +5,7 @@ const SteamerPlugin = require('steamer-plugin'),
 
 class ConfigPlugin extends SteamerPlugin {
     constructor(args) {
-        super();
+        super(args);
         this.argv = args;
         this.pluginName = 'steamerjs';
         this.description = 'set steamerjs config';

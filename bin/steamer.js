@@ -25,13 +25,12 @@ class Commander extends SteamerPlugin {
         // command example: steamer init
         let argv = this.argv,
             mainCommands = argv._;
-
         if (mainCommands.length) {
             // use the 1st value
             this.runPlugin(mainCommands[0], argv);
         }
         else {
-            let isVersion = argv.version || argv.v || false,
+            let isVersion = argv.ver || argv.v || false,
                 isHelpCalled = argv.help || argv.h || false;
 
             if (isHelpCalled) {
@@ -44,14 +43,30 @@ class Commander extends SteamerPlugin {
     }
 
     /**
-     * reserver commands
+     * reserve commands
      * @param  {String} cmd [command name]
      * @return {String}     [returned command name]
      */
     reserveCmds(cmd) {
 
-        let reserve = config.reserveCmd,
+        let route = path.join(__dirname, '../../', cmd),
             returnCmd = null;
+
+        // shortcut path
+        if (fs.existsSync(route)) {
+            returnCmd = route;
+            return returnCmd;
+        }
+
+        // global node_module path
+        returnCmd = path.join(this.getGlobalModules(), cmd);
+
+        if (fs.existsSync(returnCmd)) {
+            return returnCmd;
+        }
+
+        // reserved commands
+        let reserve = config.reserveCmd;
 
         reserve = reserve.map((item) => {
             return pkgPrefix + item;
@@ -59,16 +74,7 @@ class Commander extends SteamerPlugin {
 
         if (reserve.indexOf(cmd) > -1) {
             returnCmd = './libs/' + cmd;
-        }
-        else {
-            let route = path.join(__dirname, '../../', cmd);
-
-            if (fs.existsSync(route)) {
-                returnCmd = route;
-            }
-            else {
-                returnCmd = path.join(this.getGlobalModules(), cmd);
-            }
+            return returnCmd;
         }
 
         return returnCmd;
@@ -91,11 +97,17 @@ class Commander extends SteamerPlugin {
             }
             catch (e) {
                 if (e.code === 'MODULE_NOT_FOUND') {
-                    this.warn('Please run \"steamer doctor\" to detect the following problem.');
+                    this.warn('Please run \"steamer doctor\" to detect the problem 1 & 2. ');
+                    this.warn('Please see detailed erros message for problem 3.');
+
                     let msg = pkg + ' is not installed. One of following two reasons may cause this issue: \n';
                     msg += '1. You do not install this plugin.\n';
                     msg += '2. You install the plugin but forget to set NODE_PATH.\n';
-                    throw new Error(msg);
+                    msg += '3. There are internal errors inside the plugin.\n';
+                    this.error(msg);
+
+                    this.warn('Detailed Error Message: ');
+                    throw e;
                 }
                 else {
                     throw e;
@@ -131,7 +143,7 @@ class Commander extends SteamerPlugin {
      */
     callCommands(argv, Plugin, instance, pkg) {
         let isHelpCalled = argv.help || argv.h || false,
-            isVersion = argv.version || argv.v || false,
+            isVersion = argv.ver || argv.v || false,
             isBeforeInit = (argv._init === 'before'),
             isAfterInit = (argv._init === 'after');
 
@@ -206,7 +218,7 @@ class Commander extends SteamerPlugin {
         this.printUsage('steamer core command', '[<plugin>] [--<option>]');
         this.printOption([
             {
-                option: 'version',
+                option: 'ver',
                 alias: 'v',
                 description: 'show built-in or third-party plugin version'
             },

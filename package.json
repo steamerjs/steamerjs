@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "cross-spawn": "^5.1.0",
+    "download-git-repo": "^1.0.1",
     "inquirer": "^3.3.0",
     "klaw-sync": "^3.0.0",
     "lodash": "^4.17.4",

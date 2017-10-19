@@ -7,7 +7,7 @@ const pluginPrefix = 'steamer-plugin-';
 
 class ListPlugin extends SteamerPlugin {
     constructor(args) {
-        super();
+        super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-list';
         this.description = 'list steamerjs commands';

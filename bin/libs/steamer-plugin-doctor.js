@@ -32,9 +32,9 @@ function fixPath(filepath) {
     return fixedPath;
 }
 
-class DoctortPlugin extends SteamerPlugin {
+class DoctorPlugin extends SteamerPlugin {
     constructor(args) {
-        super();
+        super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-doctor';
         this.description = 'detect steamerjs problems';
@@ -86,4 +86,4 @@ class DoctortPlugin extends SteamerPlugin {
     }
 }
 
-module.exports = DoctortPlugin;
+module.exports = DoctorPlugin;

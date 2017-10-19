@@ -8,7 +8,7 @@ const SteamerPlugin = require('steamer-plugin'),
 
 class UpdatePlugin extends SteamerPlugin {
     constructor(args) {
-        super();
+        super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-update';
         this.description = 'update steamerjs commands and starterkits';

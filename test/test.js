@@ -1,7 +1,7 @@
 "use strict";
 
 const path = require('path'),
-	  os = require('os'),
+	os = require('os'),
 	  fs = require('fs-extra'),
 	  logSymbols = require('log-symbols'),
 	  chalk = require('chalk'),

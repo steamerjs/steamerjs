@@ -19,7 +19,7 @@ const SteamerPlugin = require('steamer-plugin'),
 
 class KitPlugin extends SteamerPlugin {
     constructor(args) {
-        super();
+        super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-kit';
         this.description = 'manage starterkits';
