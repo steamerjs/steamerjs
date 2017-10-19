@@ -11,7 +11,7 @@ const path = require('path'),
     semver = require('semver'),
     childProcess = require('child_process'),
     baseVer = '6.11.4',
-    SteamerPlugin = require('steamer-plugin').default;
+    SteamerPlugin = require('steamer-plugin');
 
 /**
  * learn from yo doctor

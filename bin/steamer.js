@@ -6,7 +6,7 @@ const path = require('path'),
     yargs = require('yargs'),
     yargv = yargs.argv,
     _ = require('lodash'),
-    SteamerPlugin = require('steamer-plugin').default;
+    SteamerPlugin = require('steamer-plugin');
 
 const pkgPrefix = 'steamer-plugin-';
 const config = require('./libs/config');

@@ -37,7 +37,7 @@
     "chai": "^4.1.2",
     "codecov.io": "^0.1.6",
     "coveralls": "^3.0.0",
-    "eslint": "^4.8.0",
+    "eslint": "^4.9.0",
     "expect.js": "^0.3.1",
     "fs-extra": "^4.0.2",
     "istanbul": "^0.4.5",
@@ -53,7 +53,7 @@
     "log-symbols": "^2.1.0",
     "npm-check": "^5.4.5",
     "semver": "^5.4.1",
-    "steamer-plugin": "*",
+    "steamer-plugin": "0.0.2",
     "yargs": "^9.0.1"
   },
   "engines": {

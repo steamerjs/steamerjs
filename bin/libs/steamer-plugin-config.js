@@ -1,6 +1,6 @@
 'use strict';
 
-const SteamerPlugin = require('steamer-plugin').default,
+const SteamerPlugin = require('steamer-plugin'),
     path = require('path');
 
 class ConfigPlugin extends SteamerPlugin {

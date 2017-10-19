@@ -1,6 +1,6 @@
 'use strict';
 
-const SteamerPlugin = require('steamer-plugin').default,
+const SteamerPlugin = require('steamer-plugin'),
     config = require('./config');
 
 const pluginPrefix = 'steamer-plugin-';
