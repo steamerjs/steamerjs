@@ -8,7 +8,7 @@ const path = require('path'),
     downloadGit = require('download-git-repo'),
     SteamerPlugin = require('steamer-plugin');
 
-const pluginPrefix= 'steamer-plugin-',
+const pluginPrefix = 'steamer-plugin-',
     kitPrefix = 'steamer-';
 
 class DevelopPlugin extends SteamerPlugin {
@@ -32,6 +32,10 @@ class DevelopPlugin extends SteamerPlugin {
         }
     }
 
+    /**
+     * install plugin template
+     * @param {String} plugin 
+     */
     plugin(plugin) {
         let pluginName = `${pluginPrefix}${plugin}`,
             projectPath = path.join(process.cwd(), pluginName);
@@ -82,6 +86,10 @@ class DevelopPlugin extends SteamerPlugin {
 
     }
 
+    /**
+     * install starterkit template
+     * @param {String} kit 
+     */
     kit(kit) {
         let pluginName = `${kitPrefix}${kit}`,
             projectPath = path.join(process.cwd(), pluginName);
@@ -103,6 +111,11 @@ class DevelopPlugin extends SteamerPlugin {
         });
     }
 
+    /**
+     * replace steamer-example and create ./steamer/steamer-xxx.js
+     * @param {String} projectPath 
+     * @param {String} kit 
+     */
     processKit(projectPath, kit) {
         let pkgJson = path.join(projectPath, 'package.json'),
             kitConfig = path.join(projectPath, './.steamer/steamer-example.js'),

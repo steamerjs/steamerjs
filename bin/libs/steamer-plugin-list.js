@@ -13,13 +13,26 @@ class ListPlugin extends SteamerPlugin {
         this.description = 'list steamerjs commands';
     }
 
+    calCharCodeNum(str) {
+        let len = str.length,
+            index = 0,
+            num = 0;
+
+        while (index < len) {
+            num += str.charCodeAt(index);
+            index++;
+        }
+
+        return num;
+    }
+
     list() {
-        let files = this.filterCmds();
+        let files = this.filterCmds().sort();
 
         this.printListTitle();
 
         files.map((item) => {
-            this.success(item.replace(pluginPrefix, ''));
+            this.success(item);
         });
 
         this.printListUsage();
@@ -41,7 +54,11 @@ class ListPlugin extends SteamerPlugin {
             return item.indexOf(pluginPrefix) === 0;
         });
 
-        files = files.concat(config.reserveCmd);
+        files = files.map((item) => {
+            return item.replace(pluginPrefix, '');
+        });
+
+        files = (files.concat(config.reserveCmd));
 
         return files;
     }
@@ -51,9 +68,7 @@ class ListPlugin extends SteamerPlugin {
      * @return {String} [title string]
      */
     printListTitle() {
-        let msg = this.chalk.bold.white('Hello! You can use following commands: ');
-        console.log(msg);
-        return msg;
+        this.log('Hello! You can use following commands: ');
     }
 
     /**

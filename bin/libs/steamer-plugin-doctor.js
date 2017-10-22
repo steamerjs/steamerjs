@@ -7,10 +7,10 @@
 
 const path = require('path'),
     fs = require('fs-extra'),
+    Promise = require("bluebird"),
     logSymbols = require('log-symbols'),
     semver = require('semver'),
     childProcess = require('child_process'),
-    baseVer = '6.11.4',
     SteamerPlugin = require('steamer-plugin');
 
 /**
@@ -38,51 +38,55 @@ class DoctorPlugin extends SteamerPlugin {
         this.argv = args;
         this.pluginName = 'steamer-plugin-doctor';
         this.description = 'detect steamerjs problems';
+        this.baseVer = '6.4.0';
     }
 
     checkNodePath() {
-        childProcess.exec('npm -g root --silent', (err, stdout) => {
-            if (err) {
-                return this.error(err);
-            }
+        return new Promise((resolve, reject) => {
+            childProcess.exec('npm -g root --silent', (err, stdout) => {
+                try {
+                    if (err) {
+                        reject(err);
+                    }
 
-            let npmRoot = fixPath(stdout);
+                    this.npmRoot = fixPath(stdout);
 
-            if (npmRoot === this.getGlobalModules()) {
-                this.log(`${logSymbols.success}  NODE_PATH is ${this.getGlobalModules()}`);
-            }
-            else {
-                this.log(`${logSymbols.error}  NODE_PATH should equal to ${this.chalk.yellow(npmRoot)}. \nPlease run  \'npm root -g\' to get this value. \nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH`);
-            }
+                    if (this.npmRoot === this.getGlobalModules()) {
+                        this.log(`${logSymbols.success}  NODE_PATH is ${this.npmRoot}`);
+                    }
+                    else {
+                        this.log(`${logSymbols.error}  NODE_PATH should equal to ${this.chalk.yellow(this.npmRoot)}. \nPlease run  \'npm root -g\' to get this value. \nYou can visit https://github.com/SteamerTeam/steamerjs to see how to set NODE_PATH`);
+                    }
+                    resolve();
+                }
+                catch (e) {
+                    reject(e);
+                }
+            });
         });
     }
 
-    throwNodePathError() {
-        throw new Error('You must set NODE_PATH correctly!!! Now it\'s undefined or empty\nYou can visit https://github.com/steamerjs/steamerjs to see how to set NODE_PATH');
-    }
-
     checkNodeVersion() {
-        let version = semver.valid(process.version);
+        return new Promise((resolve, reject) => {
+            let version = semver.valid(process.version);
 
-        if (semver.gt(version, baseVer)) {
-            this.log(logSymbols.success + '  Node Version is ' + process.version);
-        }
-        else {
-            this.log(logSymbols.error + '    Node Version should be >= ' + baseVer);
-        }
-    }
+            if (semver.gt(version, this.baseVer)) {
+                this.log(`${logSymbols.success}  Node Version is ${process.version}`);
+            }
+            else {
+                this.log(`${logSymbols.error}  Node Version should be >= ${this.baseVer}`);
+            }
 
-    throwNodeVerError() {
-        throw new Error('Node version should be >= ' + baseVer);
+            resolve();
+        });
     }
 
     init() {
-        this.checkNodePath();
-        this.checkNodeVersion();
+        return Promise.all([this.checkNodePath(), this.checkNodeVersion()]);
     }
 
     help() {
-        this.utils.printUsage('help you check steamer running environment!', 'doctor');
+        this.printUsage('help you check steamer running environment!', 'doctor');
     }
 }
 

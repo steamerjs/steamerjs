@@ -4,7 +4,8 @@ const SteamerPlugin = require('steamer-plugin'),
     npmCheck = require('npm-check'),
     semVer = require('semver'),
     inquirer = require('inquirer'),
-    spawn = require('cross-spawn');
+    spawn = require('cross-spawn'),
+    Promise = require('bluebird');
 
 class UpdatePlugin extends SteamerPlugin {
     constructor(args) {
@@ -12,12 +13,13 @@ class UpdatePlugin extends SteamerPlugin {
         this.argv = args;
         this.pluginName = 'steamer-plugin-update';
         this.description = 'update steamerjs commands and starterkits';
+        this.npmCheck = npmCheck;
     }
 
     init() {
         this.config = this.readSteamerConfig();
         this.npm = this.config.npm || 'npm';
-        this.checkUpdate();
+        return this.checkUpdate();
     }
 
     /**
@@ -27,34 +29,38 @@ class UpdatePlugin extends SteamerPlugin {
 
         process.env.NPM_CHECK_INSTALLER = this.npm;
 
-        npmCheck({
-            update: true,
-            spinner: true,
-            global: true,
-            ignore: ['!steamer*'],
-            installer: this.npm,
-        }).then((currentState) => {
-            let pacakges = currentState.get('packages');
+        return new Promise((resolve, reject) => {
+            this.npmCheck({
+                update: true,
+                spinner: true,
+                global: true,
+                ignore: ['!steamer*'],
+                installer: this.npm,
+            }).then((currentState) => {
+                let pacakges = currentState.get('packages');
+                
+                if (pacakges.length) {
+                    let updatePkgs = [];
 
-            if (pacakges.length) {
-                let updatePkgs = [];
+                    pacakges.forEach((item) => {
+                        if (item.installed && item.latest && semVer.lt(item.installed, item.latest)) {
+                            let updatePkg = {
+                                name: item.moduleName,
+                                oldVer: item.installed,
+                                latestVer: item.latest,
+                                homepage: item.homepage
+                            };
+                            updatePkgs.push(updatePkg);
+                        }
+                    });
 
-                pacakges.forEach((item) => {
-                    if (item.installed && item.latest && semVer.lt(item.installed, item.latest)) {
-                        let updatePkg = {
-                            name: item.moduleName,
-                            oldVer: item.installed,
-                            latestVer: item.latest,
-                            homepage: item.homepage
-                        };
-                        updatePkgs.push(updatePkg);
-                    }
-                });
-
-                this.autoSelection(updatePkgs);
-            }
-        }).catch((e) => {
-            this.error(e.stack);
+                    this.autoSelection(updatePkgs);
+                    resolve(updatePkgs);
+                }
+            }).catch((e) => {
+                this.error(e.stack);
+                reject(e);
+            });
         });
     }
 
