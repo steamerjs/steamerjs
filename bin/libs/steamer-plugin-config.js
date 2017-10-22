@@ -41,9 +41,9 @@ class ConfigPlugin extends SteamerPlugin {
     }
 
     /**
-	 * get key value from command option
-	 * @return {Object} [key: value pair]
-	 */
+     * get key value from command option
+     * @return {Object} [key: value pair]
+     */
     getKeyValue() {
         let argv = this.argv,
             kv = argv.set || argv.s,
@@ -56,13 +56,13 @@ class ConfigPlugin extends SteamerPlugin {
     }
 
     /**
-	 * set config key value
-	 */
+     * set config key value
+     */
     set() {
 
         let kv = this.getKeyValue(),
             config = this.readSteamerConfig({ isGlobal: this.isGlobal });
-        
+
         config[kv.key] = kv.value;
 
         this.createSteamerConfig(config, {
@@ -73,8 +73,8 @@ class ConfigPlugin extends SteamerPlugin {
     }
 
     /**
-	 * delete config key value
-	 */
+     * delete config key value
+     */
     del() {
         let argv = this.argv,
             key = argv.del || argv.d,
