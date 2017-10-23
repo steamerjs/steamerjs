@@ -7,7 +7,7 @@ const fs = require('fs-extra'),
     SteamerConfig = require('../bin/libs/steamer-plugin-config');
 
 
-describe.only('steamer-plugin-config', function() {
+describe('steamer-plugin-config', function() {
     let globalPath = path.join(process.cwd(), './test/global'),
         localPath = path.join(process.cwd(), './test/local');
 

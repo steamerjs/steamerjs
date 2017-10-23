@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- *   This plugin is going to kickstart plugin or starterkit development.
+ * This plugin is going to kickstart plugin or starterkit development.
  */
 
 const path = require('path'),
@@ -17,6 +17,7 @@ class DevelopPlugin extends SteamerPlugin {
         this.argv = args;
         this.pluginName = 'steamer-plugin-develop';
         this.description = 'develop steamer plugins and starterkits';
+        this.downloadGit = downloadGit;
     }
 
     init() {
@@ -45,8 +46,8 @@ class DevelopPlugin extends SteamerPlugin {
         }
 
         this.info('Waiting to download...');
-        
-        downloadGit('https://github.com:steamerjs/steamer-plugin-example#master', projectPath, { clone: true }, (err) => {
+
+        this.downloadGit('https://github.com:steamerjs/steamer-plugin-example#master', projectPath, { clone: true }, (err) => {
             if (err) {
                 this.error(err);
             }
@@ -74,6 +75,9 @@ class DevelopPlugin extends SteamerPlugin {
             pkgJsonContent = pkgJsonContent.replace(regex1, `${pluginPrefix}${plugin}`);
             this.fs.writeFileSync(pkgJson, pkgJsonContent);
         }
+        else {
+            this.fileNotExist(projectPath);
+        }
 
         if (this.fs.existsSync(indexFile)) {
             let indexContent = this.fs.readFileSync(indexFile, 'utf-8'),
@@ -82,6 +86,9 @@ class DevelopPlugin extends SteamerPlugin {
             indexContent = indexContent.replace(regex1, `${pluginPrefix}${plugin}`);
             indexContent = indexContent.replace(regex2, pluginClass);
             this.fs.writeFileSync(indexFile, indexContent);
+        }
+        else {
+            this.fileNotExist(projectPath);
         }
 
     }
@@ -99,8 +106,8 @@ class DevelopPlugin extends SteamerPlugin {
         }
 
         this.info('Waiting to download...');
-        
-        downloadGit('https://github.com:steamerjs/steamer-example#master', projectPath, { clone: true }, (err) => {
+
+        this.downloadGit('https://github.com:steamerjs/steamer-example#master', projectPath, { clone: true }, (err) => {
             if (err) {
                 this.error(err);
             }
@@ -128,12 +135,16 @@ class DevelopPlugin extends SteamerPlugin {
             this.fs.writeFileSync(pkgJson, pkgJsonContent);
         }
 
-        this.fs.copySync(kitConfig, path.join(projectPath, `./.steamer/${kitPrefix}${kit}`));
+        this.fs.copySync(kitConfig, path.join(projectPath, `./.steamer/${kitPrefix}${kit}.js`));
         this.fs.removeSync(kitConfig);
     }
 
     folderExist(projectPath) {
         throw new Error(`${projectPath} exists.`);
+    }
+
+    fileNotExist(projectPath) {
+        throw new Error(`${projectPath} not exists.`);
     }
 
     help() {
