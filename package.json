@@ -54,7 +54,7 @@
     "log-symbols": "^2.1.0",
     "npm-check": "^5.4.5",
     "semver": "^5.4.1",
-    "steamer-plugin": "0.0.3",
+    "steamer-plugin": "^1.0.0",
     "yargs": "^10.0.3"
   },
   "engines": {
