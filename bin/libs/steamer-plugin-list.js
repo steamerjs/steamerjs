@@ -13,19 +13,6 @@ class ListPlugin extends SteamerPlugin {
         this.description = 'list steamerjs commands';
     }
 
-    calCharCodeNum(str) {
-        let len = str.length,
-            index = 0,
-            num = 0;
-
-        while (index < len) {
-            num += str.charCodeAt(index);
-            index++;
-        }
-
-        return num;
-    }
-
     list() {
         let files = this.filterCmds().sort();
 

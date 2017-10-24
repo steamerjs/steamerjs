@@ -16,6 +16,7 @@ class Commander extends SteamerPlugin {
         super();
         this.argv = args || yargv;
         this.pluginName = 'steamerjs';
+        this.instance = null; // command instance
     }
 
     /**
@@ -107,25 +108,23 @@ class Commander extends SteamerPlugin {
                     this.error(msg);
 
                     this.warn('Detailed Error Message: ');
-                    throw e;
                 }
-                else {
-                    throw e;
-                }
+                throw e;
             }
 
             if (!_.isFunction(Plugin)) {
                 throw new Error(pkg + ' is not a function. ');
             }
 
-            let instance = new Plugin(argv);
-            instance.argv = argv;
-            instance.yargs = yargs;
+            this.instance = new Plugin(argv);
+            this.instance.argv = argv;
+            this.instance.yargs = yargs;
 
-            this.callCommands(argv, Plugin, instance, pkg);
+            this.callCommands(argv, Plugin, this.instance, pkg);
 
             process.on('exit', (code) => {
-                _.isFunction(Plugin.prototype.onExit) && instance.onExit(code);
+                console.log('=====exit=====');
+                _.isFunction(Plugin.prototype.onExit) && this.instance.onExit(code);
             });
 
         }
@@ -143,9 +142,7 @@ class Commander extends SteamerPlugin {
      */
     callCommands(argv, Plugin, instance, pkg) {
         let isHelpCalled = argv.help || argv.h || false,
-            isVersion = argv.ver || argv.v || false,
-            isBeforeInit = (argv._init === 'before'),
-            isAfterInit = (argv._init === 'after');
+            isVersion = argv.ver || argv.v || false;
 
         // --help -h
         if (isHelpCalled) {
@@ -158,24 +155,6 @@ class Commander extends SteamerPlugin {
         // --version -h
         else if (isVersion) {
             this.showVersion(pkg);
-        }
-        // auto called, before init
-        else if (isBeforeInit) {
-            if (!_.isFunction(Plugin.prototype.beforeInit)) {
-                throw new Error(pkg + '.prototpe.beforeInit is not a function. ');
-            }
-
-            instance.beforeInit();
-
-        }
-        // auto called, after init
-        else if (isAfterInit) {
-            if (!_.isFunction(Plugin.prototype.afterInit)) {
-                throw new Error(pkg + '.prototpe.afterInit is not a function. ');
-            }
-
-            instance.afterInit();
-
         }
         // auto called, init
         else if (_.isFunction(Plugin.prototype.init)) {
@@ -230,55 +209,8 @@ class Commander extends SteamerPlugin {
         ]);
     }
 
-    /**
-     * remove duplicate commands
-     * @param  {Array} cmds [commands]
-     * @return {Array}      [uinque commands]
-     */
-    uniqueCmds(cmds) {
-        let mainCommands = this.argv._,
-            mainCommand = null,
-            returnCmds = null;
-
-        if (mainCommands.length) {
-            mainCommand = mainCommands[0];
-        }
-
-        returnCmds = cmds.filter((item) => {
-            return item !== mainCommand;
-        });
-
-        return returnCmds;
-    }
-
-    /**
-     * plugins called before current running plugin
-     */
-    pluginBeforeInit() {
-        // make sure current main command is not in queue
-        config.beforeInit = this.uniqueCmds(config.beforeInit);
-
-        config.beforeInit.map((item) => {
-            this.runPlugin(item, { _init: 'before' });
-        });
-    }
-
-    /**
-     * plugins called after current running plugin
-     */
-    pluginAfterInit() {
-        // make sure current main command is not in queue
-        config.afterInit = this.uniqueCmds(config.afterInit);
-
-        config.afterInit.map((item) => {
-            this.runPlugin(item, { _init: 'after' });
-        });
-    }
-
     init() {
-        this.pluginBeforeInit();
         this.initPlugin();
-        this.pluginAfterInit();
     }
 }
 

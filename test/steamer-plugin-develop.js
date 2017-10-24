@@ -6,8 +6,7 @@ const fs = require('fs-extra'),
     sinon = require('sinon'),
     SteamerDevelop = require('../bin/libs/steamer-plugin-develop');
 
-
-describe.only('steamer-plugin-develop', function() {
+describe('steamer-plugin-develop', function() {
 
     let pluginPath = path.join(process.cwd(), './test/develop/plugin/'),
         kitPath = path.join(process.cwd(), './test/develop/kit/');
@@ -29,15 +28,13 @@ describe.only('steamer-plugin-develop', function() {
         });
 
         let downloadGitStub = sinon.stub(develop, 'downloadGit').callsFake(function(url, projectPath, option, cb) {
-                fs.copySync(path.join(path.join(process.cwd(), '../../template/plugin')), path.join(pluginPath, 'steamer-plugin-tool'));
-                cb(null);
-            }),
-            logSub = sinon.stub(develop, 'log');
+            fs.copySync(path.join(path.join(process.cwd(), '../../template/plugin')), path.join(pluginPath, 'steamer-plugin-tool'));
+            cb(null);
+        });
 
         develop.init();
 
         downloadGitStub.restore();
-        logSub.restore();
 
         process.chdir('./../../../');
 
@@ -54,19 +51,33 @@ describe.only('steamer-plugin-develop', function() {
         });
 
         let downloadGitStub = sinon.stub(develop, 'downloadGit').callsFake(function(url, projectPath, option, cb) {
-                fs.copySync(path.join(path.join(process.cwd(), '../../template/kit')), path.join(kitPath, 'steamer-tool'));
-                cb(null);
-            }),
-            logSub = sinon.stub(develop, 'log');
+            fs.copySync(path.join(path.join(process.cwd(), '../../template/kit')), path.join(kitPath, 'steamer-tool'));
+            cb(null);
+        });
 
         develop.init();
 
         downloadGitStub.restore();
-        logSub.restore();
 
         process.chdir('./../../../');
 
         expect(fs.existsSync(path.join(kitPath, './steamer-tool/.steamer/steamer-tool.js'))).to.eql(true);
         expect(fs.readFileSync(path.join(process.cwd(), './test/template/result/kit/package.json'), 'utf8')).to.eql(fs.readFileSync(path.join(kitPath, './steamer-tool/package.json'), 'utf8'));
+    });
+
+    it('help', function() {
+
+        let develop = new SteamerDevelop({
+            help: true
+        });
+
+        let printUsageStub = sinon.stub(develop, 'printUsage');
+
+        develop.help();
+
+        expect(printUsageStub.calledWith('help you check steamer running environment!', 'develop')).to.eql(true);
+        expect(printUsageStub.calledOnce).to.eql(true);
+        printUsageStub.restore();
+
     });
 });

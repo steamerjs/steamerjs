@@ -65,4 +65,19 @@ describe('steamer-plugin-update', function() {
         });
     });
 
+    it('help', function() {
+        let update = new SteamerUpdate({
+            help: true
+        });
+
+        let printUsageStub = sinon.stub(update, 'printUsage');
+
+        update.help();
+
+        expect(printUsageStub.calledWith('update steamerjs commands and starterkits', 'update')).to.eql(true);
+        expect(printUsageStub.calledOnce).to.eql(true);
+
+        printUsageStub.restore();
+    });
+
 });

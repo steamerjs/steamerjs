@@ -1,25 +1,26 @@
-"use strict";
+'use strict';
 
-const pluginutils = require('steamer-pluginutils');
+const SteamerPlugin = require('steamer-plugin');
 
-function ExamplePlugin(argv) {
-	this.argv = argv;
-	this.utils = new pluginutils("steamer-plugin-example");
+class ExamplePlugin extends SteamerPlugin {
+    constructor(args) {
+        super(args);
+        this.argv = args;
+        this.pluginName = 'steamer-plugin-example';
+        this.description = 'steamer plugin example';
+    }
+
+    init() {
+        this.info('This is plugin example.');
+    }
+
+    onExit() {
+        this.info('This is the end of plugin example');
+    }
+
+    help() {
+        this.printUsage('steamer plugin example help', 'example');
+    }
 }
-
-ExamplePlugin.prototype.init = function() {
-	console.log(this.argv);
-};
-
-ExamplePlugin.prototype.help = function() {
-	this.utils.printUsage('steamer plugin example', 'example');
-	this.utils.printOption([
-		{
-			option: "list",
-			alias: "l",
-			description: "list examples"
-		},
-	]);
-};
 
 module.exports = ExamplePlugin;

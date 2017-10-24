@@ -37,4 +37,19 @@ describe('steamer-plugin-list', function() {
         readdirSyncStub.restore();
         logSub.restore();
     });
+
+    it('help', function() {
+        let list = new SteamerList({
+            help: true
+        });
+
+        let printUsageStub = sinon.stub(list, 'printUsage');
+
+        list.help();
+
+        expect(printUsageStub.calledWith('list all available commands', 'list')).to.eql(true);
+        expect(printUsageStub.calledOnce).to.eql(true);
+
+        printUsageStub.restore();
+    });
 });

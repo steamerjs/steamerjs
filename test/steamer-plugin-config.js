@@ -143,4 +143,21 @@ describe('steamer-plugin-config', function() {
         log.restore();
     });
 
+    it('help', function() {
+        let sConfig = new SteamerConfig({
+            help: true
+        });
+
+        let printUsageStub = sinon.stub(sConfig, 'printUsage'),
+            printOptionstUB = sinon.stub(sConfig, 'printOption');
+
+        sConfig.help();
+
+        expect(printUsageStub.calledWith('steamer config manager', 'config')).to.eql(true);
+        expect(printUsageStub.calledOnce).to.eql(true);
+
+        printUsageStub.restore();
+        printOptionstUB.restore();
+    });
+
 });

@@ -148,7 +148,7 @@ class DevelopPlugin extends SteamerPlugin {
     }
 
     help() {
-        this.utils.printUsage('help you check steamer running environment!', 'develop');
+        this.printUsage('help you check steamer running environment!', 'develop');
     }
 }
 

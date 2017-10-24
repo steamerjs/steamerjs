@@ -49,13 +49,13 @@
     "cross-spawn": "^5.1.0",
     "download-git-repo": "^1.0.1",
     "inquirer": "^3.3.0",
-    "klaw-sync": "^3.0.0",
+    "klaw-sync": "^3.0.2",
     "lodash": "^4.17.4",
     "log-symbols": "^2.1.0",
     "npm-check": "^5.4.5",
     "semver": "^5.4.1",
-    "steamer-plugin": "0.0.2",
-    "yargs": "^9.0.1"
+    "steamer-plugin": "0.0.3",
+    "yargs": "^10.0.3"
   },
   "engines": {
     "node": ">=6.4.0"
