@@ -1,6 +1,6 @@
-.DS_Store
 node_modules
+coverage
+.DS_Store
 npm-debug*.log
 .idea
-dist
 coverage
