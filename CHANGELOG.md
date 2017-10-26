@@ -1,3 +1,7 @@
+## 2.0.2
+	- 更新插件内核 steamer-plugin
+	- 将 npm-check 临时更换为 npm-check-steamer
+
 ## 1.5.0
     - 升级 steamer-pluginutils
 

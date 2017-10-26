@@ -1,6 +1,6 @@
 {
   "name": "steamerjs",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {
@@ -52,7 +52,7 @@
     "klaw-sync": "^3.0.2",
     "lodash": "^4.17.4",
     "log-symbols": "^2.1.0",
-    "npm-check": "^5.4.5",
+    "npm-check-steamer": "^5.4.5",
     "semver": "^5.4.1",
     "steamer-plugin": "^1.0.0",
     "yargs": "^10.0.3"
