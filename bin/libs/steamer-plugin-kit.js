@@ -680,7 +680,7 @@ class KitPlugin extends SteamerPlugin {
         kits = this.addOfficialKits(kits);
 
         if (kits[0].type !== 'separator') {
-            kits.unshift(new inquirer.Separator('Local installed Starter Kits:'));
+            kits.unshift(new inquirer.Separator('* Local installed Starter Kits:'));
         }
 
         inquirer.prompt([{
@@ -711,7 +711,7 @@ class KitPlugin extends SteamerPlugin {
 
     addOfficialKits(kits) {
 
-        kits.push(new inquirer.Separator('Other official Starter Kits:'));
+        kits.push(new inquirer.Separator('* Other official Starter Kits:'));
 
         let officialKits = [
             {
