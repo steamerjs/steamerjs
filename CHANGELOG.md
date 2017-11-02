@@ -1,3 +1,7 @@
+## 2.0.4
+	- 将npm-check-steamer 正式更换成 npm-check 最新版
+	- 更新 steamer-plugin-kit
+
 ## 2.0.2
 	- 更新插件内核 steamer-plugin
 	- 将 npm-check 临时更换为 npm-check-steamer

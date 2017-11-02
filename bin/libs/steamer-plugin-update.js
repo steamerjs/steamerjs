@@ -1,7 +1,7 @@
 'use strict';
 
 const SteamerPlugin = require('steamer-plugin'),
-    npmCheck = require('npm-check-steamer'),
+    npmCheck = require('npm-check'),
     semVer = require('semver'),
     inquirer = require('inquirer'),
     spawn = require('cross-spawn'),

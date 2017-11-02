@@ -88,6 +88,28 @@ class KitPlugin extends SteamerPlugin {
 
         let config = null;
 
+        // as a function api
+        if (argvs.hasOwnProperty('webserver') && argvs.hasOwnProperty('cdn')) {
+            config = _.merge({}, {
+                webserver: argvs.webserver || '//localhost:9000/',
+                cdn: argvs.webserver || '//localhost:8000/',
+                port: argvs.port || 9000,
+            });
+
+            // copy template files
+            this.copyFiles(kitPath, cpyFiles, folder, config);
+
+            this.copyPkgJson(folder, 'install');
+
+            // create config file, for example in ./.steamer/steamer-plugin-kit.js
+            this.createPluginConfig({
+                kit: kit,
+            }, folder);
+
+            return path.resolve(folder);
+        }
+
+        // interactive
         inquirerConfig.push({
             type: 'input',
             name: 'npm',
