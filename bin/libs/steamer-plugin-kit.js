@@ -92,7 +92,7 @@ class KitPlugin extends SteamerPlugin {
         if (argvs.hasOwnProperty('webserver') && argvs.hasOwnProperty('cdn')) {
             config = _.merge({}, {
                 webserver: argvs.webserver || '//localhost:9000/',
-                cdn: argvs.webserver || '//localhost:8000/',
+                cdn: argvs.cdn || '//localhost:8000/',
                 port: argvs.port || 9000,
             });
 
@@ -550,23 +550,19 @@ class KitPlugin extends SteamerPlugin {
             kit = localConfig.kit || null,
             folder = path.resolve();
 
-        // if .steamer/steamer-plugin-kit.js not exist
-        // let kitConfigPath = path.join(process.cwd(), './.steamer/steamer-plugin-kit.js');
-
-        this.checkConfigExist(localConfig);
-
-        // if (!this.fs.existsSync(kitConfigPath)) {
+        // this.checkConfigExist(localConfig);
 
         let pkgJsonPath = path.join(process.cwd(), 'package.json');
 
-        if (this.fs.existsSync(pkgJsonPath)) {
+        // 如果 localConfig 为空，则创建，兼容直接 git clone 脚手架的情况
+        if (this.fs.existsSync(pkgJsonPath) && !Object.keys(localConfig).length) {
             this.pkgJson = require(path.join(process.cwd(), 'package.json')) || {};
 
-            this.createPluginConfig({
-                kit: this.pkgJson.name,
-            }, process.cwd());
+            localConfig.kit = this.pkgJson.name;
+            localConfig.version = this.pkgJson.version;
+
+            this.createPluginConfig(localConfig, process.cwd());
         }
-        // }
 
         if (!localConfig.template || !localConfig.template.src || !localConfig.template.dist) {
             inquirer.prompt([{
