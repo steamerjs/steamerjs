@@ -6,7 +6,6 @@
  */
 
 const path = require('path'),
-    fs = require('fs-extra'),
     spawnSync = require('child_process').spawnSync,
     SteamerPlugin = require('steamer-plugin'),
     KitPlugin = require('./steamer-plugin-kit');
@@ -29,15 +28,11 @@ class TeamPlugin extends SteamerPlugin {
         if (isAdd) {
             this.addTeam(isAdd);
         }
-        // console.log();
-        // console.log(this.argv);
-        // console.log();
     }
 
     addTeam(team) {
         this.teamPrefix = (team === 'default') ? 'steamer-team-' : this.teamPrefix;
-        let config = this.readSteamerConfig(),
-            teamPath = path.join(this.getGlobalModules(), `${this.teamPrefix}${team}`),
+        let teamPath = path.join(this.getGlobalModules(), `${this.teamPrefix}${team}`),
             teamConfig = {};
 
         try {
@@ -73,7 +68,6 @@ class TeamPlugin extends SteamerPlugin {
         spawnSync(newConfig.NPM, ['install', '--global', installPlugins], { stdio: 'inherit', shell: true });
 
         let kitPlugin = new KitPlugin({}),
-            kitHomePath = kitPlugin.kitHomePath,
             kitConfigs = kitPlugin.kitOptions;
 
         let cloneAction = [];
