@@ -7,7 +7,6 @@
 
 const path = require('path'),
     fs = require('fs-extra'),
-    Promise = require('bluebird'),
     logSymbols = require('log-symbols'),
     semver = require('semver'),
     childProcess = require('child_process'),

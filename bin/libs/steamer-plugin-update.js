@@ -4,8 +4,7 @@ const SteamerPlugin = require('steamer-plugin'),
     npmCheck = require('npm-check'),
     semVer = require('semver'),
     inquirer = require('inquirer'),
-    spawn = require('cross-spawn'),
-    Promise = require('bluebird');
+    spawn = require('cross-spawn');
 
 class UpdatePlugin extends SteamerPlugin {
     constructor(args) {
@@ -18,7 +17,7 @@ class UpdatePlugin extends SteamerPlugin {
 
     init() {
         this.config = this.readSteamerConfig();
-        this.npm = this.config.npm || 'npm';
+        this.npm = this.config.NPM || 'npm';
         return this.checkUpdate();
     }
 
@@ -70,18 +69,20 @@ class UpdatePlugin extends SteamerPlugin {
     autoSelection(updatePkgs) {
 
         if (!updatePkgs.length) {
-            this.info('All plugins or starterkits are latest.');
+            this.info('All plugins are latest.');
             return;
         }
 
-        this.info('Following plugins or starterkits have latest versions:');
+        this.info('Following plugins have latest versions:');
 
         let pkgs = [];
 
         updatePkgs.map((item, key) => {
             pkgs.push({
-                name: this.chalk.yellow(item.name) + '  ' + this.chalk.white(item.oldVer) + ' > '
-      + this.chalk.white.bold(item.latestVer) + ' ' + this.chalk.blue(item.homepage),
+                name: this.chalk.yellow(item.name)
+                        + '  ' + this.chalk.white(item.oldVer)
+                        + ' > ' + this.chalk.white.bold(item.latestVer)
+                        + ' ' + this.chalk.blue(item.homepage),
                 value: key
             });
         });
@@ -122,7 +123,7 @@ class UpdatePlugin extends SteamerPlugin {
     }
 
     help() {
-        this.printUsage('update steamerjs commands and starterkits', 'update');
+        this.printUsage('update steamerjs command plugin', 'update');
     }
 
 }
