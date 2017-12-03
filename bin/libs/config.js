@@ -1,3 +1,3 @@
 module.exports = {
-    reserveCmd: ['config', 'develop', 'doctor', 'kit', 'list', 'update'], // reserve commands
+    reserveCmd: ['config', 'develop', 'doctor', 'kit', 'list', 'team', 'update'], // reserve commands
 };

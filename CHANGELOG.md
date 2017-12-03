@@ -1,3 +1,7 @@
+## 3.0.0-beta.1
+    - 新增 steamer-plugin-team 团队配置插件
+    - 更新 steamer-plugin-kit 安装脚手架方式，从 npm 更改为 git
+
 ## 2.0.6 
     - 更新依赖
 

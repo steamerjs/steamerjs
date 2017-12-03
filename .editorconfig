@@ -10,8 +10,8 @@ indent_style=space
 indent_size=2
 
 [{*.applejs,*.js}]
-indent_style=tab
-tab_width=4
+indent_style=space
+indent_size=4
 
 [{.analysis_options,*.yml,*.yaml}]
 indent_style=space

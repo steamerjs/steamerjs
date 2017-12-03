@@ -8,13 +8,14 @@ const path = require('path'),
     _ = require('lodash'),
     SteamerPlugin = require('steamer-plugin');
 
-const pkgPrefix = 'steamer-plugin-';
 const config = require('./libs/config');
 
 class Commander extends SteamerPlugin {
     constructor(args) {
         super();
         this.argv = args || yargv;
+        this.config = this.readSteamerConfig();
+        this.pkgPrefix = this.config.PLUGIN_PREFIX || 'steamer-plugin-';
         this.pluginName = 'steamerjs';
         this.instance = null; // command instance
     }
@@ -70,7 +71,7 @@ class Commander extends SteamerPlugin {
         let reserve = config.reserveCmd;
 
         reserve = reserve.map((item) => {
-            return pkgPrefix + item;
+            return this.pkgPrefix + item;
         });
 
         if (reserve.indexOf(cmd) > -1) {
@@ -88,7 +89,7 @@ class Commander extends SteamerPlugin {
      */
     runPlugin(pluginName, argv = {}) {
         let Plugin = null,
-            pkg = pkgPrefix + pluginName;
+            pkg = this.pkgPrefix + pluginName;
 
         try {
             pkg = this.reserveCmds(pkg);
