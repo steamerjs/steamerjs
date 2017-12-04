@@ -36,7 +36,7 @@ class DoctorPlugin extends SteamerPlugin {
         super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-doctor';
-        this.description = 'detect steamerjs problems';
+        this.description = require('./config').descriptions.doctor;
         this.baseVer = '6.4.0';
     }
 
@@ -85,7 +85,7 @@ class DoctorPlugin extends SteamerPlugin {
     }
 
     help() {
-        this.printUsage('help you check steamer running environment!', 'doctor');
+        this.printUsage(this.description, 'doctor');
     }
 }
 

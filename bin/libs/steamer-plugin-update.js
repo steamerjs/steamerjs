@@ -11,7 +11,7 @@ class UpdatePlugin extends SteamerPlugin {
         super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-update';
-        this.description = 'update steamerjs commands and starterkits';
+        this.description = require('./config').descriptions.update;
         this.npmCheck = npmCheck;
     }
 
@@ -123,7 +123,7 @@ class UpdatePlugin extends SteamerPlugin {
     }
 
     help() {
-        this.printUsage('update steamerjs command plugin', 'update');
+        this.printUsage(this.description, 'update');
     }
 
 }

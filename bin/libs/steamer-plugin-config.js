@@ -8,7 +8,7 @@ class ConfigPlugin extends SteamerPlugin {
         super(args);
         this.argv = args;
         this.pluginName = 'steamerjs';
-        this.description = 'set steamerjs config';
+        this.description = require('./config').descriptions.config;
     }
 
     /**
@@ -108,7 +108,7 @@ class ConfigPlugin extends SteamerPlugin {
     }
 
     help() {
-        this.printUsage('steamer config manager', 'config');
+        this.printUsage(this.description, 'config');
         this.printOption([
             {
                 option: 'list',

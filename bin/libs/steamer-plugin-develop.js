@@ -13,7 +13,7 @@ class DevelopPlugin extends SteamerPlugin {
         super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-develop';
-        this.description = 'develop steamer plugins and starterkits';
+        this.description = require('./config').descriptions.develop;
         this.config = this.readSteamerConfig();
         this.pluginPrefix = this.config.PLUGIN_PREFIX || 'steamer-plugin-';
         this.kitPrefix = this.config.KIT_PREFIX || 'steamer-kit-';
@@ -60,6 +60,7 @@ class DevelopPlugin extends SteamerPlugin {
                     this.error(err);
                 }
                 else {
+                    this.fs.removeSync(path.join(projectPath, '.git'));
                     this.processPlugin(projectPath, plugin);
                     this.info(`Installation success! \nYou can develop the plugin inside ${projectPath}`);
                 }
@@ -123,6 +124,7 @@ class DevelopPlugin extends SteamerPlugin {
                     this.error(err);
                 }
                 else {
+                    this.fs.removeSync(path.join(projectPath, '.git'));
                     this.processKit(projectPath, kit);
                     this.info(`Installation success! \nYou can develop the starterkit inside ${projectPath}`);
                 }
@@ -172,6 +174,7 @@ class DevelopPlugin extends SteamerPlugin {
                     this.error(err);
                 }
                 else {
+                    this.fs.removeSync(path.join(projectPath, '.git'));
                     this.processTeam(projectPath, team);
                     this.info(`Installation success! \nYou can develop the team config inside ${projectPath}`);
                 }
@@ -211,7 +214,7 @@ class DevelopPlugin extends SteamerPlugin {
     }
 
     help() {
-        this.printUsage('help you check steamer running environment!', 'develop');
+        this.printUsage(this.description, 'develop');
         this.printOption([
             {
                 option: 'plugin',

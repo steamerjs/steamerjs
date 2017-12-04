@@ -58,6 +58,7 @@
     "semver": "^5.4.1",
     "simple-git": "^1.84.0",
     "steamer-plugin": "^1.0.0",
+    "steamer-team-default": "^1.0.0",
     "yargs": "^10.0.3"
   },
   "engines": {

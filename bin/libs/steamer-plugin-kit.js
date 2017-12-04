@@ -27,7 +27,7 @@ class KitPlugin extends SteamerPlugin {
         super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-kit';
-        this.description = 'manage starterkits';
+        this.description = require('./config').descriptions.kit;
 
         this.prefix = 'steamer-';
         this.kitHomePath = path.join(this.getGlobalHome(), '.steamer', 'starterkits');
@@ -388,10 +388,12 @@ class KitPlugin extends SteamerPlugin {
     }
 
     list() {
+        this.log('You can use following starterkits: ');
         let kits = this.kitOptions.list;
         Object.keys(kits).forEach((key) => {
             let kit = kits[key];
-            this.warn(this.chalk.bold(`* ${key}@${kit.currentVersion}`));
+            this.green(this.chalk.bold(`* ${key}`));
+            this.log(`    - ver: ${kit.currentVersion}`);
             this.log(`    - des: ${kit.description}`);
             this.log(`    - url: ${kit.url}`);
         });
@@ -506,7 +508,7 @@ class KitPlugin extends SteamerPlugin {
      * [help]
      */
     help() {
-        this.printUsage('steamer kit manager', 'kit');
+        this.printUsage(this.description, 'kit');
         this.printOption([
             // {
             //     option: 'list',
