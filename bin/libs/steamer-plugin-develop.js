@@ -212,6 +212,23 @@ class DevelopPlugin extends SteamerPlugin {
 
     help() {
         this.printUsage('help you check steamer running environment!', 'develop');
+        this.printOption([
+            {
+                option: 'plugin',
+                alias: 'p',
+                description: 'generate template for plugin development'
+            },
+            {
+                option: 'kit',
+                alias: 'k',
+                description: 'generate template for starterkit development'
+            },
+            {
+                option: 'team',
+                alias: 't',
+                description: 'generate template for team config development'
+            }
+        ]);
     }
 }
 
