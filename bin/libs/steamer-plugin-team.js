@@ -6,7 +6,9 @@
  */
 
 const path = require('path'),
-    spawnSync = require('child_process').spawnSync,
+    spawn = require('cross-spawn'),
+    logSymbols = require('log-symbols'),
+    ora = require('ora'),
     SteamerPlugin = require('steamer-plugin'),
     KitPlugin = require('./steamer-plugin-kit');
 
@@ -43,7 +45,7 @@ class TeamPlugin extends SteamerPlugin {
                 teamConfig = require(`${this.teamPrefix}${team}`);
             }
             else {
-                return this.error('The team configuration is not found.');
+                return this.error(`The team configuration '${this.teamPrefix}${team}' is not found.\nPlease use npm install -g ${this.teamPrefix}${team} to install it first.`);
             }
         }
 
@@ -54,8 +56,8 @@ class TeamPlugin extends SteamerPlugin {
             afterInstall = teamConfig.afterInstall || emptyFunc;
 
         beforeInstall();
-        this.info(`Your team is \'${team}\'`);
-        this.info('You will use \'npm\' as your npm command');
+        this.info(`Your team is \'${newConfig.TEAM}\'`);
+        this.info(`You will use \'${newConfig.NPM}\' as your npm command`);
 
 
         this.createSteamerConfig(newConfig, {
@@ -64,9 +66,20 @@ class TeamPlugin extends SteamerPlugin {
         });
 
         let installPlugins = plugins.join(' ');
-        this.info(`Installing ${installPlugins}`);
-        spawnSync(newConfig.NPM, ['install', '--global', installPlugins], { stdio: 'inherit', shell: true });
+        
+        this.log('\n');
+        this.info(`Installing plugins: `);
+        let result = spawn.sync(newConfig.NPM, ['install', '--global', installPlugins], { stdio: 'inherit' });
+    
+        if (!result.error) {
+            this.log(`${logSymbols.success} ${installPlugins} installed`);
+        }
+        else {
+            this.log(`${logSymbols.error} ${installPlugins} installed error: ${result.error}`);
+        }
 
+        this.log('\n');
+        this.info(`Installing starterkits: `);
         let kitPlugin = new KitPlugin({}),
             kitConfigs = kitPlugin.kitOptions;
 
@@ -79,7 +92,7 @@ class TeamPlugin extends SteamerPlugin {
                 cloneAction.push(kitPlugin.clone(repo));
             }
             else {
-                this.info(`${kit} has been installed`);
+                this.log(`${logSymbols.success} ${kit}@${kitConfigs.list[kit].latestVersion} installed`);
             }
         });
 
@@ -95,6 +108,12 @@ class TeamPlugin extends SteamerPlugin {
 
     help() {
         this.printUsage('help you initiate any config, plugins or starterkits for your team', 'teamer');
+        this.printOption([
+            {
+                option: 'add',
+                description: 'add team config and install plugins or starterkits'
+            }
+        ]);
     }
 }
 

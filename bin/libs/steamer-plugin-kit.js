@@ -16,7 +16,8 @@ const SteamerPlugin = require('steamer-plugin'),
      module.exports = {
         'plugin': 'steamer-plugin-kit',
         'config': {
-            'kit': 'steamer-react'
+            'kit': 'steamer-react',
+            'version:': '1.0.0'
         }
     }
 */
@@ -27,17 +28,12 @@ class KitPlugin extends SteamerPlugin {
         this.argv = args;
         this.pluginName = 'steamer-plugin-kit';
         this.description = 'manage starterkits';
-        // this.globalNodeModules = this.getGlobalModules();
 
         this.prefix = 'steamer-';
         this.kitHomePath = path.join(this.getGlobalHome(), '.steamer', 'starterkits');
         this.kitOptionsPath = path.join(this.kitHomePath, 'starterkits.js');
         this.spinner = ora('Loading unicorns');
         this.kitOptions = this.getKitOptions();
-
-        this.pkgJson = {};
-        // 旧的项目pkgjson内容，在脚手架更新的时候有用。
-        this.oldPkgJson = {};
     }
 
     init(argv) {
@@ -49,9 +45,6 @@ class KitPlugin extends SteamerPlugin {
             isGlobal = argvs.global || argvs.g,
             isRemove = argvs.remove,
             isList = argvs.list || argvs.l;
-
-        // this.clone('https://github.com/steamerjs/steamer-simple.git');
-        // this.clone()
 
         if (isAdd) {
             this.add(isAdd, isTag, isAlias);
@@ -72,7 +65,6 @@ class KitPlugin extends SteamerPlugin {
 
     add(repo, tag, alias) {
         this.clone(repo, tag, alias).then(() => {
-            // console.log(this.kitOptions)
             this.writeKitOptions(this.kitOptions);
         }).catch((e) => {
             this.error(e.stack);
@@ -211,9 +203,9 @@ class KitPlugin extends SteamerPlugin {
                                 versions: versions
                             });
                             resolve();
-                        });  
-                })
-            });
+                        });
+                });
+        });
     }
 
     upgrade(kit) {
@@ -503,10 +495,6 @@ class KitPlugin extends SteamerPlugin {
 
     createPluginConfig(conf, folder) {
         let config = conf;
-
-        if (!config.version) {
-            config.version = this.pkgJson.version;
-        }
 
         this.createConfig(config, {
             folder: folder,
