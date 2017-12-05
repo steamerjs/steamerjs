@@ -73,7 +73,7 @@ class Commander extends SteamerPlugin {
         reserve = reserve.map((item) => {
             return this.pkgPrefix + item;
         });
-
+        // TODO 更换prefix时候的命名冲突
         if (reserve.indexOf(cmd) > -1) {
             returnCmd = './libs/' + cmd;
             return returnCmd;

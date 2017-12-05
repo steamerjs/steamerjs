@@ -14,10 +14,10 @@ class DevelopPlugin extends SteamerPlugin {
         this.argv = args;
         this.pluginName = 'steamer-plugin-develop';
         this.description = require('./config').descriptions.develop;
-        this.config = this.readSteamerConfig();
-        this.pluginPrefix = this.config.PLUGIN_PREFIX || 'steamer-plugin-';
-        this.kitPrefix = this.config.KIT_PREFIX || 'steamer-kit-';
-        this.teamPrefix = this.config.TEAM_PREFIX || 'steamer-team-';
+        this.config = this.readSteamerDefaultConfig();
+        this.pluginPrefix = this.config.PLUGIN_PREFIX;
+        this.kitPrefix = this.config.KIT_PREFIX;
+        this.teamPrefix = this.config.TEAM_PREFIX;
         this.git = git;
     }
 

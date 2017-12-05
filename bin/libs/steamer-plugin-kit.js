@@ -475,7 +475,7 @@ class KitPlugin extends SteamerPlugin {
             .checkout(ver, () => {
                 if (this.fs.existsSync(kitConfigPath)) {
                     kitConfig = require(kitConfigPath);
-                    files = kitConfig.files;
+                    files = kitConfig.installFiles || kitConfig.files;
                     files.push('package.json');
                 }
                 else {

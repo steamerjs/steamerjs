@@ -4,11 +4,9 @@ const _ = require('lodash'),
 let plugin = new SteamerPlugin({});
 plugin.pluginName = 'steamerjs';
 
-let config = plugin.readSteamerConfig(),
-    defaultConfig = require('./default.js'),
-    newConfig = _.merge({}, defaultConfig, config);
+let config = plugin.readSteamerDefaultConfig();
 
-plugin.createSteamerConfig(newConfig, {
+plugin.createSteamerConfig(config, {
     overwrite: true,
     isGlobal: true
 });

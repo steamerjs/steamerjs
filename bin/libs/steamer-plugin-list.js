@@ -10,8 +10,8 @@ class ListPlugin extends SteamerPlugin {
         this.argv = args;
         this.pluginName = 'steamer-plugin-list';
         this.description = require('./config').descriptions.list;
-        this.config = this.readSteamerConfig();
-        this.pluginPrefix = this.config.PLUGIN_PREFIX || 'steamer-plugin-';
+        this.config = this.readSteamerDefaultConfig();
+        this.pluginPrefix = this.config.PLUGIN_PREFIX;
     }
 
     list() {

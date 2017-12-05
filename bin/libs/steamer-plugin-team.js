@@ -18,8 +18,8 @@ class TeamPlugin extends SteamerPlugin {
     constructor(args) {
         super(args);
         this.argv = args;
-        this.config = this.readSteamerConfig();
-        this.teamPrefix = this.config.TEAM_PREFIX || 'steamer-team-';
+        this.config = this.readSteamerDefaultConfig();
+        this.teamPrefix = this.config.TEAM_PREFIX;
         this.pluginName = 'steamer-plugin-team';
         this.description = require('./config').descriptions.team;
     }
@@ -107,11 +107,11 @@ class TeamPlugin extends SteamerPlugin {
     }
 
     help() {
-        this.printUsage(this.description, 'teamer');
+        this.printUsage(this.description, 'team');
         this.printOption([
             {
                 option: 'add',
-                description: 'add team config and install plugins or starterkits'
+                description: 'add config and install plugins or starterkits for your team'
             }
         ]);
     }
