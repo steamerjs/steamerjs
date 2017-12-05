@@ -9,15 +9,14 @@ const SteamerPlugin = require('steamer-plugin'),
     _ = require('lodash'),
     git = require('simple-git'),
     compareVer = require('compare-versions'),
-    spawnSync = require('child_process').spawnSync;
+    spawn = require('cross-spawn');
 
 /**
  * // .steamer/steamer.plugin-kit.js
      module.exports = {
         'plugin': 'steamer-plugin-kit',
         'config': {
-            'kit': 'steamer-react',
-            'version:': '1.0.0'
+            'kit': 'steamer-react'
         }
     }
 */
@@ -27,20 +26,22 @@ class KitPlugin extends SteamerPlugin {
         super(args);
         this.argv = args;
         this.pluginName = 'steamer-plugin-kit';
-        this.description = require('./config').descriptions.kit;
+        this.description = 'manage starterkits';
+        // this.globalNodeModules = this.getGlobalModules();
 
-        this.prefix = 'steamer-';
+        this.config = this.readSteamerConfig();
         this.kitHomePath = path.join(this.getGlobalHome(), '.steamer', 'starterkits');
         this.kitOptionsPath = path.join(this.kitHomePath, 'starterkits.js');
         this.spinner = ora('Loading unicorns');
         this.kitOptions = this.getKitOptions();
+        this.ignoreFiles = ['.git', '.svn'];
     }
 
     init(argv) {
         let argvs = argv || this.argv, // command argv
             isAdd = argvs.add,
             isTag = argvs.tag,
-            isUpgrade = argvs.upgrade,
+            isUpdate = argvs.update || argvs.u,
             isAlias = argvs.alias || null,
             isGlobal = argvs.global || argvs.g,
             isRemove = argvs.remove,
@@ -49,8 +50,8 @@ class KitPlugin extends SteamerPlugin {
         if (isAdd) {
             this.add(isAdd, isTag, isAlias);
         }
-        else if (isUpgrade) {
-            this.upgrade(isUpgrade, isGlobal);
+        else if (isUpdate) {
+            this.update(isGlobal);
         }
         else if (isRemove) {
             this.remove(isRemove);
@@ -59,12 +60,13 @@ class KitPlugin extends SteamerPlugin {
             this.list();
         }
         else {
-            this.install();
+            this.install()
         }
     }
 
     add(repo, tag, alias) {
         this.clone(repo, tag, alias).then(() => {
+            // console.log(this.kitOptions)
             this.writeKitOptions(this.kitOptions);
         }).catch((e) => {
             this.error(e.stack);
@@ -74,7 +76,7 @@ class KitPlugin extends SteamerPlugin {
     clone(repo, tag = null, alias) {
         let nameSpace = this.getNameSpace(repo),
             kitName = alias || this.getKitName(nameSpace),
-            localPath = path.join(this.kitHomePath, kitName);
+            localPath = path.join(this.kitHomePath , kitName);
 
         let opt = {
             repo,
@@ -97,7 +99,7 @@ class KitPlugin extends SteamerPlugin {
                 };
             }
             if (opt.tag) {
-                return this.cloneTag(opt);
+                return this.cloneTag(opt)
             }
             else {
                 return this.cloneLatest(opt);
@@ -135,18 +137,17 @@ class KitPlugin extends SteamerPlugin {
                     git(localPath)
                         .silent(true)
                         .branch([pkgJson.version], (err) => {
-                            err && this.spinFail(kitName, err);
+                            err && this.spinFail(kitName, err)
                         })
                         .checkout(pkgJson.version, (err) => {
                             if (err) {
                                 this.spinFail(kitName, err);
                             }
                             else {
-                                this.spinSuccess(kitName, pkgJson.version);
+                                this.spinSuccess(`${kitName}@${pkgJson.version} installed`);
                             }
                         })
                         .branch(['-D', 'master'], (err) => {
-                            err && this.spinFail(kitName, err);
                             resolve();
                         });
                 });
@@ -177,11 +178,11 @@ class KitPlugin extends SteamerPlugin {
                     let isGitFolderExists = this.fs.existsSync(path.join(localPath, '.git'));
                     
                     if (!isGitFolderExists) {
-                        spawnSync('git', ['init'], { cwd: localPath });
-                        spawnSync('git', ['remote', 'add', 'origin', repo], { cwd: localPath });
+                        spawn.sync('git', ['init'], { cwd: localPath });
+                        spawn.sync('git', ['remote', 'add', 'origin', repo], { cwd: localPath });
                     }
                 })
-                .fetch(['origin', `refs/tags/${tag}:refs/tags/${tag}`], (err) => {
+                .fetch(['origin', `refs/tags/${tag}:refs/tags/${tag}`, '--depth=1'], (err) => {
                     if (err) {
                         return this.spinFail(kitName, err);
                     }
@@ -192,7 +193,7 @@ class KitPlugin extends SteamerPlugin {
                             err && this.spinFail(kitName, err);
                         })
                         .checkout(`${version}`, () => {
-                            this.spinSuccess(kitName, version);
+                            this.spinSuccess(`${kitName}@${version} installed`);
                             let pkgJson = this.getPkgJson(localPath),
                                 versions = this.addVersion(this.kitOptions.list[kitName].versions, pkgJson.version);
         
@@ -203,27 +204,156 @@ class KitPlugin extends SteamerPlugin {
                                 versions: versions
                             });
                             resolve();
-                        });
-                });
-        });
+                        });  
+                })
+            });
     }
 
-    upgrade(kit) {
-        if (kit) {
-            this.upgradeGlobal(kit).then((newVer) => {
-                if (newVer) {
-                    this.kitOptions.list[kit].versions = this.addVersion(this.kitOptions.list[kit].versions, newVer);
-                    this.kitOptions.list[kit].currentVersion = newVer;
-                    this.kitOptions.list[kit].latestVersion = newVer;
-                    this.writeKitOptions(this.kitOptions);
-                }
-            }).catch((e) => {
-                this.error(e.stack);
-            });
+    update(isGlobal) {
+        if (isGlobal) {
+            this.updateGlobal();
+        }
+        else if (!isGlobal) {
+            this.updateLocal();
         }
     }
 
-    upgradeGlobal(kitName) {
+    updateLocal() {    
+        let pluginConfig = this.readConfig();
+        if (!pluginConfig.hasOwnProperty('kit')) {
+            return this.error('.steamer/steamer-plugin-kit.js does not have current project kit value.');
+        }
+
+        let kit = pluginConfig.kit,
+            curVer = pluginConfig.version;
+
+        if (!this.kitOptions.list.hasOwnProperty(kit)) {
+            return this.error(`Please install ${kit} starterkit before you update.`);
+        }
+
+        let kitOptions = this.kitOptions.list[kit],
+            kitPath = kitOptions.path;
+
+        if (compareVer(curVer, kitOptions.latestVersion) >= 0) {
+            return this.info('Your project has already used the latest starterkit.');
+        }
+        
+        let keepFiles = ['src', 'config', 'tools'];
+
+        let files = this.fs.readdirSync(kitPath);
+        files = files.filter((item) => {
+            return !this.ignoreFiles.includes(item);
+        });
+
+        git(kitPath)
+            .checkout(kitOptions.latestVersion, (err) => {
+                if (err) {
+                    return this.error(err);
+                }
+
+                let copyFiles = this.backupFiles(files, keepFiles, kitPath);
+                
+                this.copyUpdateFiles(copyFiles, kitPath);
+        
+                this.copyUpdatePkgJson(kitPath);
+
+                spawn.sync(this.config.NPM, ['install'], { stdio: 'inherit', cwd: process.cwd() });
+
+                this.success(`The project has been updated to ${kitOptions.latestVersion}`);
+            });
+
+        
+    }
+
+    backupFiles(files, keepFiles, kitPath) {
+        files = files.filter((item) => {
+            return !keepFiles.includes(item);
+        });
+
+        let ts = Date.now();
+
+        files.forEach((item) => {
+            this.fs.copySync(path.join(kitPath, item), path.join(process.cwd(), `backup/${ts}`, item));
+        });
+
+        return files;
+    }
+    
+    copyUpdateFiles(files, kitPath) {
+        files = files.filter((item) => {
+            return item !== 'package.json' && item !== 'package-lock.json';
+        });
+
+        files.forEach((item) => {
+            this.fs.copySync(path.join(kitPath, item), path.join(process.cwd(), item));
+        });
+    }
+
+    copyUpdatePkgJson(kitPath) {
+        this.fs.removeSync(path.join(process.cwd(), 'package-lock.json'));
+        let oldPkgJson = require(path.join(process.cwd(), 'package.json')),
+            newPkgJson = require(path.join(kitPath, 'package.json'));
+
+        let pkgJson = _.merge({}, oldPkgJson, {
+            version: newPkgJson.version,
+            dependencies: newPkgJson.dependencies,
+            devDependencies: newPkgJson.devDependencies,
+        });
+
+        this.fs.writeFileSync(path.join(process.cwd(), 'package.json'), JSON.stringify(pkgJson, null, 4), 'utf-8');
+    }
+
+    updateGlobal() {
+        let kits = this.kitOptions.list,
+        questions = [],
+        choices = [];
+
+        Object.keys(kits).forEach((key) => {
+            choices.push({
+                name: `${key} - ${kits[key].description}`,
+                value: key
+            });
+        });
+
+        choices.unshift({
+            name: 'all starterkits',
+            value: 1
+        });
+
+        let updateKits = [],
+            prompt = inquirer.createPromptModule();
+       prompt([{
+            type: 'list',
+            name: 'kit',
+            message: 'Which starterkit do you wanna update: ',
+            choices: choices,
+            pageSize: 100
+        }]).then((answers) => {
+            updateKits = (answers.kit == 1) ?  updateKits.concat(Object.keys(kits)) : [answers.kit];
+            
+            let updateAction = [];
+            updateKits.forEach((kitName) => {
+                let action = this.updateGlobalKit(kitName);
+                updateAction.push(action);
+            });
+
+            return Promise.all(updateAction).then((result) => {
+                result.map((item) => {
+                    let kit = item.kitName,
+                        ver = item.newVer;
+                    this.kitOptions.list[kit].versions = this.addVersion(this.kitOptions.list[kit].versions, ver);
+                    this.kitOptions.list[kit].currentVersion = ver;
+                    this.kitOptions.list[kit].latestVersion = ver;
+                });
+                this.writeKitOptions(this.kitOptions);
+            }).catch((e) => {
+                this.error(e.stack);
+            });
+        });
+
+    }
+
+    updateGlobalKit(kitName) {
         let kits = this.kitOptions.list;
         
         if (!kits.hasOwnProperty(kitName)) {
@@ -259,8 +389,11 @@ class KitPlugin extends SteamerPlugin {
                                 err && this.spinFail(kitName, err);
                             })
                             .branch(['-D', 'master'], () => {
-                                this.spinSuccess(kitName, newVer);
-                                resolve(newVer);
+                                this.spinSuccess(`${kitName}@${newVer} installed`);
+                                resolve({
+                                    kitName,
+                                    newVer
+                                });
                             });
                     }
                     else {
@@ -270,8 +403,11 @@ class KitPlugin extends SteamerPlugin {
                                 err && this.spinFail(kitName, err);
                             })
                             .branch(['-D', 'master'], () => {
-                                this.spinSuccess(kitName, newVer);
-                                resolve();
+                                this.spinSuccess(`${kitName}@${newVer} installed`);
+                                resolve({
+                                    kitName,
+                                    newVer
+                                });
                             });
                     }
                 });
@@ -375,9 +511,9 @@ class KitPlugin extends SteamerPlugin {
         return tag.replace(/[a-zA-Z]+/ig, '');
     }
 
-    spinSuccess(kitName, version) {
+    spinSuccess(msg) {
         this.spinner.stop().succeed([
-            `${kitName}@${version} installed`
+            msg
         ]);
     }
 
@@ -392,7 +528,7 @@ class KitPlugin extends SteamerPlugin {
         let kits = this.kitOptions.list;
         Object.keys(kits).forEach((key) => {
             let kit = kits[key];
-            this.green(this.chalk.bold(`* ${key}`));
+            this.success(this.chalk.bold(`* ${key}`));
             this.log(`    - ver: ${kit.currentVersion}`);
             this.log(`    - des: ${kit.description}`);
             this.log(`    - url: ${kit.url}`);
@@ -454,7 +590,8 @@ class KitPlugin extends SteamerPlugin {
             type: 'list',
             name: 'kit',
             message: 'Which starterkit do you wanna install: ',
-            choices: choices
+            choices: choices,
+            pageSize: 100
         });
     }
 
@@ -468,31 +605,113 @@ class KitPlugin extends SteamerPlugin {
         let kitPath = path.join(this.kitHomePath, kit),
             kitConfigPath = path.join(kitPath, `.steamer/${kit}.js`),
             kitConfig = {},
+            isSteamerKit = false,
             folderPath = path.join(process.cwd(), folder),
+            kitQuestions = [],
             files = [];
-
+       
         git(kitPath)
             .checkout(ver, () => {
+                // 查看是否能获取steamer规范的脚手架配置
                 if (this.fs.existsSync(kitConfigPath)) {
                     kitConfig = require(kitConfigPath);
                     files = kitConfig.installFiles || kitConfig.files;
-                    files.push('package.json');
+                    files.push('package.json'),
+                    kitQuestions = kitConfig.options;
+                    isSteamerKit = true;
                 }
                 else {
-                    files = this.fs.readdirSync();
+                    files = this.fs.readdirSync(kitPath);
                 }
-        
-                files.forEach((item) => {
-                    let srcFiles = path.join(kitPath, item),
-                        destFile = path.join(folderPath, item);
-                    this.fs.copySync(srcFiles, destFile);
-                });
 
+                let isEmpty = this.checkEmpty(folderPath),
+                    overwriteQuestion = [];
+                    
+                if (!isEmpty) {
+                    overwriteQuestion.push({
+                        type: 'text',
+                        name: 'overwrite',
+                        message: 'The foler is not empty, do you wanna overrite?',
+                        default: 'n'
+                    });
+                }
+
+                let prompt = inquirer.createPromptModule();
+                prompt(overwriteQuestion).then((answers) => {
+                    if (!answers.hasOwnProperty('overwrite')
+                        || answers.overwrite && answers.overwrite === 'y') {
+                        this.copyFiles({files, kitQuestions, folderPath, kitPath, kit, ver, isSteamerKit});
+                    }
+                }).catch((e) => {
+                    this.error(e.stack);
+                });
+                
+            });
+    }
+
+    /**
+     * copy starterkit files to project folder
+     */
+    copyFiles(options) {
+        let {
+            files,
+            kitQuestions,
+            folderPath,
+            kitPath,
+            kit,
+            ver,
+            isSteamerKit
+        } = options;
+        // 脚手架相关配置问题
+        let prompt = inquirer.createPromptModule();
+        prompt(kitQuestions).then((answers) => {
+            if (answers.webserver) {
+                this.fs.ensureFileSync(path.join(folderPath, 'config/steamer.config.js'));
+                this.fs.writeFileSync(path.join(folderPath, 'config/steamer.config.js'), 'module.exports = ' + JSON.stringify(answers, null, 4));
+            }
+
+            files = files.filter((item) => {
+                return !this.ignoreFiles.includes(item);
+            });
+
+            files.forEach((item) => {
+                let srcFiles = path.join(kitPath, item),
+                    destFile = path.join(folderPath, item);
+                this.fs.copySync(srcFiles, destFile);
+            });
+
+            if (isSteamerKit) {
                 this.createPluginConfig({
                     kit: kit,
                     version: ver
                 }, folderPath);
+            }
+
+            // 安装项目node_modules包
+            spawn.sync(this.config.NPM, ['install'], { stdio: 'inherit', cwd: folderPath });
+            this.success(`The project is initiated success in ${folderPath}`);
+        }).catch((e) => {
+            this.error(e.stack);
+        });
+        
+    }
+
+    /**
+     * check folder empty or not
+     * @param {*} folderPath 
+     */
+    checkEmpty(folderPath) {
+        // 查看目标目录是否为空
+        if (path.resolve(folderPath) === process.cwd()) {
+            let folderInfo = this.fs.readdirSync(folderPath);
+            folderInfo = folderInfo.filter((item) => {
+                return !this.ignoreFiles.includes(item);
             });
+            return !folderInfo.length;
+        }
+        else {
+            return !this.fs.existsSync(folderPath);
+        }
     }
 
     createPluginConfig(conf, folder) {
@@ -508,25 +727,30 @@ class KitPlugin extends SteamerPlugin {
      * [help]
      */
     help() {
-        this.printUsage(this.description, 'kit');
+        this.printUsage('steamer kit manager', 'kit');
         this.printOption([
-            // {
-            //     option: 'list',
-            //     alias: 'l',
-            //     description: 'list all available starter kits'
-            // },
-            // {
-            //     option: 'install',
-            //     alias: 'i',
-            //     value: '<starter kit> [--path|-p] <project path>',
-            //     description: 'install starter kit'
-            // },
-            // {
-            //     option: 'update',
-            //     alias: 'u',
-            //     value: '[<starter kit>]',
-            //     description: 'update starter kit for project'
-            // }
+            {
+                option: 'list',
+                alias: 'l',
+                description: 'list all available starter kits'
+            },
+            {
+                option: 'add',
+                alias: 'i',
+                value: '[<git repo>|<git repo> --tag <tag name>|--alias <starterkit name>]',
+                description: 'install starter kit'
+            },
+            {
+                option: 'update',
+                alias: 'u',
+                value: '[--global]',
+                description: 'update starter kit for project or update global starterkit'
+            },
+            {
+                option: 'remove',
+                value: '<starterkit name>',
+                description: 'remove starterkit'
+            }
         ]);
     }
 }
