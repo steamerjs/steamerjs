@@ -37,6 +37,12 @@ class TeamPlugin extends SteamerPlugin {
         let teamPath = path.join(this.getGlobalModules(), `${this.teamPrefix}${team}`),
             teamConfig = {};
 
+        if (!this.fs.existsSync(teamPath)) {
+            this.info(`Installing ${this.teamPrefix}${team}`);
+            spawn.sync(this.config.NPM, ['install', '--global', `${this.teamPrefix}${team}`], { stdio: 'inherit' });
+            this.info(`${this.teamPrefix}${team} installed`);
+        }
+
         try {
             teamConfig = require(teamPath);
         }
@@ -52,9 +58,10 @@ class TeamPlugin extends SteamerPlugin {
         let newConfig = this._.merge({}, this.config, teamConfig.config || {}),
             kits = teamConfig.kits || [],
             plugins = teamConfig.plugins || [],
+            tasks = teamConfig.tasks || ['steamer-task-alloyteam'],
             beforeInstall = teamConfig.beforeInstall || emptyFunc,
             afterInstall = teamConfig.afterInstall || emptyFunc;
-
+        
         beforeInstall();
         this.info(`Your team is \'${newConfig.TEAM}\'`);
         this.info(`You will use \'${newConfig.NPM}\' as your npm command`);
@@ -65,11 +72,14 @@ class TeamPlugin extends SteamerPlugin {
             isGlobal: true
         });
 
-        let installPlugins = plugins.join(' ');
-        
+        let installPlugins = plugins.join(' '),
+            installTasks = tasks.join(' ');
+
         this.log('\n');
-        this.info(`Installing plugins: `);
-        let result = spawn.sync(newConfig.NPM, ['install', '--global', installPlugins], { stdio: 'inherit' });
+        this.info(`Installing plugins and tasks: `);
+        let action = ['install', '--global'];
+        action = action.concat(plugins, tasks);
+        let result = spawn.sync(newConfig.NPM, action, { stdio: 'inherit' });
     
         if (!result.error) {
             this.log(`${logSymbols.success} ${installPlugins} installed`);
