@@ -1,8 +1,8 @@
 {
-  "name": "steamer-tool",
+  "name": "steamer-kit-tool",
   "version": "2.0.0",
   "description": "steamer starter kit example",
-  "main": "./.steamer/steamer-tool.js",
+  "main": "./.steamer/steamer-kit-tool.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node ./tools/script.js",
     "dev": "npm run start",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SteamerTeam/steamer-tool.git"
+    "url": "git+https://github.com/SteamerTeam/steamer-kit-tool.git"
   },
   "keywords": [
     "steamer starterkit",
@@ -24,9 +24,9 @@
   "author": "SteamerTeam",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SteamerTeam/steamer-tool/issues"
+    "url": "https://github.com/SteamerTeam/steamer-kit-tool/issues"
   },
-  "homepage": "https://github.com/SteamerTeam/steamer-tool#readme",
+  "homepage": "https://github.com/SteamerTeam/steamer-kit-tool#readme",
   "dependencies": {},
   "devDependencies": {
     "@alloyteam/stylelint-config-standard": "0.0.2",

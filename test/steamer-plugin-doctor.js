@@ -64,7 +64,7 @@ describe('steamer-plugin-doctor', function() {
 
         doctor.help();
 
-        expect(printUsageStub.calledWith('help you check steamer running environment!', 'doctor')).to.eql(true);
+        expect(printUsageStub.calledWith('help you check running environment', 'doctor')).to.eql(true);
         expect(printUsageStub.calledOnce).to.eql(true);
 
         printUsageStub.restore();

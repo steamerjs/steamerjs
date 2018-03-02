@@ -74,7 +74,7 @@ describe('steamer-plugin-update', function() {
 
         update.help();
 
-        expect(printUsageStub.calledWith('update steamerjs commands and starterkits', 'update')).to.eql(true);
+        expect(printUsageStub.calledWith('update command plugins', 'update')).to.eql(true);
         expect(printUsageStub.calledOnce).to.eql(true);
 
         printUsageStub.restore();

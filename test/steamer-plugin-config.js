@@ -153,7 +153,7 @@ describe('steamer-plugin-config', function() {
 
         sConfig.help();
 
-        expect(printUsageStub.calledWith('steamer config manager', 'config')).to.eql(true);
+        expect(printUsageStub.calledWith('config manager', 'config')).to.eql(true);
         expect(printUsageStub.calledOnce).to.eql(true);
 
         printUsageStub.restore();

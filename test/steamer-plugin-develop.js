@@ -27,10 +27,23 @@ describe('steamer-plugin-develop', function() {
             plugin: 'tool'
         });
 
-        let downloadGitStub = sinon.stub(develop, 'downloadGit').callsFake(function(url, projectPath, option, cb) {
-            fs.copySync(path.join(path.join(process.cwd(), '../../template/plugin')), path.join(pluginPath, 'steamer-plugin-tool'));
-            cb(null);
-        });
+        let fakeGit = {
+            git: function(projectPath) {
+                // console.log(projectPath);
+                return this;
+            },
+            silent: function() {
+                return this;
+            },
+            clone: function(pluginTemplateRepo, projectPath, options, cb) {
+                fs.copySync(path.join(path.join(process.cwd(), '../../template/plugin')), path.join(pluginPath, 'steamer-plugin-tool'));
+                cb(null);
+                return this;
+            }
+        };
+
+        let downloadGitStub = sinon.stub(develop, 'git').callsFake(fakeGit.git.bind(fakeGit));
+
 
         develop.init();
 
@@ -50,10 +63,27 @@ describe('steamer-plugin-develop', function() {
             kit: 'tool'
         });
 
-        let downloadGitStub = sinon.stub(develop, 'downloadGit').callsFake(function(url, projectPath, option, cb) {
-            fs.copySync(path.join(path.join(process.cwd(), '../../template/kit')), path.join(kitPath, 'steamer-tool'));
-            cb(null);
-        });
+        // let downloadGitStub = sinon.stub(develop, 'downloadGit').callsFake(function(url, projectPath, option, cb) {
+        //     fs.copySync(path.join(path.join(process.cwd(), '../../template/kit')), path.join(kitPath, 'steamer-tool'));
+        //     cb(null);
+        // });
+
+        let fakeGit = {
+            git: function(projectPath) {
+                // console.log(projectPath);
+                return this;
+            },
+            silent: function() {
+                return this;
+            },
+            clone: function(pluginTemplateRepo, projectPath, options, cb) {
+                fs.copySync(path.join(path.join(process.cwd(), '../../template/kit')), path.join(kitPath, 'steamer-kit-tool'));
+                cb(null);
+                return this;
+            }
+        };
+
+        let downloadGitStub = sinon.stub(develop, 'git').callsFake(fakeGit.git.bind(fakeGit));
 
         develop.init();
 
@@ -61,8 +91,8 @@ describe('steamer-plugin-develop', function() {
 
         process.chdir('./../../../');
 
-        expect(fs.existsSync(path.join(kitPath, './steamer-tool/.steamer/steamer-tool.js'))).to.eql(true);
-        expect(fs.readFileSync(path.join(process.cwd(), './test/template/result/kit/package.json'), 'utf8')).to.eql(fs.readFileSync(path.join(kitPath, './steamer-tool/package.json'), 'utf8'));
+        expect(fs.existsSync(path.join(kitPath, './steamer-kit-tool/.steamer/steamer-kit-tool.js'))).to.eql(true);
+        expect(fs.readFileSync(path.join(process.cwd(), './test/template/result/kit/package.json'), 'utf8')).to.eql(fs.readFileSync(path.join(kitPath, './steamer-kit-tool/package.json'), 'utf8'));
     });
 
     it('help', function() {
@@ -75,7 +105,7 @@ describe('steamer-plugin-develop', function() {
 
         develop.help();
 
-        expect(printUsageStub.calledWith('help you check steamer running environment!', 'develop')).to.eql(true);
+        expect(printUsageStub.calledWith('develop plugins and starterkits', 'develop')).to.eql(true);
         expect(printUsageStub.calledOnce).to.eql(true);
         printUsageStub.restore();
 

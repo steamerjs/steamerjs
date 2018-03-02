@@ -58,12 +58,9 @@ class ListPlugin extends SteamerPlugin {
             return item.indexOf(this.pluginPrefix) === 0;
         });
 
-        files = files.map((item) => {
-            let newItem = item.replace(this.pluginPrefix, '');
-            let pkgJson = require(path.join(globalModules, item, 'package.json'));
-            descriptions[newItem] = pkgJson.description;
-            return newItem;
-        });
+        let des = this.readDescription(files, globalModules);
+        descriptions = des.descriptions;
+        files = des.files;
 
         config.reserveCmd = config.reserveCmd.map((item) => {
             descriptions[item] = config.descriptions[item];
@@ -71,6 +68,26 @@ class ListPlugin extends SteamerPlugin {
         });
 
         files = files.concat(config.reserveCmd);
+
+        return {
+            files,
+            descriptions
+        };
+    }
+
+    /**
+     * read plugin description
+     * @param {Array} files search for node_modules files
+     * @param {String} globalModules global node_modules path
+     */
+    readDescription(files, globalModules) {
+        let descriptions = {};
+        files = files.map((item) => {
+            let newItem = item.replace(this.pluginPrefix, '');
+            let pkgJson = require(path.join(globalModules, item, 'package.json'));
+            descriptions[newItem] = pkgJson.description;
+            return newItem;
+        });
 
         return {
             files,

@@ -19,22 +19,58 @@ describe('steamer-plugin-list', function() {
                     'cdef'
                 ];
             }),
+            readDescriptionStub = sinon.stub(list, 'readDescription').callsFake(function() {
+                return {
+                    files: [
+                        'a',
+                        'b',
+                    ],
+                    descriptions: {
+                        a: 'plugin a',
+                        b: 'plugin b',
+                        config: 'config manager',
+                        develop: 'develop plugins and starterkits',
+                        doctor: 'help you check running environment',
+                        jb: 'commands for AlloyTeam JB system',
+                        kit: 'manage starterkits',
+                        list: 'list all available commands',
+                        team: 'manage config for your team',
+                        update: 'update command plugins'
+                    }
+                }
+            }),
             logSub = sinon.stub(list, 'log');
 
         list.init();
 
-        expect(list.filterCmds().sort()).to.eql([
-            'a',
-            'b',
-            'config',
-            'develop',
-            'doctor',
-            'kit',
-            'list',
-            'update',
-        ]);
+        expect(list.filterCmds()).to.eql({
+            files:[ 
+                'a',
+                'b',
+                'config',
+                'develop',
+                'doctor',
+                'kit',
+                'list',
+                'team',
+                'update' 
+            ],
+            descriptions:{
+                a: 'plugin a',
+                b: 'plugin b',
+                config: 'config manager',
+                develop: 'develop plugins and starterkits',
+                doctor: 'help you check running environment',
+                jb: 'commands for AlloyTeam JB system',
+                kit: 'manage starterkits',
+                list: 'list all available commands',
+                team: 'manage config for your team',
+                update: 'update command plugins'
+            }
+        });
 
         readdirSyncStub.restore();
+        readDescriptionStub.restore();
         logSub.restore();
     });
 
