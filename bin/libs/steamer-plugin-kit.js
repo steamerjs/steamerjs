@@ -88,6 +88,28 @@ class KitPlugin extends SteamerPlugin {
 
         let config = null;
 
+        // as a function api
+        if (argvs.hasOwnProperty('webserver') && argvs.hasOwnProperty('cdn')) {
+            config = _.merge({}, {
+                webserver: argvs.webserver || '//localhost:9000/',
+                cdn: argvs.cdn || '//localhost:8000/',
+                port: argvs.port || 9000,
+            });
+
+            // copy template files
+            this.copyFiles(kitPath, cpyFiles, folder, config);
+
+            this.copyPkgJson(folder, 'install');
+
+            // create config file, for example in ./.steamer/steamer-plugin-kit.js
+            this.createPluginConfig({
+                kit: kit,
+            }, folder);
+
+            return path.resolve(folder);
+        }
+
+        // interactive
         inquirerConfig.push({
             type: 'input',
             name: 'npm',
@@ -528,23 +550,19 @@ class KitPlugin extends SteamerPlugin {
             kit = localConfig.kit || null,
             folder = path.resolve();
 
-        // if .steamer/steamer-plugin-kit.js not exist
-        // let kitConfigPath = path.join(process.cwd(), './.steamer/steamer-plugin-kit.js');
-
-        this.checkConfigExist(localConfig);
-
-        // if (!this.fs.existsSync(kitConfigPath)) {
+        // this.checkConfigExist(localConfig);
 
         let pkgJsonPath = path.join(process.cwd(), 'package.json');
 
-        if (this.fs.existsSync(pkgJsonPath)) {
+        // 如果 localConfig 为空，则创建，兼容直接 git clone 脚手架的情况
+        if (this.fs.existsSync(pkgJsonPath) && !Object.keys(localConfig).length) {
             this.pkgJson = require(path.join(process.cwd(), 'package.json')) || {};
 
-            this.createPluginConfig({
-                kit: this.pkgJson.name,
-            }, process.cwd());
+            localConfig.kit = this.pkgJson.name;
+            localConfig.version = this.pkgJson.version;
+
+            this.createPluginConfig(localConfig, process.cwd());
         }
-        // }
 
         if (!localConfig.template || !localConfig.template.src || !localConfig.template.dist) {
             inquirer.prompt([{
@@ -680,7 +698,7 @@ class KitPlugin extends SteamerPlugin {
         kits = this.addOfficialKits(kits);
 
         if (kits[0].type !== 'separator') {
-            kits.unshift(new inquirer.Separator('Local installed Starter Kits:'));
+            kits.unshift(new inquirer.Separator('* Local installed Starter Kits:'));
         }
 
         inquirer.prompt([{
@@ -711,7 +729,7 @@ class KitPlugin extends SteamerPlugin {
 
     addOfficialKits(kits) {
 
-        kits.push(new inquirer.Separator('Other official Starter Kits:'));
+        kits.push(new inquirer.Separator('* Other official Starter Kits:'));
 
         let officialKits = [
             {

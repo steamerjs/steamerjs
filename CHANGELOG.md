@@ -1,3 +1,17 @@
+## 2.0.6 
+    - 更新依赖
+
+## 2.0.5
+    - 更新 steamer-plugin-kit
+
+## 2.0.4
+	- 将npm-check-steamer 正式更换成 npm-check 最新版
+	- 更新 steamer-plugin-kit
+
+## 2.0.2
+	- 更新插件内核 steamer-plugin
+	- 将 npm-check 临时更换为 npm-check-steamer
+
 ## 1.5.0
     - 升级 steamer-pluginutils
 
@@ -48,3 +62,6 @@
 
 ## 1.1.1 
 	- 引用外部插件，自身设置，罗列命令
+## 2.0.0
+	- 更新steamer-plugin内核及引用机制
+	- 优化提示

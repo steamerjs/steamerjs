@@ -27,7 +27,7 @@ npm i -g steamer-plugin-xxx
 
 由于 `steamerjs` 的命令或脚手架都需要全局安装，尽管steamerjs会尝试兼容，但在某些使用场景下会仍然找到不全局安装的位置，因此推荐设置环境变量 `NODE_PATH`。
 
-[常见问题 - NODE_PATH设置](https://steamerjs.github.io/steamerjs/docs/Steamer-QA.html)
+[常见问题 - NODE_PATH设置](https://steamerjs.github.io/docs/introduction/Steamer-QA.html)
 
 
 ## 使用
@@ -37,6 +37,14 @@ steamer xxx
 // 或可使用简写 str
 str xxx
 ```
+
+## 内置插件
+[steamer-plugin-config](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Config.html)
+[steamer-plugin-develop](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Develop.html)
+[steamer-plugin-doctor](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Doctor.html)
+[steamer-plugin-kit](https://steamerjs.github.io/docs/plugins/Steamer-Plugin-Kit.html)
+[steamer-plugin-list](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-List.html)
+[steamer-plugin-update](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Update.html)
 
 
 ## 更新

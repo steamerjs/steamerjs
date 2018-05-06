@@ -123,7 +123,6 @@ class Commander extends SteamerPlugin {
             this.callCommands(argv, Plugin, this.instance, pkg);
 
             process.on('exit', (code) => {
-                console.log('=====exit=====');
                 _.isFunction(Plugin.prototype.onExit) && this.instance.onExit(code);
             });
 
