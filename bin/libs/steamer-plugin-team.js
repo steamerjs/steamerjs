@@ -17,8 +17,10 @@ let emptyFunc = () => {};
 class TeamPlugin extends SteamerPlugin {
     constructor(args) {
         super(args);
+        this.spawn = spawn;
         this.argv = args;
         this.config = this.readSteamerDefaultConfig();
+        this.kitPlugin = new KitPlugin({});
         this.teamPrefix = this.config.TEAM_PREFIX;
         this.pluginName = 'steamer-plugin-team';
         this.description = require('./config').descriptions.team;
@@ -28,8 +30,12 @@ class TeamPlugin extends SteamerPlugin {
         let isAdd = this.argv.add;
 
         if (isAdd) {
-            this.addTeam(isAdd);
+            return this.addTeam(isAdd);
         }
+    }
+
+    getTeamConfig(teamPath) {
+        return require(teamPath);
     }
 
     addTeam(team) {
@@ -39,16 +45,16 @@ class TeamPlugin extends SteamerPlugin {
 
         if (!this.fs.existsSync(teamPath)) {
             this.info(`Installing ${this.teamPrefix}${team}`);
-            spawn.sync(this.config.NPM, ['install', '--global', `${this.teamPrefix}${team}`], { stdio: 'inherit' });
+            this.spawn.sync(this.config.NPM, ['install', '--global', `${this.teamPrefix}${team}`], { stdio: 'inherit' });
             this.info(`${this.teamPrefix}${team} installed`);
         }
 
         try {
-            teamConfig = require(teamPath);
+            teamConfig = this.getTeamConfig(teamPath);
         }
         catch (e) {
             if (e.code === 'MODULE_NOT_FOUND' && team === 'default') {
-                teamConfig = require(`${this.teamPrefix}${team}`);
+                teamConfig = this.getTeamConfig(`${this.teamPrefix}${team}`);
             }
             else {
                 return this.error(`The team configuration '${this.teamPrefix}${team}' is not found.\nPlease use npm install -g ${this.teamPrefix}${team} to install it first.`);
@@ -66,32 +72,31 @@ class TeamPlugin extends SteamerPlugin {
         this.info(`Your team is \'${newConfig.TEAM}\'`);
         this.info(`You will use \'${newConfig.NPM}\' as your npm command`);
 
-
         this.createSteamerConfig(newConfig, {
             overwrite: true,
             isGlobal: true
         });
 
-        let installPlugins = plugins.join(' '),
-            installTasks = tasks.join(' ');
+        let installPlugins = plugins.join(' ');
+        let installTasks = tasks.join(' ');
 
         this.log('\n');
         this.info(`Installing plugins and tasks: `);
         let action = ['install', '--global'];
         action = action.concat(plugins, tasks);
-        let result = spawn.sync(newConfig.NPM, action, { stdio: 'inherit' });
-    
+        let result = this.spawn.sync(newConfig.NPM, action, { stdio: 'inherit' });
+        
         if (!result.error) {
-            this.log(`${logSymbols.success} ${installPlugins} installed`);
+            this.log(`${logSymbols.success} ${installPlugins} ${installTasks} installed`);
         }
         else {
-            this.log(`${logSymbols.error} ${installPlugins} installed error: ${result.error}`);
+            this.log(`${logSymbols.error} ${installPlugins} ${installTasks} installed error: ${result.error}`);
         }
 
         this.log('\n');
         this.info(`Installing starterkits: `);
-        let kitPlugin = new KitPlugin({}),
-            kitConfigs = kitPlugin.kitOptions;
+        // this.kitPlugin = new KitPlugin({});
+        let kitConfigs = this.kitPlugin.kitOptions;
 
         let cloneAction = [];
 
@@ -99,21 +104,22 @@ class TeamPlugin extends SteamerPlugin {
             let kit = item.name,
                 repo = item.git;
             if (!kitConfigs.list.hasOwnProperty(kit)) {
-                cloneAction.push(kitPlugin.clone(repo));
+                cloneAction.push(this.kitPlugin.clone(repo));
             }
             else {
                 this.log(`${logSymbols.success} ${kit}@${kitConfigs.list[kit].latestVersion} installed`);
             }
         });
 
-
-        Promise.all(cloneAction).then((value) => {
-            kitPlugin.writeKitOptions(kitConfigs);
-        }).catch((e) => {
-            this.error(e);
+        return new Promise((resolve) => {
+            Promise.all(cloneAction).then((value) => {
+                this.kitPlugin.writeKitOptions();
+                afterInstall();
+                resolve();
+            }).catch((e) => {
+                this.error(e);
+            });
         });
-
-        afterInstall();
     }
 
     help() {

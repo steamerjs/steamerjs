@@ -10,14 +10,16 @@ class UpdatePlugin extends SteamerPlugin {
     constructor(args) {
         super(args);
         this.argv = args;
+        this.spawn = spawn;
         this.pluginName = 'steamer-plugin-update';
         this.description = require('./config').descriptions.update;
         this.npmCheck = npmCheck;
+
+        this.config = this.readSteamerDefaultConfig();
+        this.npm = this.config.NPM || 'npm';
     }
 
     init() {
-        this.config = this.readSteamerConfig();
-        this.npm = this.config.NPM || 'npm';
         return this.checkUpdate();
     }
 
@@ -94,7 +96,8 @@ class UpdatePlugin extends SteamerPlugin {
             choices: pkgs,
         }]).then((answers) => {
             let chosenPkgs = answers.pkgs || [];
-
+            console.log(updatePkgs);
+            console.log(chosenPkgs);
             this.startUpdate(updatePkgs, chosenPkgs);
 
         }).catch((e) => {
@@ -114,7 +117,7 @@ class UpdatePlugin extends SteamerPlugin {
         });
 
         if (execStr) {
-            let result = spawn.sync(this.npm, ['install', '-g', execStr], { stdio: 'inherit' });
+            let result = this.spawn.sync(this.npm, ['install', '-g', execStr], { stdio: 'inherit' });
 
             if (result.error) {
                 this.error(result.error);

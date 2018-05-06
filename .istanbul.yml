@@ -1,0 +1,3 @@
+instrumentation:
+    es-modules: true
+    excludes: ['**/steamer-plugin-kit.js']
