@@ -6,6 +6,10 @@ node_js:
   - 6
 script: npm run travis
 
+cache:
+  directories:
+    - node_modules
+
 before_install:
   - export NODE_PATH=$(npm root -g)
 

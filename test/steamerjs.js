@@ -10,6 +10,7 @@ const path = require('path'),
 describe('steamerjs', function() {
 
     before(function() {
+        this.timeout(100000);
         try {
             process.chdir(path.join(process.cwd(), 'test/steamer-plugin-example'));
 
@@ -27,7 +28,7 @@ describe('steamerjs', function() {
     });
 
     after(function() {
-
+        this.timeout(100000);
         process.env.steamer_test = false;
 
         spawnSync('npm', ['unlink'], {
