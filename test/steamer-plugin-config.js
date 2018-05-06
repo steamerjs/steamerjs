@@ -112,6 +112,7 @@ describe('steamer-plugin-config', function() {
     });
 
     it('del global key', function() {
+        this.timeout(5000);
         let sConfig1 = new SteamerConfig({
             d: 'k3',
             g: true
