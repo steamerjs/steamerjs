@@ -59,3 +59,8 @@ npm install -g steamer-plugin-xxx@latest
 // 更新脚手架
 npm install -g steamer-xxx@latest
 ```
+
+## 交流群
+__交流QQ群__：647150527
+<br/>
+<img src="http://pub.idqqimg.com/pc/misc/files/20180507/6175ec88c78d4efba925d31d4ce10752.jpg" width="200px"/>
