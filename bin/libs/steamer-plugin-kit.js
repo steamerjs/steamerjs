@@ -1,4 +1,5 @@
 'use strict';
+
 const SteamerPlugin = require('steamer-plugin'),
     path = require('path'),
     url = require('url'),
@@ -8,6 +9,7 @@ const SteamerPlugin = require('steamer-plugin'),
     _ = require('lodash'),
     git = require('simple-git'),
     compareVer = require('compare-versions'),
+    klawSync = require('klaw-sync'),
     spawn = require('cross-spawn');
 
 /**
@@ -42,16 +44,16 @@ class KitPlugin extends SteamerPlugin {
         this.git = git;
     }
 
-    /* istanbul ignore next */
-    init /* istanbul ignore next */ (argv) {
-        let argvs = argv || this.argv, // command argv
-            isAdd = argvs.add,
-            isTag = argvs.tag,
-            isUpdate = argvs.update || argvs.u,
-            isAlias = argvs.alias || null,
-            isGlobal = argvs.global || argvs.g,
-            isRemove = argvs.remove,
-            isList = argvs.list || argvs.l;
+    init(argv) {
+        let argvs = argv || this.argv; // command argv
+        let isAdd = argvs.add;
+        let isTag = argvs.tag;
+        let isUpdate = argvs.update || argvs.u;
+        let isAlias = argvs.alias || null;
+        let isGlobal = argvs.global || argvs.g;
+        let isRemove = argvs.remove;
+        let isTemplate = argvs.template || argvs.t;
+        let isList = argvs.list || argvs.l;
 
         if (isAdd) {
             this.add(isAdd, isTag, isAlias);
@@ -61,6 +63,9 @@ class KitPlugin extends SteamerPlugin {
         }
         else if (isRemove) {
             this.remove(isRemove);
+        }
+        else if (isTemplate) {
+            this.template();
         }
         else if (isList) {
             this.list();
@@ -446,6 +451,170 @@ class KitPlugin extends SteamerPlugin {
         });
     }
 
+    /**
+     * Create page from template
+     */
+    template() {
+
+        let localConfig = this.readConfig(),
+            kit = localConfig.kit || null,
+            folder = path.resolve();
+
+        // this.checkConfigExist(localConfig);
+
+        let pkgJsonPath = path.join(process.cwd(), 'package.json');
+
+        // 如果 localConfig 为空，则创建，兼容直接 git clone 脚手架的情况
+        if (this.fs.existsSync(pkgJsonPath) && !Object.keys(localConfig).length) {
+            this.pkgJson = require(path.join(process.cwd(), 'package.json')) || {};
+
+            localConfig.kit = this.pkgJson.name;
+            localConfig.version = this.pkgJson.version;
+
+            this.createPluginConfig(localConfig, process.cwd());
+        }
+
+        if (!localConfig.template || !localConfig.template.src || !localConfig.template.dist) {
+            inquirer.prompt([{
+                type: 'text',
+                name: 'src',
+                message: 'type the template source folder:',
+                default: './tools/template',
+            }, {
+                type: 'input',
+                name: 'dist',
+                message: 'type your template destination folder: ',
+                default: './src/page',
+            }, {
+                type: 'input',
+                name: 'npm',
+                message: 'type your npm command(npm|tnpm|cnpm etc): ',
+                default: 'npm',
+            }]).then((answers) => {
+
+                localConfig.template = {};
+                localConfig.template.src = answers.src;
+                localConfig.template.dist = answers.dist;
+                localConfig.template.npm = answers.npm;
+
+                this.createPluginConfig(localConfig, path.resolve());
+
+                this.listTemplate(localConfig);
+            }).catch((e) => {
+                this.error(e.statck);
+            });
+        }
+        else {
+            this.listTemplate(localConfig);
+        }
+    }
+
+    /**
+     * list all templates
+     * @param {*} localConfig 
+     */
+    listTemplate(localConfig) {
+        let templateFolder = path.resolve(localConfig.template.src),
+            templateInfo = this.fs.readdirSync(templateFolder);
+
+        templateInfo = templateInfo.filter((item) => {
+            return this.fs.statSync(path.join(templateFolder, item)).isDirectory();
+        });
+
+        inquirer.prompt([{
+            type: 'list',
+            name: 'template',
+            message: 'which template do you like: ',
+            choices: templateInfo,
+        }, {
+            type: 'input',
+            name: 'path',
+            message: 'type in your page name: ',
+        }]).then((answers) => {
+
+            if (!answers.path) {
+                return this.error('Please type in your page name.');
+            }
+
+            let targetFolder = path.resolve(localConfig.template.dist, answers.path),
+                srcFolder = path.resolve(localConfig.template.src, answers.template);
+
+            if (this.fs.existsSync(targetFolder)) {
+                return this.error('Target folder already exist. Please change another page name.');
+            }
+
+            this.fs.copySync(srcFolder, targetFolder);
+
+            this.walkAndReplace(targetFolder, ['.js', '.html'], { title: answers.path });
+
+            this.installDependency(path.resolve(localConfig.template.src), answers.template, localConfig.template.npm);
+
+        }).catch((e) => {
+            this.error(e.statck);
+        });
+    }
+
+    /**
+     * loop files and replace placeholder
+     * @param {String} folder 
+     * @param {*} extensions 
+     * @param {*} replaceObj 
+     */
+    walkAndReplace(folder, extensions = [], replaceObj = {}) {
+
+        let files = klawSync(folder, { nodir: true });
+
+        if (extensions.length) {
+            files = files.filter((item) => {
+                let ext = path.extname(item.path);
+                return extensions.includes(ext);
+            });
+        }
+
+        files.forEach((file) => {
+            let content = this.fs.readFileSync(file.path, 'utf-8');
+
+            Object.keys(replaceObj).forEach((key) => {
+                content = content.replace(new RegExp('<% ' + key + ' %>', 'ig'), function (match) {
+                    return replaceObj[key];
+                });
+            });
+
+            this.fs.writeFileSync(file.path, content, 'utf-8');
+        });
+    }
+
+    /**
+     * Install template dependency
+     * @param {*} templateFolder 
+     * @param {*} templateName 
+     * @param {*} npmCmd 
+     */
+    installDependency(templateFolder, templateName, npmCmd = 'npm') {
+        let dependencyJson = path.join(templateFolder, 'dependency.js');
+
+        if (!this.fs.existsSync(dependencyJson)) {
+            return;
+        }
+
+        let dependencies = require(dependencyJson) || {};
+        dependencies = dependencies[templateName] || {};
+
+        let cmd = '';
+
+        Object.keys(dependencies).forEach((item) => {
+            cmd += (item + '@' + dependencies[item] + ' ');
+        });
+
+        if (cmd) {
+            this.spawn.sync(npmCmd, ['install', '--save', cmd], { stdio: 'inherit', shell: true });
+        }
+    }
+
+    /**
+     * remove starterkit
+     * @param {String} kit 
+     */
     remove(kit) {
         let kits = this.kitOptions.list;
 

@@ -53,6 +53,8 @@
 ## 1.2.6
 	- 优化报错提示
 
+## 3.0.0-beta.5
+	- add `steamer-plugin-kit` and `steamer-plugin-task` as internal plugin
 
 ## 1.2.4
 	- update dependencies

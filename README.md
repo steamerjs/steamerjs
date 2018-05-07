@@ -44,8 +44,9 @@ str xxx
 * [steamer-plugin-doctor](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Doctor.html)
 * [steamer-plugin-kit](https://steamerjs.github.io/docs/plugins/Steamer-Plugin-Kit.html)
 * [steamer-plugin-list](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-List.html)
-* [steamer-plugin-update](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Update.html)
+* [steamer-plugin-task](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Task.html)
 * [steamer-plugin-team](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Team.html)
+* [steamer-plugin-update](https://steamerjs.github.io/docs/builtin-plugins/Steamer-Plugin-Update.html)
 
 
 ## 更新
