@@ -52,10 +52,11 @@ describe('steamer-plugin-list', function() {
                 'doctor',
                 'kit',
                 'list',
+                'task',
                 'team',
-                'update' 
+                'update'
             ],
-            descriptions:{
+            descriptions: {
                 a: 'plugin a',
                 b: 'plugin b',
                 config: 'config manager',
@@ -64,6 +65,7 @@ describe('steamer-plugin-list', function() {
                 jb: 'commands for AlloyTeam JB system',
                 kit: 'manage starterkits',
                 list: 'list all available commands',
+                task: 'run tasks parallelly or serially',
                 team: 'manage config for your team',
                 update: 'update command plugins'
             }
