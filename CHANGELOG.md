@@ -53,6 +53,9 @@
 ## 1.2.6
 	- 优化报错提示
 
+## 3.0.0-beta.7
+	- 修复steamer-plugin-kit writeKitOpionts错误
+
 ## 3.0.0-beta.6
     - add team -add error handler
 

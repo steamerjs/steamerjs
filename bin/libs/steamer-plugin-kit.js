@@ -116,6 +116,12 @@ class KitPlugin extends SteamerPlugin {
         }
         else {
             if (!this.kitOptions.list.hasOwnProperty(kitName)) {
+
+                // if the repo is not in config, but repo localPath exist, delete it and reinstall
+                if (this.fs.existsSync(localPath)) {
+                    this.fs.removeSync(localPath);
+                }
+
                 this.kitOptions.list[kitName] = {
                     url: repo,
                     path: localPath,
@@ -675,18 +681,14 @@ class KitPlugin extends SteamerPlugin {
     /**
      * write starterkit options
      * @param {Object} options starter kit options
-     * @param {String} key starterkit name
      */
-    writeKitOptions(options, key) {
+    writeKitOptions(options = {}) {
         try {
-            let updatedOptions = this.getKitOptions();
+            // let updatedOptions = this.getKitOptions();
 
-            if (key) {
-                updatedOptions.list[key] = options.list[key];
-            }
-
-            updatedOptions.timestamp = Date.now();
-            this.fs.writeFileSync(this.kitOptionsPath, `module.exports = ${JSON.stringify(updatedOptions, null, 4)};`, 'utf-8');
+            // updatedOptions.timestamp = Date.now();
+            this.fs.ensureFileSync(this.kitOptionsPath);
+            this.fs.writeFileSync(this.kitOptionsPath, `module.exports = ${JSON.stringify(options, null, 4)};`, 'utf-8');
 
         }
         catch (e) {
