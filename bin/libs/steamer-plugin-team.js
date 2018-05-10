@@ -30,6 +30,15 @@ class TeamPlugin extends SteamerPlugin {
         let isAdd = this.argv.add;
 
         if (isAdd) {
+
+            process.on('exit', () => {
+                this.unDoInstall();
+            });
+
+            process.on('SIGINT', () => {
+                this.unDoInstall();
+            });
+
             return this.addTeam(isAdd);
         }
     }
@@ -111,14 +120,29 @@ class TeamPlugin extends SteamerPlugin {
             }
         });
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             Promise.all(cloneAction).then((value) => {
-                this.kitPlugin.writeKitOptions();
+                this.kitPlugin.writeKitOptions(this.kitPlugin.kitOptions);
                 afterInstall();
                 resolve();
             }).catch((e) => {
                 this.error(e);
+                reject(e);
+                process.exit();
             });
+        });
+    }
+
+    unDoInstall() {
+        // remove starterkit if previous option does not have its config
+        let kitOptions = this.kitPlugin.getKitOptions();
+        Object.keys(this.kitPlugin.kitOptions.list).forEach((kitName) => {
+            if (!kitOptions.list.hasOwnProperty(kitName)) {
+                let kitInfo = this.kitPlugin.kitOptions.list[kitName];
+                if (this.fs.existsSync(kitInfo.path)) {
+                    this.fs.removeSync(kitInfo.path);
+                }
+            }
         });
     }
 
