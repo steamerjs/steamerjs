@@ -64,6 +64,8 @@ describe('steamer-plugin-config', function() {
     });
 
     it('set global key', function() {
+        this.timeout(100000);
+
         let sConfig1 = new SteamerConfig({
                 s: 'k1=v111',
                 g: true,
