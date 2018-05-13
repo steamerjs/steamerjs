@@ -1,3 +1,15 @@
+## 3.0.0-beta.8
+	- steamer-plugin-kit 文件拷贝时校验是否存在
+
+## 3.0.0-beta.7
+	- 修复steamer-plugin-kit writeKitOpionts错误
+
+## 3.0.0-beta.6
+    - add team -add error handler
+
+## 3.0.0-beta.5
+	- add `steamer-plugin-kit` and `steamer-plugin-task` as internal plugin
+
 ## 3.0.0-beta.4
     - 提高测试覆盖率
 
@@ -52,15 +64,6 @@
 
 ## 1.2.6
 	- 优化报错提示
-
-## 3.0.0-beta.7
-	- 修复steamer-plugin-kit writeKitOpionts错误
-
-## 3.0.0-beta.6
-    - add team -add error handler
-
-## 3.0.0-beta.5
-	- add `steamer-plugin-kit` and `steamer-plugin-task` as internal plugin
 
 ## 1.2.4
 	- update dependencies

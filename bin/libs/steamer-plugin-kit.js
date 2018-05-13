@@ -342,13 +342,18 @@ class KitPlugin extends SteamerPlugin {
         });
 
         files.forEach((item) => {
-            this.fs.copySync(path.join(kitPath, item), path.join(process.cwd(), item));
+            let itemPath = path.join(kitPath, item);
+            if (this.fs.existsSync(itemPath)) {
+                this.fs.copySync(itemPath, path.join(process.cwd(), item));
+            }
         });
     }
 
     copyUpdatePkgJson(kitPath) {
-        this.fs.removeSync(path.join(process.cwd(), 'package-lock.json'));
-
+        let pkgLockPath = path.join(process.cwd(), 'package-lock.json');
+        if (this.fs.existsSync(pkgLockPath)) {
+            this.fs.removeSync(pkgLockPath);
+        }
 
         let oldPkgJsonPath = path.join(process.cwd(), 'package.json');
         let newPkgJsonPath = path.join(kitPath, 'package.json');
@@ -916,7 +921,10 @@ class KitPlugin extends SteamerPlugin {
             files.forEach((item) => {
                 let srcFiles = path.join(kitPath, item),
                     destFile = path.join(folderPath, item);
-                this.fs.copySync(srcFiles, destFile);
+                
+                if (this.fs.existsSync(srcFiles)) {
+                    this.fs.copySync(srcFiles, destFile);
+                }
             });
 
             if (isSteamerKit) {
