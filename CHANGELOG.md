@@ -1,3 +1,7 @@
+## 3.0.0-beta.9
+	- 修复 steamer-plugin-kit 的bug
+    - 添加自动更新提示
+
 ## 3.0.0-beta.8
 	- steamer-plugin-kit 文件拷贝时校验是否存在
 

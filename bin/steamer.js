@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 'use strict';
 
-const path = require('path'),
-    fs = require('fs'),
-    yargs = require('yargs'),
-    yargv = yargs.argv,
-    _ = require('lodash'),
-    SteamerPlugin = require('steamer-plugin');
+const path = require('path');
+const fs = require('fs');
+const updateNotifier = require('update-notifier');
+const yargs = require('yargs');
+const yargv = yargs.argv;
+const _ = require('lodash');
+const SteamerPlugin = require('steamer-plugin');
 
 const config = require('./libs/config');
 
@@ -42,6 +43,33 @@ class Commander extends SteamerPlugin {
                 this.showVersion('../');
             }
         }
+
+        // 查看 steamerjs有没有更新
+        this.checkPluginUpdate();
+    }
+
+    /**
+     * 检查包更新
+     * @param {Boolean} isCore 是否 steamerjs 库
+     * @param {String} pkgJsonPath package.json 路径
+     */
+    checkPluginUpdate(isCore = true, pkgJsonPath = null) {
+        let pkg = isCore ? require('../package.json') : require(pkgJsonPath);
+        let notifier = updateNotifier({
+            pkg,
+            updateCheckInterval: 0,
+        });
+
+        // {
+        //     latest: '3.0.0-beta.8',
+        //     current: '2.0.0',
+        //     type: 'major',
+        //     name: 'steamerjs'
+        // }
+        
+        notifier.notify();
+        // console.log(notifier.update);
+        return notifier;
     }
 
     /**
@@ -122,6 +150,12 @@ class Commander extends SteamerPlugin {
             this.instance.yargs = yargs;
 
             this.callCommands(argv, Plugin, this.instance, pkg);
+
+            // 检查使用的插件是否有更新
+            let pkgJsonPath = path.join(pkg, 'package.json');
+            if (fs.existsSync(pkgJsonPath)) {
+                this.checkPluginUpdate(false, pkgJsonPath);
+            }
 
             process.on('exit', (code) => {
                 _.isFunction(Plugin.prototype.onExit) && this.instance.onExit(code);

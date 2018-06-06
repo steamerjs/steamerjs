@@ -1,6 +1,6 @@
 {
   "name": "steamerjs",
-  "version": "3.0.0-beta.8",
+  "version": "3.0.0-beta.9",
   "description": "steamerjs",
   "main": "index.js",
   "scripts": {
@@ -61,6 +61,7 @@
     "simple-git": "^1.92.0",
     "steamer-plugin": "^1.0.4",
     "steamer-team-default": "^1.0.0",
+    "update-notifier": "^2.5.0",
     "yargs": "^11.0.0"
   },
   "engines": {
