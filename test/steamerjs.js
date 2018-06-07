@@ -1,11 +1,9 @@
-'use strict';
-
-const path = require('path'),
-    chalk = require('chalk'),
-    expect = require('chai').expect,
-    sinon = require('sinon'),
-    Steamer = require('../bin/steamer'),
-    spawnSync = require('child_process').spawnSync;
+const path = require('path');
+const chalk = require('chalk');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const Steamer = require('../bin/steamer');
+const spawnSync = require('child_process').spawnSync;
 
 describe('steamerjs', function() {
 

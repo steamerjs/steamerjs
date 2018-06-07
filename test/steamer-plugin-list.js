@@ -1,8 +1,6 @@
-'use strict';
-
-const expect = require('chai').expect,
-    sinon = require('sinon'),
-    SteamerList = require('../bin/libs/steamer-plugin-list');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const SteamerList = require('../bin/libs/steamer-plugin-list');
 
 
 describe('steamer-plugin-list', function() {
@@ -13,38 +11,38 @@ describe('steamer-plugin-list', function() {
         });
 
         let readdirSyncStub = sinon.stub(list.fs, 'readdirSync').callsFake(function() {
-                return [
-                    'steamer-plugin-a',
-                    'steamer-plugin-b',
-                    'cdef'
-                ];
-            }),
-            readDescriptionStub = sinon.stub(list, 'readDescription').callsFake(function() {
-                return {
-                    files: [
-                        'a',
-                        'b',
-                    ],
-                    descriptions: {
-                        a: 'plugin a',
-                        b: 'plugin b',
-                        config: 'config manager',
-                        develop: 'develop plugins and starterkits',
-                        doctor: 'help you check running environment',
-                        jb: 'commands for AlloyTeam JB system',
-                        kit: 'manage starterkits',
-                        list: 'list all available commands',
-                        team: 'manage config for your team',
-                        update: 'update command plugins'
-                    }
+            return [
+                'steamer-plugin-a',
+                'steamer-plugin-b',
+                'cdef'
+            ];
+        });
+        let readDescriptionStub = sinon.stub(list, 'readDescription').callsFake(function() {
+            return {
+                files: [
+                    'a',
+                    'b',
+                ],
+                descriptions: {
+                    a: 'plugin a',
+                    b: 'plugin b',
+                    config: 'config manager',
+                    develop: 'develop plugins and starterkits',
+                    doctor: 'help you check running environment',
+                    jb: 'commands for AlloyTeam JB system',
+                    kit: 'manage starterkits',
+                    list: 'list all available commands',
+                    team: 'manage config for your team',
+                    update: 'update command plugins'
                 }
-            }),
-            logSub = sinon.stub(list, 'log');
+            };
+        });
+        let logSub = sinon.stub(list, 'log');
 
         list.init();
 
         expect(list.filterCmds()).to.eql({
-            files:[ 
+            files: [
                 'a',
                 'b',
                 'config',

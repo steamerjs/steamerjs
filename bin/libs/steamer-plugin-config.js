@@ -32,7 +32,7 @@ class ConfigPlugin extends SteamerPlugin {
         let config = this.readSteamerConfig();
 
         for (let key in config) {
-            if (config.hasOwnProperty[key]) {
+            if (config.hasOwnProperty(key)) {
                 this.info(key + '=' + config[key] || '');
             }
         }

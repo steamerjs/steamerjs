@@ -1,9 +1,7 @@
-'use strict';
-
-const Promise = require('bluebird'),
-    expect = require('chai').expect,
-    sinon = require('sinon'),
-    SteamerUpdate = require('../bin/libs/steamer-plugin-update');
+const Promise = require('bluebird');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const SteamerUpdate = require('../bin/libs/steamer-plugin-update');
 
 describe('steamer-plugin-update', function() {
 

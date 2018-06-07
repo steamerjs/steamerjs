@@ -1,10 +1,8 @@
-'use strict';
-
-const fs = require('fs-extra'),
-    path = require('path'),
-    expect = require('chai').expect,
-    sinon = require('sinon'),
-    SteamerDevelop = require('../bin/libs/steamer-plugin-develop');
+const fs = require('fs-extra');
+const path = require('path');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const SteamerDevelop = require('../bin/libs/steamer-plugin-develop');
 
 describe('steamer-plugin-develop', function() {
 

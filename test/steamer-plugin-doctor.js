@@ -1,10 +1,8 @@
-'use strict';
-
-const path = require('path'),
-    logSymbols = require('log-symbols'),
-    expect = require('chai').expect,
-    sinon = require('sinon'),
-    SteamerDoctor = require('../bin/libs/steamer-plugin-doctor');
+const path = require('path');
+const logSymbols = require('log-symbols');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const SteamerDoctor = require('../bin/libs/steamer-plugin-doctor');
 
 describe('steamer-plugin-doctor', function() {
     it('all pass', function(cb) {
@@ -32,8 +30,8 @@ describe('steamer-plugin-doctor', function() {
             _: ['doctor']
         });
 
-        let NODE_PATH = process.env.NODE_PATH,
-            baseVer = doctor.baseVer;
+        let NODE_PATH = process.env.NODE_PATH;
+        let baseVer = doctor.baseVer;
 
         process.env.NODE_PATH = path.resolve('./123');
         doctor.baseVer = '20.0.0';

@@ -1,9 +1,7 @@
-'use strict';
-
-const logSymbols = require('log-symbols'),
-    expect = require('chai').expect,
-    sinon = require('sinon'),
-    SteamerTeam = require('../bin/libs/steamer-plugin-team');
+const logSymbols = require('log-symbols');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const SteamerTeam = require('../bin/libs/steamer-plugin-team');
 
 describe('steamer-plugin-team', function() {
     it('add team config', function(done) {

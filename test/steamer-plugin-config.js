@@ -1,15 +1,13 @@
-'use strict';
-
-const fs = require('fs-extra'),
-    path = require('path'),
-    expect = require('chai').expect,
-    sinon = require('sinon'),
-    SteamerConfig = require('../bin/libs/steamer-plugin-config');
+const fs = require('fs-extra');
+const path = require('path');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const SteamerConfig = require('../bin/libs/steamer-plugin-config');
 
 
 describe('steamer-plugin-config', function() {
-    let globalPath = path.join(process.cwd(), './test/global'),
-        localPath = path.join(process.cwd(), './test/local');
+    let globalPath = path.join(process.cwd(), './test/global');
+    let localPath = path.join(process.cwd(), './test/local');
 
     let returnGlobalPath = function() {
         return globalPath;
@@ -45,14 +43,14 @@ describe('steamer-plugin-config', function() {
 
     it('set local key', function() {
         let sConfig1 = new SteamerConfig({
-                s: 'k1=v1',
-            }),
-            sConfig2 = new SteamerConfig({
-                s: 'k2=v2',
-            });
+            s: 'k1=v1',
+        });
+        let sConfig2 = new SteamerConfig({
+            s: 'k2=v2',
+        });
 
-        let globalHomeStub1 = sinon.stub(sConfig1, 'getGlobalHome').callsFake(returnGlobalPath),
-            globalHomeStub2 = sinon.stub(sConfig2, 'getGlobalHome').callsFake(returnGlobalPath);
+        let globalHomeStub1 = sinon.stub(sConfig1, 'getGlobalHome').callsFake(returnGlobalPath);
+        let globalHomeStub2 = sinon.stub(sConfig2, 'getGlobalHome').callsFake(returnGlobalPath);
 
         sConfig1.init();
         sConfig2.init();
@@ -67,24 +65,24 @@ describe('steamer-plugin-config', function() {
         this.timeout(100000);
 
         let sConfig1 = new SteamerConfig({
-                s: 'k1=v111',
-                g: true,
-            }),
-            sConfig2 = new SteamerConfig({
-                s: 'k2=v22',
-            }),
-            sConfig3 = new SteamerConfig({
-                s: 'k3=v3',
-            }),
-            sConfig4 = new SteamerConfig({
-                s: 'k3=v33',
-                g: true,
-            });
+            s: 'k1=v111',
+            g: true,
+        });
+        let sConfig2 = new SteamerConfig({
+            s: 'k2=v22',
+        });
+        let sConfig3 = new SteamerConfig({
+            s: 'k3=v3',
+        });
+        let sConfig4 = new SteamerConfig({
+            s: 'k3=v33',
+            g: true,
+        });
 
-        let globalHomeStub1 = sinon.stub(sConfig1, 'getGlobalHome').callsFake(returnGlobalPath),
-            globalHomeStub2 = sinon.stub(sConfig2, 'getGlobalHome').callsFake(returnGlobalPath),
-            globalHomeStub3 = sinon.stub(sConfig3, 'getGlobalHome').callsFake(returnGlobalPath),
-            globalHomeStub4 = sinon.stub(sConfig4, 'getGlobalHome').callsFake(returnGlobalPath);
+        let globalHomeStub1 = sinon.stub(sConfig1, 'getGlobalHome').callsFake(returnGlobalPath);
+        let globalHomeStub2 = sinon.stub(sConfig2, 'getGlobalHome').callsFake(returnGlobalPath);
+        let globalHomeStub3 = sinon.stub(sConfig3, 'getGlobalHome').callsFake(returnGlobalPath);
+        let globalHomeStub4 = sinon.stub(sConfig4, 'getGlobalHome').callsFake(returnGlobalPath);
 
         sConfig1.init();
         sConfig2.init();
@@ -134,8 +132,8 @@ describe('steamer-plugin-config', function() {
             l: true
         });
 
-        let globalHomeStub1 = sinon.stub(sConfig1, 'getGlobalHome').callsFake(returnGlobalPath),
-            log = sinon.stub(sConfig1, 'info');
+        let globalHomeStub1 = sinon.stub(sConfig1, 'getGlobalHome').callsFake(returnGlobalPath);
+        let log = sinon.stub(sConfig1, 'info');
 
         sConfig1.init();
 
@@ -151,8 +149,8 @@ describe('steamer-plugin-config', function() {
             help: true
         });
 
-        let printUsageStub = sinon.stub(sConfig, 'printUsage'),
-            printOptionstUB = sinon.stub(sConfig, 'printOption');
+        let printUsageStub = sinon.stub(sConfig, 'printUsage');
+        let printOptionstUB = sinon.stub(sConfig, 'printOption');
 
         sConfig.help();
 
