@@ -1,7 +1,5 @@
-'use strict';
-
-const SteamerPlugin = require('steamer-plugin'),
-    path = require('path');
+const SteamerPlugin = require('steamer-plugin');
+const path = require('path');
 
 class ConfigPlugin extends SteamerPlugin {
     constructor(args) {
@@ -29,13 +27,14 @@ class ConfigPlugin extends SteamerPlugin {
 
     /**
      * list config key & values, local config extend global config
-     * 
      */
     list() {
         let config = this.readSteamerConfig();
 
         for (let key in config) {
-            this.info(key + '=' + config[key] || '');
+            if (config.hasOwnProperty[key]) {
+                this.info(key + '=' + config[key] || '');
+            }
         }
 
     }
@@ -45,12 +44,12 @@ class ConfigPlugin extends SteamerPlugin {
      * @return {Object} [key: value pair]
      */
     getKeyValue() {
-        let argv = this.argv,
-            kv = argv.set || argv.s,
-            kvArr = (kv && kv !== true) ? kv.split('=') : [];
+        let argv = this.argv;
+        let kv = argv.set || argv.s;
+        let kvArr = (kv && kv !== true) ? kv.split('=') : [];
 
-        let key = (kvArr.length > 0) ? kvArr[0] : '',
-            value = (kvArr.length > 1) ? kvArr[1] : '';
+        let key = (kvArr.length > 0) ? kvArr[0] : '';
+        let value = (kvArr.length > 1) ? kvArr[1] : '';
 
         return { key, value };
     }
@@ -60,8 +59,8 @@ class ConfigPlugin extends SteamerPlugin {
      */
     set() {
 
-        let kv = this.getKeyValue(),
-            config = this.readSteamerConfig({ isGlobal: this.isGlobal });
+        let kv = this.getKeyValue();
+        let config = this.readSteamerConfig({ isGlobal: this.isGlobal });
 
         config[kv.key] = kv.value;
 
@@ -76,9 +75,9 @@ class ConfigPlugin extends SteamerPlugin {
      * delete config key value
      */
     del() {
-        let argv = this.argv,
-            key = argv.del || argv.d,
-            config = this.readSteamerConfig({ isGlobal: this.isGlobal });
+        let argv = this.argv;
+        let key = argv.del || argv.d;
+        let config = this.readSteamerConfig({ isGlobal: this.isGlobal });
 
         delete config[key];
 

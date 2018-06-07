@@ -1,5 +1,5 @@
-const _ = require('lodash'),
-    SteamerPlugin = require('steamer-plugin');
+// const _ = require('lodash');
+const SteamerPlugin = require('steamer-plugin');
 
 let plugin = new SteamerPlugin({});
 plugin.pluginName = 'steamerjs';

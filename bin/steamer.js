@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 
 const path = require('path');
 const fs = require('fs');
@@ -26,15 +25,15 @@ class Commander extends SteamerPlugin {
      */
     initPlugin() {
         // command example: steamer init
-        let argv = this.argv,
-            mainCommands = argv._;
+        let argv = this.argv;
+        let mainCommands = argv._;
         if (mainCommands.length) {
             // use the 1st value
             this.runPlugin(mainCommands[0], argv);
         }
         else {
-            let isVersion = argv.ver || argv.v || false,
-                isHelpCalled = argv.help || argv.h || false;
+            let isVersion = argv.ver || argv.v || false;
+            let isHelpCalled = argv.help || argv.h || false;
 
             if (isHelpCalled) {
                 this.help();
@@ -66,7 +65,7 @@ class Commander extends SteamerPlugin {
         //     type: 'major',
         //     name: 'steamerjs'
         // }
-        
+
         notifier.notify();
         // console.log(notifier.update);
         return notifier;
@@ -79,8 +78,8 @@ class Commander extends SteamerPlugin {
      */
     reserveCmds(cmd) {
 
-        let route = path.join(__dirname, '../../', cmd),
-            returnCmd = null;
+        let route = path.join(__dirname, '../../', cmd);
+        let returnCmd = null;
 
         // shortcut path
         if (fs.existsSync(route)) {
@@ -116,8 +115,8 @@ class Commander extends SteamerPlugin {
      * @param  {Ojbect} argv       [command argv from yargs]
      */
     runPlugin(pluginName, argv = {}) {
-        let Plugin = null,
-            pkg = this.pkgPrefix + pluginName;
+        let Plugin = null;
+        let pkg = this.pkgPrefix + pluginName;
 
         try {
             pkg = this.reserveCmds(pkg);
@@ -175,8 +174,8 @@ class Commander extends SteamerPlugin {
      * @param {String} pkg steamer plugin name
      */
     callCommands(argv, Plugin, instance, pkg) {
-        let isHelpCalled = argv.help || argv.h || false,
-            isVersion = argv.ver || argv.v || false;
+        let isHelpCalled = argv.help || argv.h || false;
+        let isVersion = argv.ver || argv.v || false;
 
         // --help -h
         if (isHelpCalled) {
@@ -205,15 +204,15 @@ class Commander extends SteamerPlugin {
      */
     showVersion(pkg) {
         if (path.isAbsolute(pkg)) {
-            let pkgPath = path.join(pkg, 'package.json'),
-                pkgJson = require(pkgPath);
+            let pkgPath = path.join(pkg, 'package.json');
+            let pkgJson = require(pkgPath);
 
             this.info(pkgJson.name + '@' + pkgJson.version);
         }
         else {
-            let pkgPath = path.join(path.dirname(__dirname), 'package.json'),
-                pkgJson = require(pkgPath),
-                plugin = path.basename(pkg);
+            let pkgPath = path.join(path.dirname(__dirname), 'package.json');
+            let pkgJson = require(pkgPath);
+            let plugin = path.basename(pkg);
 
             if (plugin.length > 2) {
                 this.info('built-in plugin: ' + plugin + '\n' + pkgJson.name + '@' + pkgJson.version);

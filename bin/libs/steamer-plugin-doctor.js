@@ -1,20 +1,18 @@
-'use strict';
-
 /*
 *   This plugin is going to check the node environment.
 *   Right now we only check if NODE_PATH variable exists
  */
 
-const path = require('path'),
-    fs = require('fs-extra'),
-    logSymbols = require('log-symbols'),
-    semver = require('semver'),
-    childProcess = require('child_process'),
-    SteamerPlugin = require('steamer-plugin');
+const path = require('path');
+const fs = require('fs-extra');
+const logSymbols = require('log-symbols');
+const semver = require('semver');
+const childProcess = require('child_process');
+const SteamerPlugin = require('steamer-plugin');
 
 /**
  * learn from yo doctor
- * @param {*} filepath 
+ * @param {*} filepath
  */
 function fixPath(filepath) {
     let fixedPath = path.resolve(path.normalize(filepath.trim()));

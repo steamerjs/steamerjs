@@ -1,10 +1,8 @@
-'use strict';
-
-const SteamerPlugin = require('steamer-plugin'),
-    npmCheck = require('npm-check'),
-    semVer = require('semver'),
-    inquirer = require('inquirer'),
-    spawn = require('cross-spawn');
+const SteamerPlugin = require('steamer-plugin');
+const npmCheck = require('npm-check');
+const semVer = require('semver');
+const inquirer = require('inquirer');
+const spawn = require('cross-spawn');
 
 class UpdatePlugin extends SteamerPlugin {
     constructor(args) {
@@ -24,8 +22,8 @@ class UpdatePlugin extends SteamerPlugin {
     }
 
     /**
-	 * check latest pkgs
-	 */
+    * check latest pkgs
+    */
     checkUpdate() {
 
         process.env.NPM_CHECK_INSTALLER = this.npm;
@@ -39,7 +37,7 @@ class UpdatePlugin extends SteamerPlugin {
                 installer: this.npm,
             }).then((currentState) => {
                 let pacakges = currentState.get('packages');
-                
+
                 if (pacakges.length) {
                     let updatePkgs = [];
 
@@ -66,8 +64,9 @@ class UpdatePlugin extends SteamerPlugin {
     }
 
     /**
-	 * interactive update
-	 */
+     * interactive update
+     * @param {*} updatePkgs
+     */
     autoSelection(updatePkgs) {
 
         if (!updatePkgs.length) {
@@ -79,7 +78,7 @@ class UpdatePlugin extends SteamerPlugin {
 
         let pkgs = [];
 
-        updatePkgs.map((item, key) => {
+        updatePkgs.forEach((item, key) => {
             pkgs.push({
                 name: this.chalk.yellow(item.name)
                         + '  ' + this.chalk.white(item.oldVer)
@@ -106,8 +105,10 @@ class UpdatePlugin extends SteamerPlugin {
     }
 
     /**
-	 * start updating
-	 */
+     * start updating
+     * @param {*} updatePkgs
+     * @param {*} selectedPkgs
+     */
     startUpdate(updatePkgs, selectedPkgs) {
         let execStr = '';
 

@@ -1,8 +1,6 @@
-'use strict';
-
-const SteamerPlugin = require('steamer-plugin'),
-    config = require('./config'),
-    path = require('path');
+const SteamerPlugin = require('steamer-plugin');
+const config = require('./config');
+const path = require('path');
 
 class ListPlugin extends SteamerPlugin {
     constructor(args) {
@@ -23,19 +21,19 @@ class ListPlugin extends SteamerPlugin {
     }
 
     listPlugins() {
-        let cmds = this.filterCmds(),
-            sortedCmds = cmds.files.sort();
+        let cmds = this.filterCmds();
+        let sortedCmds = cmds.files.sort();
 
         let maxWidth = 0;
-        sortedCmds.map((item) => {
+        sortedCmds.forEach((item) => {
             if (item.length > maxWidth) {
                 maxWidth = item.length;
             }
         });
 
         sortedCmds.forEach((item) => {
-            let spaceCount = (maxWidth - item.length) + 2,
-                str = `${this.chalk.green('* ' + item)} ${' '.repeat(spaceCount)}-  ${cmds.descriptions[item]}`;
+            let spaceCount = (maxWidth - item.length) + 2;
+            let str = `${this.chalk.green('* ' + item)} ${' '.repeat(spaceCount)}-  ${cmds.descriptions[item]}`;
             this.log(str);
         });
     }
@@ -80,9 +78,9 @@ class ListPlugin extends SteamerPlugin {
      * @param {Array} files search for node_modules files
      * @param {String} globalModules global node_modules path
      */
-    readDescription(files, globalModules) {
+    readDescription(filesParam, globalModules) {
         let descriptions = {};
-        files = files.map((item) => {
+        let files = filesParam.map((item) => {
             let newItem = item.replace(this.pluginPrefix, '');
             let pkgJson = require(path.join(globalModules, item, 'package.json'));
             descriptions[newItem] = pkgJson.description;
@@ -104,7 +102,7 @@ class ListPlugin extends SteamerPlugin {
     }
 
     /**
-     * print usage 
+     * print usage
      * @return {String} [usage string]
      */
     printListUsage() {

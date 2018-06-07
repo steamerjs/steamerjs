@@ -1,12 +1,10 @@
-'use strict';
-
 /*
  * This plugin is going to kickstart plugin or starterkit development.
  */
 
-const path = require('path'),
-    git = require('simple-git'),
-    SteamerPlugin = require('steamer-plugin');
+const path = require('path');
+const git = require('simple-git');
+const SteamerPlugin = require('steamer-plugin');
 
 class DevelopPlugin extends SteamerPlugin {
     constructor(args) {
@@ -22,10 +20,10 @@ class DevelopPlugin extends SteamerPlugin {
     }
 
     init() {
-        let argv = this.argv,
-            isPlugin = argv.plugin || argv.p || false,
-            isKit = argv.kit || argv.k || false,
-            isTeam = argv.team || argv.t || false;
+        let argv = this.argv;
+        let isPlugin = argv.plugin || argv.p || false;
+        let isKit = argv.kit || argv.k || false;
+        let isTeam = argv.team || argv.t || false;
 
         if (isPlugin && isPlugin !== false) {
             this.plugin(isPlugin);
@@ -40,12 +38,12 @@ class DevelopPlugin extends SteamerPlugin {
 
     /**
      * install plugin template
-     * @param {String} plugin 
+     * @param {String} plugin
      */
     plugin(plugin) {
-        let pluginName = `${this.pluginPrefix}${plugin}`,
-            projectPath = path.join(process.cwd(), pluginName),
-            pluginTemplateRepo = 'https://github.com/steamerjs/steamer-plugin-example';
+        let pluginName = `${this.pluginPrefix}${plugin}`;
+        let projectPath = path.join(process.cwd(), pluginName);
+        let pluginTemplateRepo = 'https://github.com/steamerjs/steamer-plugin-example';
 
         if (this.fs.existsSync(projectPath)) {
             return this.folderExist(projectPath);
@@ -73,10 +71,10 @@ class DevelopPlugin extends SteamerPlugin {
      * @param {String} plugin plugin short name
      */
     processPlugin(projectPath, plugin) {
-        let pkgJson = path.join(projectPath, 'package.json'),
-            indexFile = path.join(projectPath, 'index.js'),
-            regex1 = new RegExp(`steamer-plugin-example`, 'ig'),
-            regex2 = new RegExp(`ExamplePlugin`, 'ig');
+        let pkgJson = path.join(projectPath, 'package.json');
+        let indexFile = path.join(projectPath, 'index.js');
+        let regex1 = new RegExp(`steamer-plugin-example`, 'ig');
+        let regex2 = new RegExp(`ExamplePlugin`, 'ig');
 
         if (this.fs.existsSync(pkgJson)) {
             let pkgJsonContent = this.fs.readFileSync(pkgJson, 'utf-8');
@@ -89,8 +87,8 @@ class DevelopPlugin extends SteamerPlugin {
         }
 
         if (this.fs.existsSync(indexFile)) {
-            let indexContent = this.fs.readFileSync(indexFile, 'utf-8'),
-                pluginClass = `${this._.upperFirst(plugin)}Plugin`;
+            let indexContent = this.fs.readFileSync(indexFile, 'utf-8');
+            let pluginClass = `${this._.upperFirst(plugin)}Plugin`;
 
             indexContent = indexContent.replace(regex1, `${this.pluginPrefix}${plugin}`);
             indexContent = indexContent.replace(regex2, pluginClass);
@@ -104,12 +102,12 @@ class DevelopPlugin extends SteamerPlugin {
 
     /**
      * install starterkit template
-     * @param {String} kit 
+     * @param {String} kit
      */
     kit(kit) {
-        let kitName = `${this.kitPrefix}${kit}`,
-            projectPath = path.join(process.cwd(), kitName),
-            kitTempalte = 'https://github.com/steamerjs/steamer-example';
+        let kitName = `${this.kitPrefix}${kit}`;
+        let projectPath = path.join(process.cwd(), kitName);
+        let kitTempalte = 'https://github.com/steamerjs/steamer-example';
 
         if (this.fs.existsSync(projectPath)) {
             return this.folderExist(projectPath);
@@ -133,13 +131,13 @@ class DevelopPlugin extends SteamerPlugin {
 
     /**
      * replace steamer-example and create ./steamer/steamer-xxx.js
-     * @param {String} projectPath 
-     * @param {String} kit 
+     * @param {String} projectPath
+     * @param {String} kit
      */
     processKit(projectPath, kit) {
-        let pkgJson = path.join(projectPath, 'package.json'),
-            kitConfig = path.join(projectPath, './.steamer/steamer-example.js'),
-            regex1 = new RegExp(`steamer-example`, 'ig');
+        let pkgJson = path.join(projectPath, 'package.json');
+        let kitConfig = path.join(projectPath, './.steamer/steamer-example.js');
+        let regex1 = new RegExp(`steamer-example`, 'ig');
 
         if (this.fs.existsSync(pkgJson)) {
             let pkgJsonContent = this.fs.readFileSync(pkgJson, 'utf-8');
@@ -154,12 +152,12 @@ class DevelopPlugin extends SteamerPlugin {
 
     /**
      * install team config tempalte
-     * @param {*} team 
+     * @param {*} team
      */
     team(team) {
-        let teamName = `${this.teamPrefix}${team}`,
-            projectPath = path.join(process.cwd(), teamName),
-            teamTempalte = 'https://github.com/steamerjs/steamer-team-default';
+        let teamName = `${this.teamPrefix}${team}`;
+        let projectPath = path.join(process.cwd(), teamName);
+        let teamTempalte = 'https://github.com/steamerjs/steamer-team-default';
         
         if (this.fs.existsSync(projectPath)) {
             return this.folderExist(projectPath);
@@ -183,13 +181,13 @@ class DevelopPlugin extends SteamerPlugin {
 
     /**
      * replace steamer-team-default package.json and index.js
-     * @param {String} projectPath 
-     * @param {String} team 
+     * @param {String} projectPath
+     * @param {String} team
      */
     processTeam(projectPath, team) {
-        let pkgJson = path.join(projectPath, 'package.json'),
-            teamFile = path.join(projectPath, 'index.js'),
-            regex1 = new RegExp(`steamer-team-default`, 'ig');
+        let pkgJson = path.join(projectPath, 'package.json');
+        let teamFile = path.join(projectPath, 'index.js');
+        let regex1 = new RegExp(`steamer-team-default`, 'ig');
 
         if (this.fs.existsSync(pkgJson)) {
             let pkgJsonContent = this.fs.readFileSync(pkgJson, 'utf-8');

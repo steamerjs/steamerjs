@@ -5,8 +5,6 @@ module.exports = {
     ],
     "plugins": [],
     "rules": {
-        "one-var": "off",
-        "strict": "off",
         complexity: ["error", 20]
     },
     "globals": {

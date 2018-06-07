@@ -1,16 +1,14 @@
-'use strict';
-
 /*
 *   This plugin is going to check the node environment.
 *   Right now we only check if NODE_PATH variable exists
  */
 
-const path = require('path'),
-    spawn = require('cross-spawn'),
-    logSymbols = require('log-symbols'),
-    ora = require('ora'),
-    SteamerPlugin = require('steamer-plugin'),
-    KitPlugin = require('./steamer-plugin-kit');
+const path = require('path');
+const spawn = require('cross-spawn');
+const logSymbols = require('log-symbols');
+// const ora = require('ora');
+const SteamerPlugin = require('steamer-plugin');
+const KitPlugin = require('./steamer-plugin-kit');
 
 let emptyFunc = () => {};
 
@@ -49,8 +47,8 @@ class TeamPlugin extends SteamerPlugin {
 
     addTeam(team) {
         this.teamPrefix = (team === 'default') ? 'steamer-team-' : this.teamPrefix;
-        let teamPath = path.join(this.getGlobalModules(), `${this.teamPrefix}${team}`),
-            teamConfig = {};
+        let teamPath = path.join(this.getGlobalModules(), `${this.teamPrefix}${team}`);
+        let teamConfig = {};
 
         if (!this.fs.existsSync(teamPath)) {
             this.info(`Installing ${this.teamPrefix}${team}`);
@@ -70,13 +68,13 @@ class TeamPlugin extends SteamerPlugin {
             }
         }
 
-        let newConfig = this._.merge({}, this.config, teamConfig.config || {}),
-            kits = teamConfig.kits || [],
-            plugins = teamConfig.plugins || [],
-            tasks = teamConfig.tasks || ['steamer-task-alloyteam'],
-            beforeInstall = teamConfig.beforeInstall || emptyFunc,
-            afterInstall = teamConfig.afterInstall || emptyFunc;
-        
+        let newConfig = this._.merge({}, this.config, teamConfig.config || {});
+        let kits = teamConfig.kits || [];
+        let plugins = teamConfig.plugins || [];
+        let tasks = teamConfig.tasks || ['steamer-task-alloyteam'];
+        let beforeInstall = teamConfig.beforeInstall || emptyFunc;
+        let afterInstall = teamConfig.afterInstall || emptyFunc;
+
         beforeInstall();
         this.info(`Your team is \'${newConfig.TEAM}\'`);
         this.info(`You will use \'${newConfig.NPM}\' as your npm command`);
@@ -94,7 +92,7 @@ class TeamPlugin extends SteamerPlugin {
         let action = ['install', '--global'];
         action = action.concat(plugins, tasks);
         let result = this.spawn.sync(newConfig.NPM, action, { stdio: 'inherit' });
-        
+
         if (!result.error) {
             this.log(`${logSymbols.success} ${installPlugins} ${installTasks} installed`);
         }
@@ -110,8 +108,8 @@ class TeamPlugin extends SteamerPlugin {
         let cloneAction = [];
 
         kits.forEach(item => {
-            let kit = item.name,
-                repo = item.git;
+            let kit = item.name;
+            let repo = item.git;
             if (!kitConfigs.list.hasOwnProperty(kit)) {
                 cloneAction.push(this.kitPlugin.clone(repo));
             }
