@@ -45,9 +45,25 @@ class TeamPlugin extends SteamerPlugin {
         return require(teamPath);
     }
 
+    getTeamName(teamParam) {
+        let team = teamParam;
+
+        if (team.includes(this.teamPrefix)) {
+            team = team.replace(this.teamPrefix, '');
+        }
+
+        let teamNameArr = team.split('/');
+
+        if (teamNameArr.length > 1) {
+            return `${teamNameArr[0]}/${this.teamPrefix}${teamNameArr[1]}`;
+        }
+        else {
+            return `${this.teamPrefix}${team}`;
+        }
+    }
+
     addTeam(team) {
-        this.teamPrefix = (team === 'default') ? 'steamer-team-' : this.teamPrefix;
-        let teamPath = path.join(this.getGlobalModules(), `${this.teamPrefix}${team}`);
+        let teamPath = path.join(this.getGlobalModules(), `${this.getTeamName(team)}`);
         let teamConfig = {};
 
         if (!this.fs.existsSync(teamPath)) {

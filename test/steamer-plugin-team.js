@@ -7,7 +7,7 @@ describe('steamer-plugin-team', function() {
     it('add team config', function(done) {
         this.timeout(10000);
         let team = new SteamerTeam({
-            add: ['default']
+            add: 'default'
         });
 
         team.config = {

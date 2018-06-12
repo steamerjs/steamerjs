@@ -1,3 +1,6 @@
+## 3.0.0-beta.11
+    - steamer-plugin-team 支持 scope
+
 ## 3.0.0-beta.10
     - 新增添加正在开发的脚手架到 starterkit 功能
 
