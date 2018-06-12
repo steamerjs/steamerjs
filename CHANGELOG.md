@@ -1,3 +1,6 @@
+## 3.0.0-beta.10
+    - 新增添加正在开发的脚手架到 starterkit 功能
+
 ## 3.0.0-beta.9
 	- 修复 steamer-plugin-kit 的bug
     - 添加自动更新提示
