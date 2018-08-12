@@ -1,3 +1,7 @@
+## 3.0.0-rc.1
+    - 更新 steamer-plugin-kit
+    - 修复更新提示
+
 ## 3.0.0-beta.11
     - steamer-plugin-team 支持 scope
 
