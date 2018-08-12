@@ -59,15 +59,10 @@ class Commander extends SteamerPlugin {
             updateCheckInterval: 0,
         });
 
-        // {
-        //     latest: '3.0.0-beta.8',
-        //     current: '2.0.0',
-        //     type: 'major',
-        //     name: 'steamerjs'
-        // }
+        notifier.notify({
+            isGlobal: true
+        });
 
-        notifier.notify();
-        // console.log(notifier.update);
         return notifier;
     }
 

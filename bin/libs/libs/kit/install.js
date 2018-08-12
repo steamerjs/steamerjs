@@ -214,7 +214,8 @@ exports.installKit = function(repo, tag, alias) {
         .then(() => {
             this.writeKitOptions(this.kitOptions);
         })
-        .catch(e => {
-            this.error(e.stack);
+        .catch((e) => {
+            let message = (typeof e === 'object') ? e.message : e;
+            this.error(message);
         });
 };
